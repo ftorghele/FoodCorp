@@ -1,0 +1,12 @@
+.bundle
+log/*.log
+tmp/**/*
+
+config/database.yml
+log/*.log
+*.swp
+tmp/*
+doc/api
+doc/app
+db/*.sqlite3
+.tmp_*

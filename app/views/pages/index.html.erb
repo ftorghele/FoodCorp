@@ -1,0 +1,11 @@
+<%#
+# To change this template, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+<%= "index.html" %>
+<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+
+<% if user_signed_in? %>
+  eingeloggt
+<% end %>

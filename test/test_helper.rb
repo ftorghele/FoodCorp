@@ -11,6 +11,9 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   setup { Sham.reset }
+
+  include Devise::TestHelpers
+  
 end
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")

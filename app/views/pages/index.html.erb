@@ -3,9 +3,18 @@
 # and open the template in the editor.
 %>
 
-<%= "index.html" %>
-<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
-
 <% if user_signed_in? %>
-  eingeloggt
+  eingeloggt.. <%= link_to('Logout', destroy_user_session_path) %>
+<% else %>
+  <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+  <br/>
+  <%= form_for("user", :url => user_session_path) do |f| %>
+    <%= f.text_field :email %>
+    <%= f.password_field :password %>
+    <%= f.check_box :remember_me %>
+    <%= f.label :remember_me %>
+    <%= f.submit 'Sign in' %>
+    <%= link_to "Forgot your password?", new_password_path('user') %>
+    <%= link_to('Register', new_user_registration_path)  %>
+  <% end %>
 <% end %>

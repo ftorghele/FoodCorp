@@ -22,18 +22,25 @@ ActiveRecord::Schema.define(:version => 20110407162504) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "sex"
-    t.string   "city"
-    t.string   "state"
+    t.string   "gender"
+    t.string   "birthday"
+    t.integer  "fb_id"
     t.string   "country"
+    t.string   "city"
+    t.string   "zip_code"
     t.string   "street"
-    t.integer  "street_number"
+    t.string   "street_number"
+    t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 

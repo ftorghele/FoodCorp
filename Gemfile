@@ -12,10 +12,12 @@ group :development do
 end
 
 group :test do
+  gem 'devise'
   gem 'machinist'
   gem 'faker'
   gem 'shoulda'
   gem 'capybara'
+  gem 'mocha', :require => false
 end
 
 group :production do

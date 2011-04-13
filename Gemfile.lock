@@ -30,6 +30,7 @@ GEM
     activesupport (3.0.5)
     addressable (2.2.4)
     arel (2.0.9)
+    bcrypt-ruby (2.1.4)
     bcrypt-ruby (2.1.4-x86-mingw32)
     builder (2.1.2)
     capybara (0.4.1.2)
@@ -57,6 +58,8 @@ GEM
       addressable (~> 2.2.4)
       multipart-post (~> 1.1.0)
       rack (>= 1.1.0, < 2)
+    ffi (1.0.7)
+      rake (>= 0.8.7)
     ffi (1.0.7-x86-mingw32)
       rake (>= 0.8.7)
     i18n (0.5.0)
@@ -71,9 +74,12 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    mocha (0.9.12)
     multi_json (0.0.5)
     multipart-post (1.1.0)
+    mysql2 (0.2.6)
     mysql2 (0.2.6-x86-mingw32)
+    nokogiri (1.4.4)
     nokogiri (1.4.4-x86-mingw32)
     oa-core (0.2.1)
       rack (~> 1.1)
@@ -125,6 +131,7 @@ GEM
       nokogiri (~> 1.3)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
@@ -133,6 +140,7 @@ DEPENDENCIES
   faker
   jquery-rails
   machinist
+  mocha
   mysql2
   oa-oauth
   rails (= 3.0.5)

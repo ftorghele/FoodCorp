@@ -6,12 +6,12 @@ require 'faker'
 # set locale of faker, otherwise we would be using the default locale
 Faker::Config.locale = :en
 
-# Jeder Task soll einen eigenen Title bekommen
+# Jedes Meal soll einen eigenen Title bekommen
 Sham.title  { Faker::Name.name }
 
-Task.blueprint do
+Meal.blueprint do
   title { Sham.title }
-  estimated_length 3
+  description "klfjsldkfjsldfkj"
   # oder bei Namensgleichheit zwischen Sham und Attribut einfach:
   # title
 end

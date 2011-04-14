@@ -1,0 +1,3 @@
+<h1 id="profile_name">Hello <%= @user.first_name %> <%= @user.last_name %></h1>
+
+<%= image_tag @user.avatar.url(:thumb), :id => "profile_avatar" %>

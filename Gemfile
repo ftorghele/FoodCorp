@@ -6,6 +6,7 @@ gem 'jquery-rails'
 
 gem 'devise'
 gem "oa-oauth", :require => "omniauth/oauth"
+gem "paperclip", "~> 2.3"
 
 group :development do
 

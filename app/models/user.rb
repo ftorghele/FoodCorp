@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   
   has_many :meal
+
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and 
@@ -9,7 +11,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
-                  :first_name, :last_name, :gender, :birthday, :fb_id,
+                  :first_name, :last_name, :gender, :birthday, :fb_id, :avatar,
                   :country, :city, :zip_code, :street, :street_number, :phone_number
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
@@ -36,5 +38,9 @@ class User < ActiveRecord::Base
       user.save!
       user
     end
+  end
+
+  def password_required?
+    new_record?
   end
 end

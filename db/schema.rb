@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110413133754) do
+ActiveRecord::Schema.define(:version => 20110414151624) do
 
   create_table "meals", :force => true do |t|
     t.string   "title"
@@ -55,6 +55,10 @@ ActiveRecord::Schema.define(:version => 20110413133754) do
     t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

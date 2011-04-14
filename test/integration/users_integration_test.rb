@@ -11,6 +11,18 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   OmniAuth.config.test_mode = true
+  
+  def login
+     visit '/'
+     fill_in 'user_email', :with => "test@testuser.com"
+     fill_in 'user_password', :with => "blabla"
+     click_on("Sign in")
+  end
+  
+  def logout
+    visit ''
+    click_on("Sign out")
+  end
 
   should "register new user" do
 =begin
@@ -66,9 +78,21 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     
     click_link "Logout"
     assert page.has_content?('Signed out successfully')
-    
-    User.all.delete!
-    
   end
+  
+  should "user should be able to visit his/her profile" do
+    visit '/profile/1'
+    assert page.has_css?('div#calendar', :count => 0)
+    assert page.has_css?('h1#profile_name', :count => 1)
     
+    login()
+       
+    visit '/profile/1'
+    assert page.has_css?('div#calendar', :count => 1)
+    assert page.has_css?('h1#profile_name', :count => 1)
+    assert page.has_css?('div#profile_avatar', :count => 1)
+    
+    logout()
+    User.all.delete!
+  end 
 end

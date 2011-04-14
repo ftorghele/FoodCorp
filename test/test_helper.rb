@@ -1,7 +1,7 @@
 ENV["RAILS_ENV"] = "test"
+
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-
 require 'mocha'
 
 class ActiveSupport::TestCase
@@ -11,13 +11,12 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
 
   # Add more helper methods to be used by all tests here...
-
+  
   setup { Sham.reset }
   
 end
 
 class ActionController::TestCase
-    include Devise::TestHelpers
 end
 
 require File.expand_path(File.dirname(__FILE__) + "/blueprints")

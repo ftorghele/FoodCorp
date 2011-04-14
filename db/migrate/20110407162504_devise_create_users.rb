@@ -21,6 +21,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :zip_code
       t.string :street
       t.string :street_number
+      t.string :room_number
       t.string :phone_number
 
       t.timestamps

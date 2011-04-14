@@ -18,6 +18,7 @@ group :test do
   gem 'shoulda'
   gem 'capybara'
   gem 'mocha', :require => false
+	gem "launchy"
 end
 
 group :production do

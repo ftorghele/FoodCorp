@@ -7,10 +7,17 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
+	
+<div id="header" >
+  <%= render 'layouts/registration' %>
+</div>
+	
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
   <%= yield %>
+  
+  <div id="footer"></div>
 
 </body>
 </html>

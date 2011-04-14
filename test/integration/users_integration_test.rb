@@ -20,8 +20,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   def logout
-    visit ''
-    click_on("Sign out")
+    click_on("Logout")
   end
 
   should "register new user" do
@@ -42,6 +41,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     fill_in "Phone number", :with => "066021254323"
     select "male", :from => "Gender"
     y User.all
+    y save_and_open_page
     assert_difference("User.count") do
       click_on("Sign up")
       User.all.confirm!
@@ -81,18 +81,18 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   should "user should be able to visit his/her profile" do
-    visit '/profile/1'
-    assert page.has_css?('div#calendar', :count => 0)
+    
+    visit '/users/1'
+    assert page.has_no_css?('#calendar')
     assert page.has_css?('h1#profile_name', :count => 1)
     
     login()
-       
-    visit '/profile/1'
+    
+    visit '/users/1'
     assert page.has_css?('div#calendar', :count => 1)
     assert page.has_css?('h1#profile_name', :count => 1)
-    assert page.has_css?('div#profile_avatar', :count => 1)
+    assert page.has_css?('img#profile_avatar', :count => 1)
     
     logout()
-    User.all.delete!
   end 
 end

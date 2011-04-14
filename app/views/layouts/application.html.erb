@@ -17,7 +17,11 @@
 
   <%= yield %>
   
-  <div id="footer"></div>
+  <div id="footer">
+  	<%= link_to "About", about_path %> 
+	<%= link_to "Imprint", imprint_path %> 
+	<%= link_to "Terms of service", terms_path %> 
+  </div>
 
 </body>
 </html>

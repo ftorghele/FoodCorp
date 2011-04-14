@@ -3,7 +3,13 @@ FoodCorp::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }
   resources :users
-                                      
+                           
+  controller :pages do
+     match 'about' => :about
+     match 'imprint' => :imprint
+     match 'terms' => :terms
+  end
+  
   root :to => "pages#index"
   
   # The priority is based upon order of creation:

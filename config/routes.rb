@@ -3,7 +3,8 @@ FoodCorp::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }
   resources :users
-                           
+  resources :meals
+  
   controller :pages do
      match 'about' => :about
      match 'imprint' => :imprint

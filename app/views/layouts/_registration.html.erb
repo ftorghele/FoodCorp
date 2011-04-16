@@ -4,6 +4,7 @@
   <%= current_user.last_name%>
   <%= link_to('Logout', destroy_user_session_path) %>
   <%= link_to('edit Profile', edit_user_registration_path) %>
+  <%= link_to('Profile', user_path(current_user.id) )%>
 <% else %>
   <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), :id => "fb_sign_in" %>
   <br/>

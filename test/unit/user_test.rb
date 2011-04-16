@@ -33,5 +33,6 @@ class UserTest < ActiveSupport::TestCase
       user.save
 
       assert !user.valid?, user.errors.to_s
-    end
+     end
+  
 end

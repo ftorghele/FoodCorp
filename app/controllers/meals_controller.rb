@@ -12,15 +12,12 @@ class MealsController < ApplicationController
   end
 
   def create
-    meal = Meal.new(:title => params[:title], :description => params[:description], 
-                     :user_id => current_user.id, :time => params[:time], :deadline => params[:deadline],
-                     :lon => params[:lon], :lat => params[:lat] )
-   
-    if meal.save
+    meal = Meal.new(params[:meal])
+    meal.user_id = current_user.id
+    meal.save!
       redirect_to meal_path(meal.id), :notice => "meal created successfully"
-    else
-      render 'new'
-    end 
+
+
   end
   
   def edit

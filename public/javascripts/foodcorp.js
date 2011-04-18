@@ -36,14 +36,31 @@ jQuery(document).ready(function () {
 				return false;
 			}
 		})
+
 	});
+
+         a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
+         b = [];
+        $('form.new_meal > :input').blur(function() {
+
+          var adress = "";
+          if(jQuery.inArray($(this).attr('name'), a ) >=0) {
+              var pos = a.indexOf( $(this).attr('name') );
+              b[pos] = $(this).val();
+              console.log(b);
+              showCoordinates(b.join(" "));
+          }
+
+        })
+
+
 });
 
 
 jQuery(document).ready(function () {
 	
 	$('.datepicker').datepicker({
-		altFormat: 'yyyy-mm-dd'
+		dateFormat: 'yy-mm-dd'
 	});
 	
 });
@@ -107,6 +124,38 @@ if (navigator.geolocation) {
           addressMarker = new GMarker(markerPoint);
           map.setCenter(markerPoint);
 		  map.setZoom(17);
+          map.addOverlay(addressMarker);
+        }
+      }
+    );
+  }
+}
+
+
+function showCoordinates(address) {
+
+  if (geocoder) {
+    geocoder.getLatLng(address, function(point) {
+        if (!point) {
+          alert(address + " not found");
+        } else {
+          if (addressMarker) {
+
+            map.removeOverlay(addressMarker);
+          }
+
+		  var extractLatLan = /\(([-.\d]*), ([-.\d]*)/.exec( point );
+			if (extractLatLan) {
+				var lat = parseFloat(extractLatLan[1]);
+				var lon = parseFloat(extractLatLan[2]);
+			}
+
+			$("input#meal_lat").val(lat);
+			$("input#meal_lon").val(lon);
+
+          addressMarker = new GMarker(point);
+          map.setCenter(point);
+		  map.setZoom(16);
           map.addOverlay(addressMarker);
         }
       }

@@ -22,6 +22,14 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   def logout
     click_on("Logout")
   end
+  
+  def provide_meal
+    visit '/users/1'  
+    login()
+    click_on("provide meal")
+    assert page.has_css?('div#provide_meal', :count => 1)
+    assert page.has_css?('form', :count => 1)
+  end
 
   should "register new user" do
 =begin
@@ -92,7 +100,69 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_css?('div#calendar', :count => 1)
     assert page.has_css?('h1#profile_name', :count => 1)
     assert page.has_css?('img#profile_avatar', :count => 1)
+    assert page.has_css?('a#provide_meal_button', :count => 1)
     
     logout()
   end 
+  
+  should "user should not be able to create new meal without filling all relevant fields" do
+    provide_meal()
+    
+    #1unsigned please fill in the following fields
+    click_on("Submit")
+    click_on("OK")
+    #2 please fill in the following fields
+    fill_in 'Dish', :with => "Gulasch"
+    fill_in 'Dish description', :with => "scharf und mit Knödel"
+    click_on("Submit")
+    click_on("OK")
+    #3 please check your location
+    fill_in 'Dish', :with => "Gulasch"
+    fill_in 'Dish description', :with => "scharf und mit Knödel"
+    fill_in 'Address', :with => "5020 Siegmund Hafner Gasse 10"
+    fill_in 'Date and Time', :from => "2011-04-15T20:00Z"
+    fill_in 'Deadline', :with => "2011-04-15T16:00Z"
+    click_on("Submit")
+    click_on("OK")
+    #4 please check your location
+    fill_in 'Dish', :with => ""
+    fill_in 'Dish description', :with => "scharf und mit Knödel"
+    fill_in 'Address', :with => "5020 Siegmund Hafner Gasse 10"
+    fill_in 'Date and Time', :from => "2011-04-15T20:00Z"
+    fill_in 'Deadline', :with => "2011-04-15T16:00Z"
+    click_on('check your location')
+    click_on("Submit")
+    click_on("OK")
+  end
+  
+  should "user should be able to create new meal" do
+    provide_meal()
+    
+    fill_in 'Dish', :with => "Gulasch"
+    fill_in 'Dish description', :with => "scharf und mit Knödel"
+    ##
+    fill_in 'Address', :with => "5020 Siegmund Hafner Gasse 10"
+    fill_in 'Date and Time', :from => "2011-04-15T20:00Z"
+    fill_in 'Deadline', :with => "2011-04-15T16:00Z"
+    
+    click_on("check your location")
+    
+    assert_difference("Meal.count") do
+      click_on("Submit")    
+    end
+    assert page.has_content?('meal created successfully')
+  end
+  
+  
+  should "user should be able to see meal information" do
+    visit '/meals/1'
+    
+    assert page.has_css?('div#meal_show', :count => 1)
+    assert page.has_content?('Gulasch')
+    assert page.has_content?('scharf und mit Knödel')
+    assert page.has_content?('5020 Siegmund Hafner Gasse 10')
+    
+    assert_not_nil(@meal.lon) #?
+    assert_not_nil(@meal.lat) #?
+  end
 end

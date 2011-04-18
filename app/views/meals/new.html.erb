@@ -1,0 +1,34 @@
+<div id="provide_meal">
+<!--
+Formhelper methods (form_tag form_for)
+didn`t work with javascript...  
+
+<%= form_tag(:controller => "meals", :method => "post", :id=> "meal") do %>
+  <%= label_tag(:title, "Title:") %>
+  <%= text_field_tag(:title) %>
+   <%= label_tag(:description, "Description:") %>
+  <%= text_field_tag(:description) %>
+  <%= hidden_field_tag :user_id, current_user.id  %>
+  
+  <%= submit_tag("Submit") %>
+<% end %>
+-->
+ 
+<form action="/meals" id="meal"  method="post" onsubmit="showAddress(address.value, countrycode.value); ">
+  <p>Dish<input type="text" name="title"    /></p>
+  <p>Dish description<input type="text" name="description"    /></p>
+  
+  <p>Country Code<input type="text" name="countrycode" id="countrycode"/></p>
+  <p>Address<input type="text" name="address" id="address"/></p>
+  <p>Date and Time<input type="datetime" name="time" />format:2011-04-15T20:00Z</p> <!--type="datetime-local" ??-->
+  <p>Deadline<input type="datetime" name="deadline" />format:2011-04-15T16:00Z</p>
+  <input type="hidden" name="user_id" value="<%= current_user.id %>"   />
+  <input type="hidden" name="lon" id="lon" />
+  <input type="hidden" name="lat" id="lat" />
+  
+  <input type="button" value="check your location" onclick="showAddress(address.value, countrycode.value);"/>
+  <p><input type="submit" value="Submit"/></p>
+</form>
+
+<div id="map" style="width: 450px; height: 300px"></div>
+</div>

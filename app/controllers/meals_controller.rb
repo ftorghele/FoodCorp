@@ -1,28 +1,30 @@
 class MealsController < ApplicationController
   def index
-   @meals = meal.all
+   @meals = Meal.all
   end
 
   def new 
-    @meal = meal.new
+    @meal = Meal.new
   end 
   
   def show
-    @meal = meal.find(params[:id])
+    @meal = Meal.find(params[:id])
   end
 
   def create
-    @meal = meal.new(params[:meal])
-
+    @meal = Meal.new(:title => params[:title], :description => params[:description], 
+                     :user_id => params[:user_id], :time => params[:time], :deadline => params[:deadline],
+                     :lon => params[:lon], :lat => params[:lat] )
+   
     if @meal.save
-      redirect_to meals_path, :notice => "meal erfolgreich angelegt"
+      redirect_to meal_path(@meal.id), :notice => "meal created successfully"
     else
       render 'new'
     end 
   end
   
   def edit
-    @meal = meal.find(params[:id])
+    @meal = Meal.find(params[:id])
   end
   
   def update

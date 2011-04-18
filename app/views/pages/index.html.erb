@@ -2,78 +2,15 @@
 # To change this template, choose Tools | Templates
 # and open the template in the editor.
 %>
+ 
+<form action="#" onsubmit="showAddress(this.address.value, this.countrycode.value); return false">
+  <p>
+    Country code: <input type="text" size="2" id="countrycode" name="countrycode" value="IT" />
+    &nbsp; Address: <input type="text" size="30" id="addressInput" name="address" value="Syracuse" />
+    <input type="submit" value="Go!" />
 
+  </p>
+</form>
 
-   <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAbJBurE6AcWFl0i1KGIO4ThTJQa0g3IQ9GZqIMmInSLzwtGDKaBRPpegQ19f4lsPNVjytzuDi-zTaSQ"
-      type="text/javascript"></script>
-	  
-	  
-    <style type="text/css">
-      body {
-        font-family: Arial, sans serif;
-        font-size: 11px;
-      }
-      td {
-        text-align: center; 
-      }
-      img {
-        color: #000000;
-      }
-    </style>
-	
-	
-    <script type="text/javascript">
-    //<![CDATA[
-
-    var map;
-    var geocoder = null;
-    var addressMarker;
-
-    function load() {
-      if (GBrowserIsCompatible()) {
-        map = new GMap2(document.getElementById("map"));
-        map.addControl(new GSmallMapControl());
-        map.addControl(new GMapTypeControl());
-        map.setCenter(new GLatLng(22.917922, -16.875), 2);
-        map.setMapType(G_HYBRID_MAP);
-
-        geocoder = new GClientGeocoder();
-      }
-    }
-
-    function showAddress(address, countryCode) {
-      if (geocoder) {
-        geocoder.setBaseCountryCode(countryCode);
-		
-        geocoder.getLatLng(address, function(point) {
-            if (!point) {
-              alert(address + " not found");
-            } else {
-              if (addressMarker) {
-                map.removeOverlay(addressMarker);
-              }
-              addressMarker = new GMarker(point);
-              map.setCenter(point);
-              map.addOverlay(addressMarker);
-            }
-          }
-        );
-      }
-    }
-
-    //]]>
-    </script>
-
-  </head>
-  <body onload="load()">
-    <form action="#" onsubmit="showAddress(this.address.value, this.countrycode.value); return false">
-      <p>
-        Country code: <input type="text" size="2" id="countrycode" name="countrycode" value="IT" />
-        &nbsp; Address: <input type="text" size="30" id="addressInput" name="address" value="Syracuse" />
-        <input type="submit" value="Go!" />
-
-      </p>
-    </form>
-
-    <div id="map" style="width: 450px; height: 300px"></div>
-	<div id="meals_distance_stream"></div>
+<div id="map" style="width: 450px; height: 300px"></div>
+<div id="meals_distance_stream"></div>

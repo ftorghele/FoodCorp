@@ -1,8 +1,35 @@
 var map;
 var geocoder = null;
 var addressMarker;
+var markerPoint;
+
+
+jQuery(document).ready(function () {		
+	$('.submit').click(function() {
+		var form = $(this).parent().attr('id');
+		$('#'+form + ' > :input').each(function() {
+			if ($(this).val() == "") {
+				alert($(this).attr('name') + " not valid!")
+				return false;
+			}
+		})
+	});
+});
+
+
+jQuery(document).ready(function () {
+	
+	$('.datepicker').datepicker({
+		altFormat: 'yyyy-mm-dd'
+	});
+	
+});
 
 function load() {
+  if (!navigator.geolocation) {
+    alert("GeoLocation API not available!");
+  }
+  
   if (GBrowserIsCompatible()) {
     map = new GMap2(document.getElementById("map"));
     map.addControl(new GSmallMapControl());
@@ -14,7 +41,24 @@ function load() {
   }
 }
 
+function success(position) {
+	var latitude = position.coords.latitude;
+  	var longitude = position.coords.longitude;
+	markerPoint = new GLatLng(latitude, longitude);
+	alert(markerPoint);
+}
+ 
+function error(msg) {
+	console.log(typeof msg == 'string' ? msg : "error");
+}
+
 function showAddress(address, countryCode) {
+
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(success, error);
+} else {
+	alert("your current position is not available");
+}
 
   if (geocoder) {
     geocoder.setBaseCountryCode(countryCode);
@@ -37,8 +81,8 @@ function showAddress(address, countryCode) {
 			$("input#lat").val(lat);
 			$("input#lon").val(lon);
 			
-          addressMarker = new GMarker(point);
-          map.setCenter(point);
+          addressMarker = new GMarker(markerPoint);
+          map.setCenter(markerPoint);
 		  map.setZoom(17);
           map.addOverlay(addressMarker);
         }

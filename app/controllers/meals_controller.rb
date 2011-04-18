@@ -12,12 +12,12 @@ class MealsController < ApplicationController
   end
 
   def create
-    @meal = Meal.new(:title => params[:title], :description => params[:description], 
-                     :user_id => params[:user_id], :time => params[:time], :deadline => params[:deadline],
+    meal = Meal.new(:title => params[:title], :description => params[:description], 
+                     :user_id => current_user.id, :time => params[:time], :deadline => params[:deadline],
                      :lon => params[:lon], :lat => params[:lat] )
    
-    if @meal.save
-      redirect_to meal_path(@meal.id), :notice => "meal created successfully"
+    if meal.save
+      redirect_to meal_path(meal.id), :notice => "meal created successfully"
     else
       render 'new'
     end 

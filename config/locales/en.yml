@@ -5,7 +5,16 @@ en:
   activerecord:
     attributes:
       user:
-        email: "E-mail address"
-        password: "New Password (leave blank if you don't want to change it)"
-        password_confirmation: "Password confirmation"
-        avatar: "Upload a new Avatar"
+        first_name: "First Name:"
+        last_name: "Last Name:"
+        gender: "Gender:"
+        birthday: "Your Birthday:"
+        email: "E-mail address:"
+        password: "New Password: (leave blank if you don't want to change it)"
+        password_confirmation: "Password confirmation:"
+        avatar: "Upload a new Avatar:"
+        city: "Zip code and city:"
+        street: "Street and Street Number:"
+
+  application:
+    title: "FoodCorp"

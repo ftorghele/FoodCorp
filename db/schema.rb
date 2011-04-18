@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414151624) do
+ActiveRecord::Schema.define(:version => 20110418112046) do
 
   create_table "meals", :force => true do |t|
     t.string   "title"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20110414151624) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "use_fb_avatar"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

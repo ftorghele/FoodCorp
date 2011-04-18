@@ -6,3 +6,6 @@ en:
     attributes:
       user:
         email: "E-mail address"
+        password: "New Password (leave blank if you don't want to change it)"
+        password_confirmation: "Password confirmation"
+        avatar: "Upload a new Avatar"

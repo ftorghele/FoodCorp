@@ -6,6 +6,21 @@
         Purpose of the stylesheet follows.
 */
 
+/* ---- BASIC BEG ----- */
+.float_right {
+    float: right;
+}
+.float_left {
+    float: left;
+}
+.clr {
+    clear: both;
+}
+.space_left {
+    margin-left: 15px;
+}
+/* ---- BASIC END ----- */
+
 /* ---- TABS BEG ----- */
 ul.tabs {
 	margin: 0;

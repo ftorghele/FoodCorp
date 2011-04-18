@@ -13,15 +13,21 @@
       <p><%= f.label :email %><br />
       <%= f.email_field :email %></p>
 
-      <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-      <%= f.password_field :password %></p>
+      <p><%= f.label :password %><br />
+      <%= f.password_field :password, :value => ""%></p>
 
       <p><%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation %></p>
     </div>
     <div id="tab2" class="tab_content">
-       <p><%= f.label :avatar %><br />
-       <%= f.file_field :avatar %></p>
+      <div class="float_left">
+        <%= image_tag @user.avatar.url(:medium), :id => "profile_avatar" %>
+      </div>
+      <div class="float_left space_left">
+        <p><%= f.label :avatar %><br />
+        <%= f.file_field :avatar %></p>
+      </div>
+      <div class="clr"></div>
     </div>
   </div>
 

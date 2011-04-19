@@ -14,8 +14,8 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   def login
      visit '/'
-     fill_in 'user_email', :with => "test@testuser.com"
-     fill_in 'user_password', :with => "blabla"
+     fill_in 'user[email]', :with => "test@testuser.com"
+     fill_in 'user[password]', :with => "blabla"
      click_on("Sign in")
   end
   
@@ -24,7 +24,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   def provide_meal
-    login()
     visit '/users/1'  
     
     click_on("provide meal")
@@ -92,13 +91,11 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   should "user should be able to visit his/her profile" do
     
     visit '/users/1'
-    assert page.has_css?('#calendar')
     assert page.has_css?('h1#profile_name', :count => 1)
     
     login()
     
     visit '/users/1'
-    assert page.has_css?('div#calendar', :count => 1)
     assert page.has_css?('h1#profile_name', :count => 1)
     assert page.has_css?('img#profile_avatar', :count => 1)
     assert page.has_css?('a#provide_meal_button', :count => 1)
@@ -107,32 +104,35 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end 
   
   should "user should not be able to create new meal without filling all relevant fields" do
+    login()
     provide_meal()
     
     #1unsigned please fill in the following fields
-    click_on("Submit")
+    click_on("submit")
     click_on("OK")
     #2 please fill in the following fields
-    fill_in 'Dish', :with => "Gulasch"
-    fill_in 'Dish description', :with => "scharf und mit Knödel"
-    click_on("Submit")
+    fill_in 'Title', :with => "Gulasch"
+    fill_in 'Description', :with => "scharf und mit Knödel"
+    click_on("submit")
     click_on("OK")
     #3 please check your location
-    fill_in 'Dish', :with => "Gulasch"
-    fill_in 'Dish description', :with => "scharf und mit Knödel"
-    fill_in 'Address', :with => "5020 Siegmund Hafner Gasse 10"
-    fill_in 'Date and Time', :from => "2011-04-15T20:00Z"
+    fill_in 'Title', :with => "Gulasch"
+    fill_in 'Description', :with => "scharf und mit Knödel"
+    fill_in 'Time', :from => "2011-04-15T20:00Z"
     fill_in 'Deadline', :with => "2011-04-15T16:00Z"
-    click_on("Submit")
+    click_on("submit")
     click_on("OK")
     #4 please check your location
-    fill_in 'Dish', :with => ""
-    fill_in 'Dish description', :with => "scharf und mit Knödel"
-    fill_in 'Address', :with => "5020 Siegmund Hafner Gasse 10"
+    fill_in 'Title', :with => ""
+    fill_in 'Description', :with => "scharf und mit Knödel"
+    fill_in 'Country', :with => "Austria"
+    fill_in 'City', :with => "Salzburg"
+    fill_in 'Zip code', :with => "5020"
+    fill_in 'Street', :with => "Getreidegasse"
+    fill_in 'Street number', :with => "3"
     fill_in 'Date and Time', :from => "2011-04-15T20:00Z"
     fill_in 'Deadline', :with => "2011-04-15T16:00Z"
-    click_on('check your location')
-    click_on("Submit")
+    click_on("submit")
     click_on("OK")
   end
   
@@ -143,14 +143,15 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     
     fill_in 'Title', :with => "Gulasch"
     fill_in 'Description', :with => "scharf und mit Knödel"
-    ##
     fill_in 'Country', :with => "Austria"
     fill_in 'City', :with => "Imst"
-    fill_in 'Zip Code', :with => "6460"
+    fill_in 'Zip code', :with => "6460"
     fill_in 'Street', :with => "Putzenweg"
     fill_in 'Street number', :with => "1a"
-    fill_in 'Time', :from => "2011-04-15T20:00Z"
-    fill_in 'Deadline', :with => "2011-04-15T16:00Z"
+    fill_in 'Time', :with => Time.now
+    fill_in 'Deadline', :with => Time.now
+    page.find('#meal_lat').set('34.00000000')
+    page.find('#meal_lon').set('34.00000000') 
     
     assert_difference("Meal.count") do
       click_on("submit")    
@@ -168,9 +169,8 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_css?('div#meal_show', :count => 1)
     assert page.has_content?('Gulasch')
     assert page.has_content?('scharf und mit Knödel')
-    assert page.has_content?('5020 Siegmund Hafner Gasse 10')
+    assert page.has_content?('6460')
+    assert page.has_content?('Putzenweg')
     
-    assert_not_nil(@meal.lon) #?
-    assert_not_nil(@meal.lat) #?
   end
 end

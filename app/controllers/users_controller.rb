@@ -9,7 +9,6 @@ class UsersController < ApplicationController
   def show
   end
 
-
   protected
   def get_user
     if @user = User.find(:first, :conditions => [ "id = ?", params[:id]])

@@ -1,10 +1,10 @@
 $(document).ready(function() {
 	
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
-        b = [];
+    b = [];
 	
 	// MAPS
-	
+	marker = [];
 	loc = [];
 	
 	// Validate meal
@@ -23,14 +23,18 @@ $(document).ready(function() {
 	geocoder.getLocations(loc.join(), addToMap);
 	
 	function addToMap(result) {
-		console.log(result);
-		lat = result.Placemark[0].Point.coordinates[0];
-		lon = result.Placemark[0].Point.coordinates[1];
+		marker[0] = result.Placemark[0].Point.coordinates[1];
+		marker[1] = result.Placemark[0].Point.coordinates[0];
+		(loc.indexOf( $('#meal_street').attr('value') ))? loc = loc : loc = b;
+		drawMap(loc, marker)
+	}
+	
+	function drawMap(env, marker) {
 		$('#map').googleMaps({
-			geocode: loc.join(', '),
+			geocode: env.join(', '),
 			markers: {
-				latitude: lon,
-				longitude: lat,
+				latitude: marker[0],
+				longitude: marker[1],
 				draggable: true
 			}
 		});
@@ -59,6 +63,7 @@ $(document).ready(function() {
         $(activeTab).fadeIn(); //Fade in the active ID content
         return false;
     });
+
 	// Validate inputs for new meal *FIX*
 	$('.submit').click(function() {
 		var form = $(this).parent().attr('id');
@@ -68,6 +73,7 @@ $(document).ready(function() {
 				return false;
 			}
 		})
+	});
 		
     // DISABLE AVATAR UPLOAD IF FB AVATAR IS ENABLED
     if ($('#user_use_fb_avatar').is(':checked')) {
@@ -105,10 +111,14 @@ $(document).ready(function() {
       if(jQuery.inArray($(this).attr('name'), a ) >=0) {
           var pos = a.indexOf( $(this).attr('name') );
           b[pos] = $(this).val();
-          console.log(b);
-          showCoordinates(b.join(" "));
+		  geocoder.getLocations(b.join(), calc);
       }
+    });
 
-    })
+	function calc(result) {
+		marker[0] = result.Placemark[0].Point.coordinates[1];
+		marker[1] = result.Placemark[0].Point.coordinates[0];
+		drawMap(b, marker)
+	}
     
 });

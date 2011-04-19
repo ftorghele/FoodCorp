@@ -1,16 +1,10 @@
 $(document).ready(function() {
 	
-	$('.datepicker').datetime({
-		userLang:'de',
-		americanMode:false,
-	});
-	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
     $("ul.tabs li:first").addClass("active").show(); //Activate first tab
     $(".tab_content:first").show(); //Show first tab content
 
-    //On Click Event
     $("ul.tabs li").click(function() {
 
         $("ul.tabs li").removeClass("active"); //Remove any "active" class
@@ -22,29 +16,49 @@ $(document).ready(function() {
         return false;
     });
 
-	$('.submit').click(function() {
-		var form = $(this).parent().attr('id');
-		$('#'+form + ' > :input').each(function() {
-			if ($(this).val() == "") {
-				return false;
-				alert($(this));
-			}
-		})
+    // DISABLE AVATAR UPLOAD IF FB AVATAR IS ENABLED
+    if ($('#user_use_fb_avatar').is(':checked')) {
+        $('#user_avatar').attr('disabled', true);
+    }
+    $("#user_use_fb_avatar").click(function() {
+        if ($('#user_use_fb_avatar').is(':checked')) {
+            $('#user_avatar').attr('disabled', true);
+            $('#user_avatar').attr('value', '')
 
-	});
+        } else {
+            $('#user_avatar').attr('disabled', false)
+        }
+    });
+
+    // SETUP DATEPICKER
+    $('.datepicker').datetime({
+            userLang:'de',
+            americanMode:false
+    });
+
+    $('.submit').click(function() {
+            var form = $(this).parent().attr('id');
+            $('#'+form + ' > :input').each(function() {
+                    if ($(this).val() == "") {
+                            return false;
+                            alert($(this));
+                    }
+            })
+
+    });
 
     a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
     b = [];
     
-	$('form.new_meal > :input').blur(function() {
+    $('form.new_meal > :input').blur(function() {
 
-          var adress = "";
-          if(jQuery.inArray($(this).attr('name'), a ) >=0) {
-              var pos = a.indexOf( $(this).attr('name') );
-              b[pos] = $(this).val();
-              console.log(b);
-              showCoordinates(b.join(" "));
-          }
+      var adress = "";
+      if(jQuery.inArray($(this).attr('name'), a ) >=0) {
+          var pos = a.indexOf( $(this).attr('name') );
+          b[pos] = $(this).val();
+          console.log(b);
+          showCoordinates(b.join(" "));
+      }
 
     })
     

@@ -6,25 +6,45 @@ $(document).ready(function() {
 	// MAPS
 	
 	loc = [];
-
+	
+	// Validate meal
 	$('input').each(function() {
 		var pos1 = a.indexOf( $(this).attr('name') );
 		console.log(pos1);
 		if (pos1 >= 0) {
 			loc[pos1] = $(this).val();
 		}
-	})
-	
-	
-	$('#map').googleMaps({
-		geocode: loc.join()
 	});
+	
+	// Create new geocoding object
+	geocoder = new GClientGeocoder();
+	
+	// Retrieve location information, pass it to addToMap()
+	geocoder.getLocations(loc.join(), addToMap);
+	
+	function addToMap(result) {
+		console.log(result);
+		lat = result.Placemark[0].Point.coordinates[0];
+		lon = result.Placemark[0].Point.coordinates[1];
+		$('#map').googleMaps({
+			geocode: loc.join(', '),
+			markers: {
+				latitude: lon,
+				longitude: lat,
+				draggable: true
+			}
+		});
+	}
+	
+	
 	
 	// Calendar & Time for Meals
 	$('.datepicker').datetime({
 		userLang:'de',
 		americanMode:false,
 	});
+	
+	
 	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
@@ -43,6 +63,7 @@ $(document).ready(function() {
         return false;
     });
 
+	// Validate inputs for new meal *FIX*
 	$('.submit').click(function() {
 		var form = $(this).parent().attr('id');
 		$('#'+form + ' > :input').each(function() {
@@ -54,6 +75,7 @@ $(document).ready(function() {
 
 	});
     
+	// update Map when changing inputs
 	$('form.new_meal > :input').blur(function() {
 
           var adress = "";

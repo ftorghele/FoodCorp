@@ -4,14 +4,14 @@ FoodCorp::Application.routes.draw do
                                        :registrations => "registrations" }
   resources :users
   resources :meals
-  
+
   controller :pages do
      match 'about' => :about
      match 'imprint' => :imprint
      match 'terms' => :terms
   end
   
-  root :to => "pages#index"
+  root :to => "meals#index"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

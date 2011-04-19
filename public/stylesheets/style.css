@@ -74,3 +74,26 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	font-size: 1.2em;
 }
 /* ---- TABS END ----- */
+
+/* ---- HOME BEGIN ---- */
+
+#map{
+	float:left;
+}
+
+#meals_distance_stream{
+	margin-left: 25px;
+	float: left;
+	width: 400px;
+}
+
+.meal{
+	margin-top: 10px;
+	background-color: #00ff00;	
+}
+
+.clear{
+	clear: both;
+}
+/* ---- HOME END ---- */
+ 

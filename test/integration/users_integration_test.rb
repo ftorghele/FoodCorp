@@ -30,32 +30,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_css?('div#provide_meal', :count => 1)
     assert page.has_css?('form', :count => 1)
   end
-
-  should "register new user" do
-=begin
-    visit '/'
-    click_link "Register"
-    
-    fill_in I18n.t("activerecord.attributes.user.email"), :with => "test@testuser.com"
-    fill_in "Password", :with => "blabla"
-    fill_in "Password confirmation", :with => "blabla"
-    fill_in "First name", :with => "Hans"
-    fill_in "Last name", :with => "Testuser"
-    fill_in "Country", :with => "Austria"
-    fill_in "City", :with => "Puch"
-    fill_in "Zip code", :with => "5800"
-    fill_in "Street", :with => "Urstein Süd"
-    fill_in "Street number", :with => "1"
-    fill_in "Phone number", :with => "066021254323"
-    select "male", :from => "Gender"
-    y User.all
-    y save_and_open_page
-    assert_difference("User.count") do
-      click_on("Sign up")
-      User.all.confirm!
-      save_and_open_page
-=end
-  end
   
   should "login existing user and logout after success" do
 
@@ -172,5 +146,16 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_content?('6460')
     assert page.has_content?('Putzenweg')
     
+  end
+  
+  should "user should be able to see meals on page Home" do
+    visit '/'
+      assert page.has_css?('div#meals_distance_stream', :count => 1)
+      assert page.has_css?('div.meal', :count => 1)  
+      
+      assert page.has_content?('Gulasch')
+      assert page.has_content?('scharf und mit Knödel')
+      
+      click_on('Gulasch scharf und mit Knödel')
   end
 end

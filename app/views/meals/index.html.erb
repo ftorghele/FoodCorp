@@ -1,0 +1,11 @@
+<form action="#" onsubmit="showAddress(this.address.value, this.countrycode.value); return false">
+  <p>
+    Country code: <input type="text" size="2" id="countrycode" name="countrycode" value="" />
+    &nbsp; Address: <input type="text" size="30" id="addressInput" name="address" value="" />
+    <input type="submit" value="Go!" />
+
+  </p>
+</form>
+
+<div id="map" style="width: 450px; height: 300px"></div>
+<%= render 'meals_distance_stream' %>

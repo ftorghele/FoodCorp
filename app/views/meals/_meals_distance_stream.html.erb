@@ -1,0 +1,11 @@
+<div id="meals_distance_stream">	
+	<% @meals.each do |meal|%>
+		<%= link_to(meal) do %> 
+			<div class="meal">
+				<%= meal.title %> 
+				<%= meal.description %> 
+			</div>
+		<% end %>
+	<%end%>
+</div>
+<div class="clear"></div>

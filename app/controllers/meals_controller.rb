@@ -1,6 +1,7 @@
 class MealsController < ApplicationController
+  
   def index
-   @meals = Meal.all
+   @meals = Meal.find(:all)
   end
 
   def new 

@@ -4,26 +4,21 @@ $(document).ready(function() {
     b = [];
 	
 	// MAPS
-	$.geolocation.find(function(location){
-	   $('#location').html(lat + ' ' + lon);
-	}, function(){
-	   //alert("Your device doesn't support jquery.geolocation.js");
-	});
 	
-	location = [''];
+	loc = [];
 
-	/*$('input.meal').each(function() {
+	$('input').each(function() {
 		var pos1 = a.indexOf( $(this).attr('name') );
+		console.log(pos1);
 		if (pos1 >= 0) {
-			location[pos1] = $(this).val();
+			loc[pos1] = $(this).val();
 		}
 	})
 	
-	console.log(location);
-		
+	
 	$('#map').googleMaps({
-		geocode: location.join
-	}); */
+		geocode: loc.join()
+	});
 	
 	// Calendar & Time for Meals
 	$('.datepicker').datetime({

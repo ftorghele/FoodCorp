@@ -1,9 +1,8 @@
 $(document).ready(function() {
 	
-	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
-	
 	// MAPS
 	marker = [];
+	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
 	
 	// get default User inputs
@@ -26,15 +25,29 @@ $(document).ready(function() {
     });
 	
 	function addToMap(result) {
-		marker[0] = result.Placemark[0].Point.coordinates[1];
-		marker[1] = result.Placemark[0].Point.coordinates[0];
+		console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
+		//marker = [result.Placemark[0].Point.coordinates[1], result.Placemark[0].Point.coordinates[0]];
 		$('#meal_lat').val(marker[0]);
 		$('#meal_lon').val(marker[1]);
-		drawMap(loc, marker);
+		drawMap(loc);
 	}
 	
-	function drawMap(env, marker) {
-		console.log(env)
+	// determine if the handset has client side geo location capabilities
+	if (geo_position_js.init()) {
+		geo_position_js.getCurrentPosition(geo_success, geo_error);
+	}
+	
+	function geo_error() {
+	 	console.log('geo.js not supported, switching to IP Localization');
+	}
+	
+	function geo_success(p) {
+		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
+		marker = [p.coords.latitude, p.coords.longitude];
+	}
+	
+	function drawMap(env) {
+		console.log('using: LAT'+marker[0]+' LON'+marker[1]);
 		$('#map').googleMaps({
 			geocode: env.join(', '),
 			markers: {

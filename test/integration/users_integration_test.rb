@@ -24,8 +24,9 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   def provide_meal
-    visit '/users/1'  
     login()
+    visit '/users/1'  
+    
     click_on("provide meal")
     assert page.has_css?('div#provide_meal', :count => 1)
     assert page.has_css?('form', :count => 1)
@@ -91,7 +92,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   should "user should be able to visit his/her profile" do
     
     visit '/users/1'
-    assert page.has_no_css?('#calendar')
+    assert page.has_css?('#calendar')
     assert page.has_css?('h1#profile_name', :count => 1)
     
     login()
@@ -136,21 +137,28 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   should "user should be able to create new meal" do
+    login()
+    
     provide_meal()
     
-    fill_in 'Dish', :with => "Gulasch"
-    fill_in 'Dish description', :with => "scharf und mit Knödel"
+    fill_in 'Title', :with => "Gulasch"
+    fill_in 'Description', :with => "scharf und mit Knödel"
     ##
-    fill_in 'Address', :with => "5020 Siegmund Hafner Gasse 10"
-    fill_in 'Date and Time', :from => "2011-04-15T20:00Z"
+    fill_in 'Country', :with => "Austria"
+    fill_in 'City', :with => "Imst"
+    fill_in 'Zip Code', :with => "6460"
+    fill_in 'Street', :with => "Putzenweg"
+    fill_in 'Street number', :with => "1a"
+    fill_in 'Time', :from => "2011-04-15T20:00Z"
     fill_in 'Deadline', :with => "2011-04-15T16:00Z"
     
-    click_on("check your location")
-    
     assert_difference("Meal.count") do
-      click_on("Submit")    
+      click_on("submit")    
     end
     assert page.has_content?('meal created successfully')
+    
+    logout()
+    
   end
   
   

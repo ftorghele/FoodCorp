@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	
+	$('.datepicker').datetime({
+		userLang:'de',
+		americanMode:false,
+	});
+	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
     $("ul.tabs li:first").addClass("active").show(); //Activate first tab
@@ -15,6 +21,32 @@ $(document).ready(function() {
         $(activeTab).fadeIn(); //Fade in the active ID content
         return false;
     });
+
+	$('.submit').click(function() {
+		var form = $(this).parent().attr('id');
+		$('#'+form + ' > :input').each(function() {
+			if ($(this).val() == "") {
+				return false;
+				alert($(this));
+			}
+		})
+
+	});
+
+    a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
+    b = [];
+    
+	$('form.new_meal > :input').blur(function() {
+
+          var adress = "";
+          if(jQuery.inArray($(this).attr('name'), a ) >=0) {
+              var pos = a.indexOf( $(this).attr('name') );
+              b[pos] = $(this).val();
+              console.log(b);
+              showCoordinates(b.join(" "));
+          }
+
+    })
     
 });
 
@@ -25,45 +57,6 @@ var map;
 var geocoder = null;
 var addressMarker;
 var markerPoint;
-
-
-jQuery(document).ready(function () {		
-	$('.submit').click(function() {
-		var form = $(this).parent().attr('id');
-		$('#'+form + ' > :input').each(function() {
-			if ($(this).val() == "") {
-				alert($(this).attr('name') + " not valid!")
-				return false;
-			}
-		})
-
-	});
-
-         a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
-         b = [];
-        $('form.new_meal > :input').blur(function() {
-
-          var adress = "";
-          if(jQuery.inArray($(this).attr('name'), a ) >=0) {
-              var pos = a.indexOf( $(this).attr('name') );
-              b[pos] = $(this).val();
-              console.log(b);
-              showCoordinates(b.join(" "));
-          }
-
-        })
-
-
-});
-
-
-jQuery(document).ready(function () {
-	
-	$('.datepicker').datepicker({
-		dateFormat: 'yy-mm-dd'
-	});
-	
-});
 
 function load() {
   if (!navigator.geolocation) {

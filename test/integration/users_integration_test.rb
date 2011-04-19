@@ -157,5 +157,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
       assert page.has_content?('scharf und mit Knödel')
       
       click_on('Gulasch scharf und mit Knödel')
+      
+      click_on('meal request')
   end
 end

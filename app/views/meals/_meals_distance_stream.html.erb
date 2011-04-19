@@ -4,6 +4,8 @@
 			<div class="meal">
 				<%= meal.title %> 
 				<%= meal.description %> 
+				<input type="hidden" title="lat" value="<%= meal.lat%>" />
+				<input type="hidden" title="lon" value="<%= meal.lon%>" />
 			</div>
 		<% end %>
 	<%end%>

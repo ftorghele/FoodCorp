@@ -2,7 +2,13 @@ class User < ActiveRecord::Base
   
   has_many :meal
 
-  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }
+  # Followers
+  has_many :fellowships
+  has_many :followers, :through => :fellowships
+  has_many :inverse_fellowships, :class_name => "Fellowship", :foreign_key => "follower_id"
+  has_many :inverse_followers, :through => :inverse_fellowships, :source => :user
+
+  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "50x50>" }
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and 

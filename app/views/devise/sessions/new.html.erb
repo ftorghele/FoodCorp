@@ -15,4 +15,6 @@
   <p><%= f.submit "Sign in" %></p>
 <% end %>
 
+  <p><%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), :id => "fb_sign_in" %></p>
+
 <%= render :partial => "devise/shared/links" %>

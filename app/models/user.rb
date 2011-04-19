@@ -14,14 +14,15 @@ class User < ActiveRecord::Base
                   :first_name, :last_name, :gender, :birthday, :fb_id, :avatar, :use_fb_avatar,
                   :country, :city, :zip_code, :street, :street_number, :phone_number
 
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
+  validates :gender, :presence => true
+
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token['extra']['user_hash']
     if user = User.find_by_email(data["email"])
       user.fb_id = data["id"]
-      user.first_name = data["first_name"] if user.first_name.blank?
-      user.last_name = data["last_name"] if user.last_name.blank?
-      user.gender = data["gender"] if user.gender.blank?
-      user.birthday = data["birthday"] if user.birthday.blank?
+      user.birthday = data["birthday"]
 
       if data["hometown"] # Insert hometown if available on
         hometown = data["hometown"]["name"].to_s.split(", ")

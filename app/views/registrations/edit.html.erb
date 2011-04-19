@@ -4,9 +4,9 @@
   <%= devise_error_messages! %>
 
   <ul class="tabs">
-      <li><a href="#tab1">Basic</a></li>
-      <li><a href="#tab2">Avatar</a></li>
-      <li><a href="#tab3">Address</a></li>
+      <li><a href="#tab1"><%=  I18n.t 'tab.general' %></a></li>
+      <li><a href="#tab2"><%=  I18n.t 'tab.avatar' %></a></li>
+      <li><a href="#tab3"><%=  I18n.t 'tab.address' %></a></li>
   </ul>
 
   <div class="tab_container">
@@ -21,10 +21,7 @@
         <%= f.text_field :last_name %></p>
 
         <p><%= f.label :gender %><br />
-        <%= f.select( :gender, {"male" => "male", "female" => "female"}, {:include_blank => "Select"}) %>
-
-        <p><%= f.label :birthday %><br />
-        <%= f.text_field :birthday, :class => "datepicker" %></p>
+        <%= f.select( :gender, {"male" => "male", "female" => "female"}, {:include_blank => "Select"}) %></p>
 
       </div>
       <div class="float_left space_left">
@@ -35,7 +32,7 @@
         <p><%= f.label :email %><br />
         <%= f.email_field :email %></p>
 
-        <p><%= f.label :password %><br />
+        <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
         <%= f.password_field :password, :value => ""%></p>
 
         <p><%= f.label :password_confirmation %><br />
@@ -47,11 +44,15 @@
     </div>
     <div id="tab2" class="tab_content">
       <div class="float_left">
-        <%= image_tag @user.avatar.url(:medium), :id => "profile_avatar" %>
+        <%= image_tag get_avatar_url(@user), :id => "profile_avatar" %>
       </div>
       <div class="float_left space_left">
-        <p><%= f.label :avatar %><br />
-        <%= f.file_field :avatar %></p>
+        <% if current_user.fb_user %>
+          <p><%= f.label :use_fb_avatar %><br />
+          <%= f.check_box :use_fb_avatar %></p>
+        <% end %>
+          <p><%= f.label :avatar %><br />
+          <%= f.file_field :avatar %></p>
       </div>
       <div class="clr"></div>
     </div>

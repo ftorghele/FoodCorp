@@ -8,13 +8,18 @@ en:
         first_name: "First Name:"
         last_name: "Last Name:"
         gender: "Gender:"
-        birthday: "Your Birthday:"
         email: "E-mail address:"
-        password: "New Password: (leave blank if you don't want to change it)"
+        password: "Password:"
         password_confirmation: "Password confirmation:"
+        use_fb_avatar: Use your Facebook Profile Picture?
         avatar: "Upload a new Avatar:"
         city: "Zip code and city:"
         street: "Street and Street Number:"
 
   application:
     title: "FoodCorp"
+
+  tab:
+    general: "Gerneral"
+    avatar: "Avatar"
+    address: "Address"

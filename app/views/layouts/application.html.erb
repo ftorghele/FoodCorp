@@ -3,11 +3,19 @@
 <head>
   <title><%= I18n.t 'application.title'  %> </title>
   <%= stylesheet_link_tag :all %>
-  <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAbJBurE6AcWFl0i1KGIO4ThTJQa0g3IQ9GZqIMmInSLzwtGDKaBRPpegQ19f4lsPNVjytzuDi-zTaSQ"type="text/javascript"></script>
+  
+ <script src="https://www.google.com/jsapi?key=ABQIAAAACgNO_c14SUkJV3aDiCr7MxTJQa0g3IQ9GZqIMmInSLzwtGDKaBRsQZUeKpinZvDnMZOJodz6K_l-nA" type="text/javascript"></script>
+<script language="Javascript" type="text/javascript">
+    //<![CDATA[
+
+    google.load("maps", "true");
+
+		//]]>
+</script>
   <%= javascript_include_tag :all %>
   <%= csrf_meta_tag %>
 </head>
-<body onload="load()">
+<body>
 	
 <div id="header" >
   <%= render 'layouts/registration' %>

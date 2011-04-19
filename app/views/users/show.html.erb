@@ -3,5 +3,5 @@
 <div id="calendar">CALENDAR</div>
 <% end %>
 
-<%= image_tag @user.avatar.url(:thumb), :id => "profile_avatar" %>
+<%= image_tag get_avatar_url(@user), :id => "profile_avatar" %>
 <%= link_to( "provide meal", new_meal_path) %>

@@ -14,9 +14,24 @@ class User < ActiveRecord::Base
                   :first_name, :last_name, :gender, :birthday, :fb_id, :avatar, :use_fb_avatar,
                   :country, :city, :zip_code, :street, :street_number, :phone_number
 
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
+  validates :gender, :presence => true
+
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token['extra']['user_hash']
     if user = User.find_by_email(data["email"])
+      user.fb_id = data["id"]
+      user.birthday = data["birthday"]
+
+      if data["hometown"] # Insert hometown if available on
+        hometown = data["hometown"]["name"].to_s.split(", ")
+        user.country = hometown[2] if user.country.blank?
+        user.city = hometown[0] if user.city.blank?
+      end
+      
+      user.confirm!
+      user.save
       user
     else # Create an user with a stub password and some data from fb.
       user = User.new(:email => data["email"],
@@ -43,5 +58,11 @@ class User < ActiveRecord::Base
 
   def password_required?
     new_record?
+  end
+
+  def fb_user
+    if fb_id
+      true
+    end
   end
 end

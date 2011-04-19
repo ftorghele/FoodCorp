@@ -12,4 +12,9 @@ class RegistrationsController < Devise::RegistrationsController
       render_with_scope :edit
     end
   end
+
+  private
+  def after_update_path_for(resource)
+    edit_user_registration_path
+  end
 end

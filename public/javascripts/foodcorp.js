@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
-    b = [];
+        b = [];
 	
 	// MAPS
 	
@@ -41,17 +41,14 @@ $(document).ready(function() {
 	// Calendar & Time for Meals
 	$('.datepicker').datetime({
 		userLang:'de',
-		americanMode:false,
+		americanMode:false
 	});
-	
-	
 	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
     $("ul.tabs li:first").addClass("active").show(); //Activate first tab
     $(".tab_content:first").show(); //Show first tab content
 
-    //On Click Event
     $("ul.tabs li").click(function() {
 
         $("ul.tabs li").removeClass("active"); //Remove any "active" class
@@ -62,7 +59,6 @@ $(document).ready(function() {
         $(activeTab).fadeIn(); //Fade in the active ID content
         return false;
     });
-
 	// Validate inputs for new meal *FIX*
 	$('.submit').click(function() {
 		var form = $(this).parent().attr('id');
@@ -72,19 +68,46 @@ $(document).ready(function() {
 				return false;
 			}
 		})
+		
+    // DISABLE AVATAR UPLOAD IF FB AVATAR IS ENABLED
+    if ($('#user_use_fb_avatar').is(':checked')) {
+        $('#user_avatar').attr('disabled', true);
+    }
+    $("#user_use_fb_avatar").click(function() {
+        if ($('#user_use_fb_avatar').is(':checked')) {
+            $('#user_avatar').attr('disabled', true);
+            $('#user_avatar').attr('value', '');
+ 		} else {
+            $('#user_avatar').attr('disabled', false)
+        }
+    });
 
-	});
+    // SETUP DATEPICKER
+    $('.datepicker').datetime({
+            userLang:'de',
+            americanMode:false
+    });
+
+    $('.submit').click(function() {
+            var form = $(this).parent().attr('id');
+            $('#'+form + ' > :input').each(function() {
+                    if ($(this).val() == "") {
+                            return false;
+                            alert($(this));
+                    }
+            })
+
+    });
     
 	// update Map when changing inputs
 	$('form.new_meal > :input').blur(function() {
-
-          var adress = "";
-          if(jQuery.inArray($(this).attr('name'), a ) >=0) {
-              var pos = a.indexOf( $(this).attr('name') );
-              b[pos] = $(this).val();
-              console.log(b);
-              showCoordinates(b.join(" "));
-          }
+      var adress = "";
+      if(jQuery.inArray($(this).attr('name'), a ) >=0) {
+          var pos = a.indexOf( $(this).attr('name') );
+          b[pos] = $(this).val();
+          console.log(b);
+          showCoordinates(b.join(" "));
+      }
 
     })
     

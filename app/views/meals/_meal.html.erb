@@ -10,3 +10,10 @@
 <%= @meal.deadline %>
 <%= @meal.lat %>
 <%= @meal.lon %>
+
+
+<% form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
+	<input type="hidden" value="<%= @meal.id %>" name="meal_id" />
+	<input type="hidden" value="<%= current_user %>" name="user_id" />
+	<input type="submit" value="send meal request" />
+<%end%>

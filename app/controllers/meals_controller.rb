@@ -21,7 +21,6 @@ class MealsController < ApplicationController
     else
       redirect_to new_meal_path,  :alert => "not valid"
     end
-
   end
   
   def edit
@@ -31,4 +30,9 @@ class MealsController < ApplicationController
   def update
     
   end
+  
+  def destroy
+    
+  end
+  
 end

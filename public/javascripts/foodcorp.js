@@ -1,35 +1,40 @@
 $(document).ready(function() {
 	
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
-    b = [];
 	
 	// MAPS
 	marker = [];
-	loc = [];
+	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
 	
-	// Validate meal
-	$('input').each(function() {
+	// get default User inputs
+	$('form.new_meal > :input').each(function() {
 		var pos1 = a.indexOf( $(this).attr('name') );
-		console.log(pos1);
 		if (pos1 >= 0) {
-			loc[pos1] = $(this).val();
+			// wenn keine Daten vorhanden sind
+			if($(this).val() != "") loc[pos1] = $(this).val();
 		}
-	});
+	});	
 	
-	// Create new geocoding object
-	geocoder = new GClientGeocoder();
-	
-	// Retrieve location information, pass it to addToMap()
-	geocoder.getLocations(loc.join(), addToMap);
+	// update Map when changing inputs
+	$('form.new_meal > :input').blur(function() {
+      var adress = "";
+      if(jQuery.inArray($(this).attr('name'), a ) >=0) {
+          var pos = a.indexOf( $(this).attr('name') );
+          loc[pos] = $(this).val();
+		  geocoder.getLocations(loc.join(', '), addToMap);
+      }
+    });
 	
 	function addToMap(result) {
 		marker[0] = result.Placemark[0].Point.coordinates[1];
 		marker[1] = result.Placemark[0].Point.coordinates[0];
-		(loc.indexOf( $('#meal_street').attr('value') ))? loc = loc : loc = b;
-		drawMap(loc, marker)
+		$('#meal_lat').val(marker[0]);
+		$('#meal_lon').val(marker[1]);
+		drawMap(loc, marker);
 	}
 	
 	function drawMap(env, marker) {
+		console.log(env)
 		$('#map').googleMaps({
 			geocode: env.join(', '),
 			markers: {
@@ -40,7 +45,11 @@ $(document).ready(function() {
 		});
 	}
 	
+	// Create new geocoding object
+	geocoder = new GClientGeocoder();
 	
+	// Retrieve location information, pass it to addToMap()
+	geocoder.getLocations(loc.join(), addToMap);
 	
 	// Calendar & Time for Meals
 	$('.datepicker').datetime({
@@ -104,21 +113,5 @@ $(document).ready(function() {
             })
 
     });
-    
-	// update Map when changing inputs
-	$('form.new_meal > :input').blur(function() {
-      var adress = "";
-      if(jQuery.inArray($(this).attr('name'), a ) >=0) {
-          var pos = a.indexOf( $(this).attr('name') );
-          b[pos] = $(this).val();
-		  geocoder.getLocations(b.join(), calc);
-      }
-    });
-
-	function calc(result) {
-		marker[0] = result.Placemark[0].Point.coordinates[1];
-		marker[1] = result.Placemark[0].Point.coordinates[0];
-		drawMap(b, marker)
-	}
     
 });

@@ -7,6 +7,13 @@
 */
 
 /* ---- BASIC BEG ----- */
+* {
+	margin:0px;
+	padding:0px;
+	text-decoration:none;
+	font-size:12px;
+}
+
 .float_right {
     float: right;
 }

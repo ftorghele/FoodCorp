@@ -2,8 +2,11 @@ $(document).ready(function() {
 	
 	// MAPS
 	marker = [];
-	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
+	markers = [];
+	
 	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
+	
+	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	
 	// get default User inputs
 	$('form.new_meal > :input').each(function() {
@@ -23,6 +26,19 @@ $(document).ready(function() {
 		  geocoder.getLocations(loc.join(', '), addToMap);
       }
     });
+
+	function get_markers() {
+		$('div.meal').each(function() {
+			$(this).children('input').each(function() {
+				if($(this).attr('title') == 'lat') lat = $(this).val();
+				else lon = $(this).val()
+			})
+			markers.push({'latitude': lat, 'longitude' : lon });
+		})
+		
+		return markers;
+		
+	}
 	
 	function addToMap(result) {
 		console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
@@ -39,7 +55,7 @@ $(document).ready(function() {
 	}
 	
 	// determine if the handset has client side geo location capabilities
-	if (geo_position_js.init()) {
+	/* if (geo_position_js.init()) {
 		geo_position_js.getCurrentPosition(geo_success, geo_error);
 	}
 	
@@ -50,17 +66,14 @@ $(document).ready(function() {
 	function geo_success(p) {
 		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
 		marker = [p.coords.latitude, p.coords.longitude];
-	}
+	} */
 		
 	function drawMap(env) {
+		get_markers();
 		console.log('using: LAT'+marker[0]+' LON'+marker[1]);
 		$('#map').googleMaps({
 			geocode: env.join(', '),
-			markers: {
-				latitude: marker[0],
-				longitude: marker[1],
-				draggable: true
-			}
+			markers: markers
 		});
 	}
 	
@@ -93,14 +106,16 @@ $(document).ready(function() {
     });
 
 	// Validate inputs for new meal *FIX*
-	$('.submit').click(function() {
-		var form = $(this).parent().attr('id');
-		$('#'+form + ' > :input').each(function() {
-			if ($(this).val() == "") {
-				alert('bla');
-				return false;
+	$('form.new_meal').submit(function() {
+		i = 0;
+		$(this).children('input').each(function() {
+			if($(this).val() == "") {
+				alert($(this).attr('id') + ' is not valid!');
+				i++;
 			}
 		})
+		if(i>0) return false;
+		else return true;
 	});
 		
     // DISABLE AVATAR UPLOAD IF FB AVATAR IS ENABLED
@@ -120,17 +135,6 @@ $(document).ready(function() {
     $('.datepicker').datetime({
             userLang:'de',
             americanMode:false
-    });
-
-    $('.submit').click(function() {
-            var form = $(this).parent().attr('id');
-            $('#'+form + ' > :input').each(function() {
-                    if ($(this).val() == "") {
-                            return false;
-                            alert($(this));
-                    }
-            })
-
     });
     
 });

@@ -1,7 +1,7 @@
 .bundle
 log/*.log
 tmp/**/*
-
+config/boot.rb
 config/database.yml
 config/**/*
 log/*.log

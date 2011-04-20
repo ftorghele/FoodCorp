@@ -7,9 +7,6 @@
   </p>
 </form>
 
-<%= raw Cartographer::Header.new.to_s %>
-<%= raw @map.to_html %>
 <div id="map" style="width: 450px; height: 300px"></div>
   
-<div id="map2" style="width: 450px; height: 300px"></div>
 <%= render 'meals_distance_stream' %>

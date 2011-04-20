@@ -19,8 +19,7 @@ class MealsController < ApplicationController
    @map.icons <<  @icon_org
    
    @marker1 = Cartographer::Gmarker.new(:name=> "org11", :marker_type => "Organization",
-             :position => [27.173006,78.042086],
-             :info_window_url => "/welcome/sample_ajax",
+             :position => [47.718729, 13.0932366],
              :icon => @icon_org)
              
    @map.markers << @marker1

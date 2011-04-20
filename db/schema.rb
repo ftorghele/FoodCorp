@@ -10,21 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
-ActiveRecord::Schema.define(:version => 20110419152953) do
-
-  create_table "meal_arrangements", :force => true do |t|
-    t.integer  "meal_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-ActiveRecord::Schema.define(:version => 20110419142401) do
+ActiveRecord::Schema.define(:version => 20110419183114) do
 
   create_table "fellowships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "follower_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meal_arrangements", :force => true do |t|
+    t.integer  "meal_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,6 +42,20 @@ ActiveRecord::Schema.define(:version => 20110419142401) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "messages", :force => true do |t|
+    t.string  "topic"
+    t.text    "body"
+    t.integer "received_messageable_id"
+    t.string  "received_messageable_type"
+    t.integer "sent_messageable_id"
+    t.string  "sent_messageable_type"
+    t.boolean "opened",                    :default => false
+    t.boolean "recipient_delete",          :default => false
+    t.boolean "sender_delete",             :default => false
+  end
+
+  add_index "messages", ["sent_messageable_id", "received_messageable_id"], :name => "acts_as_messageable_ids"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false

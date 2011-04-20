@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "50x50>" }
   
+  acts_as_messageable
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :lockable, :timeoutable and 
   devise :database_authenticatable, :registerable, :confirmable,

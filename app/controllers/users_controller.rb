@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]])
   end
 
   protected

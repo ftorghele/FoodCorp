@@ -1,0 +1,10 @@
+
+<%if current_user %>
+	<%if current_user.id == @meal.user_id %>
+	<%= render 'meal_form'%>
+	<%else%>
+	nix
+	<%end%>
+<%else%>
+nix
+<%end%>

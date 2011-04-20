@@ -103,4 +103,15 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	clear: both;
 }
 /* ---- HOME END ---- */
+
+/* ---- USER_PROFILE BEGIN ----*/
+
+#provided_meals{
+	background: #ff0000;
+	width: 200px;
+	height: 100px;
+}
+
+/* ---- USER_PROFILE END ----*/
+
  

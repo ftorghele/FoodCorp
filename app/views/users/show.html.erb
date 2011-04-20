@@ -6,6 +6,25 @@
 <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
 <%= link_to( "provide meal", new_meal_path) %>
 
+<div id="user_info">
+	<% @user.id %>	
+</div>
+
+
+<div id="provided_meals">
+	<% @meals.each do |meal|%>
+		<%= link_to edit_meal_path(meal.id) do %> 
+			<div class="meal">
+				<%= meal.title %> 
+				<%= meal.description %> 
+				<input type="hidden" title="lat" value="<%= meal.lat%>" />
+				<input type="hidden" title="lon" value="<%= meal.lon%>" />
+			</div>
+		<% end %>
+	<%end%>
+	
+</div>
+
 <% unless current_user == @user %>
   <% if is_following(current_user, @user) %>
     <p>

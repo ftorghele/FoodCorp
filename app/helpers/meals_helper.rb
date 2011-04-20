@@ -8,4 +8,10 @@ module MealsHelper
     end
   end
   
+  def user_name(args)
+    firstname = User.find(args[:id]).first_name
+    lastname = User.find(args[:id]).last_name
+    name = firstname + " " + lastname
+    return name
+  end
 end

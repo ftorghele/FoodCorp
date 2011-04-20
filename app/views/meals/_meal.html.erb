@@ -23,9 +23,14 @@
 			<input type="submit" value="delete meal request" />
 		<%end%>
 	<%end%>
+	
+	<!-- Userprofile -->
+	Meal provider: <%= link_to user_name(:id => @meal.user_id), user_path(@meal.user_id) %>
 <%else%>
 	<div id="">
 		<%= link_to "Sign in", user_path %>
 	</div>
 <%end%>
+
+
 

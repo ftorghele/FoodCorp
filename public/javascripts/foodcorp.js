@@ -3,9 +3,7 @@ $(document).ready(function() {
 	// MAPS
 	marker = [];
 	markers = [];
-	
 	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
-	
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	
 	// get default User inputs
@@ -27,13 +25,30 @@ $(document).ready(function() {
       }
     });
 
+	// Validate inputs for new meal *FIX*
+	$('form.new_meal').submit(function() {
+		i = 0;
+		$(this).children('input').each(function() {
+			if($(this).val() == "") {
+				alert($(this).attr('id') + ' is not valid!');
+				i++;
+			}
+		})
+		if(i>0) return false;
+		else return true;
+	});
+
 	function get_markers() {
 		$('div.meal').each(function() {
 			$(this).children('input').each(function() {
 				if($(this).attr('title') == 'lat') lat = $(this).val();
-				else lon = $(this).val()
+				else lon = $(this).val();
+				info = '#'+$(this).parent('div').attr('id');
 			})
-			markers.push({'latitude': lat, 'longitude' : lon });
+			markers.push({'latitude': lat, 
+						  'longitude': lon,
+						  'draggable': false, 
+							info: { layer: info } });
 		})
 		
 		return markers;
@@ -43,38 +58,24 @@ $(document).ready(function() {
 	function addToMap(result) {
 		console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
 		
-		if(!$.mobile) marker = [result.Placemark[0].Point.coordinates[1], result.Placemark[0].Point.coordinates[0]];
-		$('#meal_lat').val(marker[0]);
-		$('#meal_lon').val(marker[1]);
-		
-		/* TODO
-			Add meals to map from start screen
-		*/
-		
+		if(!$.mobile) marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
+								 'longitude': result.Placemark[0].Point.coordinates[0],
+								'draggable': true}];
+								
+		$('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
+		$('#meal_lon').val(result.Placemark[0].Point.coordinates[0]);
+			
 		drawMap(loc);
 	}
-	
-	// determine if the handset has client side geo location capabilities
-	/* if (geo_position_js.init()) {
-		geo_position_js.getCurrentPosition(geo_success, geo_error);
-	}
-	
-	function geo_error() {
-	 	console.log('geo.js not supported, switching to IP Localization');
-	}
-	
-	function geo_success(p) {
-		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
-		marker = [p.coords.latitude, p.coords.longitude];
-	} */
 		
 	function drawMap(env) {
 		get_markers();
-		console.log('using: LAT'+marker[0]+' LON'+marker[1]);
+		(markers.length > 1)? marker = markers : marker = marker;
 		$('#map').googleMaps({
 			geocode: env.join(', '),
-			markers: markers
+			markers: marker
 		});
+		
 	}
 	
 	// Create new geocoding object
@@ -88,6 +89,21 @@ $(document).ready(function() {
 		userLang:'de',
 		americanMode:false
 	});
+	
+	// SLOW!
+	// determine if the handset has client side geo location capabilities
+	/* if (geo_position_js.init()) {
+		geo_position_js.getCurrentPosition(geo_success, geo_error);
+	}
+	
+	function geo_error() {
+	 	console.log('geo.js not supported, switching to IP Localization');
+	}
+	
+	function geo_success(p) {
+		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
+		marker = [p.coords.latitude, p.coords.longitude];
+	} */
 	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
@@ -104,19 +120,6 @@ $(document).ready(function() {
         $(activeTab).fadeIn(); //Fade in the active ID content
         return false;
     });
-
-	// Validate inputs for new meal *FIX*
-	$('form.new_meal').submit(function() {
-		i = 0;
-		$(this).children('input').each(function() {
-			if($(this).val() == "") {
-				alert($(this).attr('id') + ' is not valid!');
-				i++;
-			}
-		})
-		if(i>0) return false;
-		else return true;
-	});
 		
     // DISABLE AVATAR UPLOAD IF FB AVATAR IS ENABLED
     if ($('#user_use_fb_avatar').is(':checked')) {
@@ -129,12 +132,6 @@ $(document).ready(function() {
  		} else {
             $('#user_avatar').attr('disabled', false)
         }
-    });
-
-    // SETUP DATEPICKER
-    $('.datepicker').datetime({
-            userLang:'de',
-            americanMode:false
     });
     
 });

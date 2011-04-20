@@ -158,6 +158,10 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
       
       click_on('Gulasch scharf und mit Knödel')
       
-      click_on('meal request')
+      click_on('send meal request')
+      assert page.has_content?('Meal arrangement was successfully created.')
+      assert page.has_css?('form', :count => 1)
+      click_on('delete meal request')
+      assert page.has_content?('Meal arrangement was successfully deleted.')
   end
 end

@@ -15,6 +15,8 @@ class MealsController < ApplicationController
   def create
     meal = Meal.new(params[:meal])
     meal.user_id = current_user.id
+    meal.time = meal.time.to_datetime().to_s(:number)
+    meal.deadline = meal.deadline.to_datetime().to_s(:number)
     
     if meal.save
       redirect_to meal_path(meal.id), :notice => "meal created successfully"
@@ -25,14 +27,14 @@ class MealsController < ApplicationController
   
   def edit
     @meal = Meal.find(params[:id])
-   
   end
   
   def update
-   if @meal.update_attributes(:description => params[:meal][:description])
-      redirect_to meal_path(meal.id), :notice => "meal updated successfully"
+      @meal = Meal.find(params[:id])
+   if @meal.update_attributes(params[:meal])
+      redirect_to meal_path(@meal.id), :notice => "meal updated successfully"
     else
-      redirect_to edit_meal_path(meal.id),  :alert => "not valid"
+      redirect_to edit_meal_path(@meal.id),  :alert => "not valid"
     end
 
   end

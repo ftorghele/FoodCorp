@@ -1,7 +1,7 @@
 <div id="meals_distance_stream">	
 	<% @meals.each do |meal|%>
 		<%= link_to(meal) do %> 
-			<div class="meal">
+			<div class="meal" id="meal_<%= meal.id %>">
 				<%= meal.title %> 
 				<%= meal.description %> 
 				<input type="hidden" title="lat" value="<%= meal.lat%>" />

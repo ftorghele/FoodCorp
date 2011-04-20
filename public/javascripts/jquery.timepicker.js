@@ -69,7 +69,7 @@ jQuery.fn.datetime = function() {
 						htmlins += '<h3 id="tpSelectedTime">';
 						htmlins += '	<span id="text_time"></span>';
 						htmlins += '	<span class="selHrs" >00</span>';
-						htmlins += '	<span class="delim" >:</span>';
+						htmlins += '	<span class="delim" >-</span>';
 						htmlins += '	<span class="selMins">00</span>';
 						htmlins += '	<span class="dayPeriod">am</span>';
 						htmlins += '</h3>';			
@@ -206,15 +206,15 @@ jQuery.fn.datetime = function() {
 					var time = ($(obj).val() || $(this).val()).split(" ");
 					
 					if (time.length < 2) {
-						time = ['00-00-00','00:00:00'];
+						time = ['00-00','00-00'];
 					}
 						
 					$('#pickerplug').data('lastdate',time[0]);	//lastdate = time[0];
 					$('#pickerplug').data('lasttime',time[1]);  //lasttime = time[1];					
-					time = time[1].split(":");					
+					time = time[1].split("-");					
 					
 					if (time.length < 2) {
-						time = ['00','00','00'];
+						time = ['00','00'];
 					}
 					
 					var hour	= time[0] || '00';
@@ -258,13 +258,13 @@ jQuery.fn.datetime = function() {
 	                    	
 	                    	$('#tpSelectedTime .selHrs').text(hours);
 	                    	
-	                    	time = fragment+':'+$('#tpSelectedTime .selMins').text();						
+	                    	time = fragment+'-'+$('#tpSelectedTime .selMins').text();						
 							break;
 						case 'minute':
 	                    	minutes = ((fragment < 10) ? '0' :'') + parseInt(fragment,10);
 	                    	$('#tpSelectedTime .selMins').text(minutes);
 	                   
-	                        time = $('#hourSlider').slider('option', 'value')+':'+minutes;  						
+	                        time = $('#hourSlider').slider('option', 'value')+'-'+minutes;  						
 							break;
 					}
 					return time;
@@ -274,14 +274,14 @@ jQuery.fn.datetime = function() {
 
 					switch (type) {
 						case 'time':
-							$('#pickerplug').data('lasttime',text+':00');						
+							$('#pickerplug').data('lasttime',text);						
 							break;	
 						default:
 							$('#pickerplug').data('lastdate',text);												
 					}
 					
 					$($('#pickerplug').data('inputfield')).val(
-								$('#pickerplug').data('lastdate')+' '+$('#pickerplug').data('lasttime')
+								$('#pickerplug').data('lastdate')+'T'+$('#pickerplug').data('lasttime')
 					);
 				}
 				

@@ -84,8 +84,8 @@ GEM
     multipart-post (1.1.0)
     mysql2 (0.2.6)
     mysql2 (0.2.6-x86-mingw32)
-    nokogiri (1.4.4)
-    nokogiri (1.4.4-x86-mingw32)
+    nokogiri (1.4.3.1)
+    nokogiri (1.4.3.1-x86-mingw32)
     oa-core (0.2.1)
       rack (~> 1.1)
     oa-oauth (0.2.1)
@@ -152,6 +152,7 @@ DEPENDENCIES
   machinist
   mocha
   mysql2
+  nokogiri (= 1.4.3.1)
   oa-oauth
   paperclip (~> 2.3)
   rails (= 3.0.5)

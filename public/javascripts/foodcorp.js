@@ -26,9 +26,15 @@ $(document).ready(function() {
 	
 	function addToMap(result) {
 		console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
-		//marker = [result.Placemark[0].Point.coordinates[1], result.Placemark[0].Point.coordinates[0]];
+		
+		if(!$.mobile) marker = [result.Placemark[0].Point.coordinates[1], result.Placemark[0].Point.coordinates[0]];
 		$('#meal_lat').val(marker[0]);
 		$('#meal_lon').val(marker[1]);
+		
+		/* TODO
+			Add meals to map from start screen
+		*/
+		
 		drawMap(loc);
 	}
 	
@@ -45,7 +51,7 @@ $(document).ready(function() {
 		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
 		marker = [p.coords.latitude, p.coords.longitude];
 	}
-	
+		
 	function drawMap(env) {
 		console.log('using: LAT'+marker[0]+' LON'+marker[1]);
 		$('#map').googleMaps({

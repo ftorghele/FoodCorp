@@ -15,7 +15,7 @@ group :development do
 end
 
 group :test do
-  gem 'devise'
+  gem 'nokogiri', '1.4.3.1'
   gem 'machinist'
   gem 'faker'
   gem 'shoulda'

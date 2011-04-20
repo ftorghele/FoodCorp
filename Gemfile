@@ -5,8 +5,10 @@ gem 'mysql2'
 gem 'jquery-rails'
 
 gem 'devise'
-gem "oa-oauth", :require => "omniauth/oauth"
-gem "paperclip", "~> 2.3"
+gem 'oa-oauth', :require => 'omniauth/oauth'
+
+gem 'paperclip', '~> 2.3'
+gem 'acts-as-messageable'
 
 group :development do
 

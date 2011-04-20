@@ -48,7 +48,13 @@ $(document).ready(function() {
 			markers.push({'latitude': lat, 
 						  'longitude': lon,
 						  'draggable': false, 
-							info: { layer: info } });
+							info: { layer: info },
+							icon: { 
+							                image: '@', 
+							                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+							                iconSize: '12, 20', 
+							                shadowSize: '22, 20' 
+							            } });
 		})
 		
 		return markers;
@@ -56,7 +62,7 @@ $(document).ready(function() {
 	}
 	
 	function addToMap(result) {
-		console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
+		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
 		
 		if(!$.mobile) marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
 								 'longitude': result.Placemark[0].Point.coordinates[0],

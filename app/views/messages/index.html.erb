@@ -7,7 +7,19 @@
 
 <div class="tab_container">
   <div id="Inbox" class="tab_content">
-
+    <ul>
+    <% current_user.received.each do |msg| %>
+      <li>
+        <% if msg.opened %>
+          <%= image_tag("mail_mark_read_icon.png") %>
+        <% else %>
+          <%= image_tag("mail_mark_unread_icon.png") %>
+        <% end %>
+        <%= link_to msg.topic, message_path(msg.id)  %>
+        <%= link_to get_username_by_id(msg.sent_messageable_id), user_path(msg.sent_messageable_id), :class => "float_right" %>
+      </li>
+    <% end %>
+    </ul>
   </div>
   <div id="Outbox" class="tab_content">
 

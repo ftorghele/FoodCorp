@@ -20,19 +20,25 @@ class MealArrangementsController < ApplicationController
   end
 
   def create
-    @meal_arrangement = MealArrangement.new(:user_id => current_user.id , :meal_id => params[:meal_id])
+    @meal_arrangement = MealArrangement.new(:user_id => current_user.id , :meal_id => params[:meal_id], :acceptance => false)
 
 
       if @meal_arrangement.save
         redirect_to meal_path(params[:meal_id]), :notice => 'Meal arrangement was successfully created.' 
       else
-        redirect_to meal_path(params[:meal_id]), :notice => "meal arrengement fails"
+        redirect_to meal_path(params[:meal_id]), :notice => "meal arrengement failed"
       end
   end
 
 
   def update
     @meal_arrangement = MealArrangement.find(params[:id])
+    
+    if @meal_arrangement.update_attributes(:acceptance => true)
+        redirect_to user_path(current_user.id), :notice => 'Meal arrangement accepted.' 
+      else
+        redirect_to user_path(current_user.id), :notice => "meal arrengement acceptance failed"
+    end
   end
 
 
@@ -41,7 +47,7 @@ class MealArrangementsController < ApplicationController
     if @meal[0].destroy
       redirect_to meal_path(params[:meal_id]), :notice => 'Meal arrangement was successfully deleted.' 
     else
-        redirect_to meal_path(params[:meal_id]), :notice => "meal arrengement delete fails"
+        redirect_to meal_path(params[:meal_id]), :notice => "meal arrengement delete failed"
     end
   end
 

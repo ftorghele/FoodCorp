@@ -4,6 +4,7 @@ class MealArrangement < ActiveRecord::Base
   
   validates :user_id, :presence => true
   validates :meal_id, :presence => true
+
   
   has_many :user
   has_one :meal

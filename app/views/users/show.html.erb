@@ -6,7 +6,12 @@
 <% end %>
 
 <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
-<%= link_to( "provide meal", new_meal_path) %>
+
+<% if current_user %>
+	<% if current_user.id == @user.id %>
+		<%= link_to( "provide meal", new_meal_path) %>
+	<%end%>
+<%end%>
 
 <div id="user_info">
 	<% @user.id %>	

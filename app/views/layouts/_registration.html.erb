@@ -1,12 +1,11 @@
 <% if user_signed_in? %>
-  <%= current_user.first_name%>
-  <%= current_user.last_name%>
-  <%= link_to('Logout', destroy_user_session_path) %>
-  <%= link_to('edit Profile', edit_user_registration_path) %>
-  <%= link_to('Profile', user_path(current_user.id) )%>
-  <%= link_to('personal Messages', messages_path)%>
-  <%= link_to('Home', root_path ) %>
-  <span>Hello <%= current_user.first_name %> <%= current_user.last_name %></span>
+	<ul id="navigation">
+		<li><%= link_to('Home', root_path ) %></li>
+  	<li><%= link_to('Profile', user_path(current_user.id) )%></li>
+  	<li><%= link_to('personal Messages', messages_path)%></li>
+  	<li><%= link_to('Logout', destroy_user_session_path) %></li>
+	</ul>
+	<div class="clear"></div>
 
 <% else %>
   <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), :id => "fb_sign_in" %>
@@ -21,3 +20,4 @@
     <%= link_to('Register', new_user_registration_path)  %>
   <% end %>
 <% end %>
+<div class="clear"></div>

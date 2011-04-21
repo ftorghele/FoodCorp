@@ -14,6 +14,15 @@
 	font-size:12px;
 }
 
+#navigation {
+	list-style:none;
+}
+
+#navigation > li {
+	float:left;
+	margin:0 10px 0 0;
+}
+
 #footer {
 	position:absolute;
 	bottom:15px;
@@ -25,9 +34,11 @@
 .float_left {
     float: left;
 }
+
 .clr {
     clear: both;
 }
+
 .space_left {
     margin-left: 15px;
 }
@@ -66,10 +77,11 @@ ul.tabs li a {
 	border: 1px solid #fff;
 	outline: none;
 }
-ul.tabs li a:hover {
+ul.tabs > li a:hover {
 	background: #ccc;
 }
-html ul.tabs li.active, html ul.tabs li.active a:hover  {
+
+ul.tabs li.active, html ul.tabs li.active a:hover  {
 	background: #fff;
 	border-bottom: 1px solid #fff;
 }
@@ -93,17 +105,6 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	float:left;
 }
 
-#meals_distance_stream{
-	margin-left: 25px;
-	float: left;
-	width: 400px;
-}
-
-.meal{
-	margin-top: 10px;
-	background-color: #00ff00;	
-}
-
 .clear{
 	clear: both;
 }
@@ -111,10 +112,26 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 
 /* ---- USER_PROFILE BEGIN ----*/
 
-#provided_meals{
-	background: #ff0000;
-	width: 200px;
-	height: 100px;
+#provided_meals, #meals_distance_stream {
+	background:#ccc;
+	width:200px;
+	position:absolute;
+	left:400px;
+}
+
+#provided_meals div.meal, #meals_distance_stream div.meal{
+	display:block;
+	padding:5px;
+	background:#ddd;
+}
+
+#provided_meals div.meal div.title, #meals_distance_stream div.meal div.title  {
+	font-weight:bold;
+	font-size:12px;
+}
+
+#provided_meals div.meal div.description, #meals_distance_stream div.meal div.description {
+	font-size:10px;
 }
 
 /* ---- USER_PROFILE END ----*/

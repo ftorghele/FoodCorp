@@ -4,6 +4,7 @@
   <%= link_to('Logout', destroy_user_session_path) %>
   <%= link_to('edit Profile', edit_user_registration_path) %>
   <%= link_to('Profile', user_path(current_user.id) )%>
+  <%= link_to('personal Messages', messages_path)%>
   <%= link_to('Home', root_path ) %>
   <span>Hello <%= current_user.first_name %> <%= current_user.last_name %></span>
 

@@ -23,3 +23,7 @@ en:
     general: "Gerneral"
     avatar: "Avatar"
     address: "Address"
+    inbox: "Inbox"
+    outbox: "Outbox"
+    trash: "Trash"
+    new: "New PM"

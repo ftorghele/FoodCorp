@@ -1,6 +1,6 @@
 class AddPointsAndInfoFieldToUsers < ActiveRecord::Migration
   def self.up
-    add_column :users, :points, :integer
+    add_column :users, :points, :integer, :default => 0
     add_column :users, :info_field, :text
   end
 

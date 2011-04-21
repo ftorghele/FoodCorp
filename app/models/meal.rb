@@ -12,5 +12,6 @@ class Meal < ActiveRecord::Base
   validates :slots, :presence => true
   
   belongs_to :user
+  has_many :meal_arrangements
   
 end

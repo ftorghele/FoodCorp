@@ -25,7 +25,7 @@ $(document).ready(function() {
       }
     });
 
-	// Validate inputs for new meal *FIX*
+	// Validate inputs for new meal
 	$('form.new_meal').submit(function() {
 		i = 0;
 		$(this).children('input').each(function() {
@@ -38,23 +38,24 @@ $(document).ready(function() {
 		else return true;
 	});
 
+	// Grabs Locations for Meals, output them as Markers on the map
 	function get_markers() {
 		$('div.meal').each(function() {
 			$(this).children('input').each(function() {
 				if($(this).attr('title') == 'lat') lat = $(this).val();
 				else lon = $(this).val();
-				info = '#'+$(this).parent('div').attr('id');
+				
+				// meal hidden, shown at markerclick
+				//info = '#'+$(this).parent('div').attr('id');
 			})
 			markers.push({'latitude': lat, 
 						  'longitude': lon,
-						  'draggable': false, 
-							info: { layer: info },
-							icon: { 
-							                image: '@', 
-							                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
-							                iconSize: '12, 20', 
-							                shadowSize: '22, 20' 
-							            } });
+						  'draggable': false,
+							icon: {  
+							      shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+							      shadowSize: '22, 20' 
+								} 
+						});
 		})
 		
 		return markers;
@@ -64,22 +65,56 @@ $(document).ready(function() {
 	function addToMap(result) {
 		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
 		
-		if(!$.mobile) marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
+		// SET LOCAL POSITION MARKER (BLUE)
+		if(!$.mobile && result.Placemark[0].Point.coordinates.length > 0) marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
 								 'longitude': result.Placemark[0].Point.coordinates[0],
-								'draggable': true}];
+								'draggable': true,
+								icon: { 
+								                image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+								                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+								                iconSize: '12, 20', 
+								                shadowSize: '22, 20' 
+								            }
+								}];
 								
 		$('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
 		$('#meal_lon').val(result.Placemark[0].Point.coordinates[0]);
 			
 		drawMap(loc);
 	}
+	
+	// SLOW!
+	/* determine if the handset has client side geo location capabilities
+	if (geo_position_js.init()) {
+		geo_position_js.getCurrentPosition(geo_success, geo_error);
+	}
+	
+	function geo_error() {
+	 	console.log('geo.js not supported, switching to IP Localization');
+	}
+	
+	function geo_success(p) {
+		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
+		marker = [{'latidtude' : p.coords.latitude,
+		 		   'longitude' : p.coords.longitude,
+				   'draggable' : true}];
+	} */
 		
 	function drawMap(env) {
+		console.log(marker, markers);
 		get_markers();
-		(markers.length > 1)? marker = markers : marker = marker;
+		if(markers.length >= 1) $.merge(marker, markers);
+		console.log
 		$('#map').googleMaps({
 			geocode: env.join(', '),
-			markers: marker
+			markers: marker,
+			controls: {
+			            mapType: [{ 
+			                remove: 'G_SATELLITE_MAP' 
+			            }, { 
+			                remove: 'G_NORMAL_MAP' 
+			            }]
+			        }
 		});
 		
 	}
@@ -95,21 +130,6 @@ $(document).ready(function() {
 		userLang:'de',
 		americanMode:false
 	});
-	
-	// SLOW!
-	// determine if the handset has client side geo location capabilities
-	/* if (geo_position_js.init()) {
-		geo_position_js.getCurrentPosition(geo_success, geo_error);
-	}
-	
-	function geo_error() {
-	 	console.log('geo.js not supported, switching to IP Localization');
-	}
-	
-	function geo_success(p) {
-		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
-		marker = [p.coords.latitude, p.coords.longitude];
-	} */
 	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
@@ -141,3 +161,11 @@ $(document).ready(function() {
     });
     
 });
+
+function panTo(lat, lon) {
+	point = GLatLng.fromUrlValue(lat+', '+lon);
+	//newLoc = $.googleMaps.gMap.fromLatLngToContainerPixel(new GLatLng(lat, lon));
+	//$.googleMaps.gMap.panBy(new GSize( newLoc.x, newLoc.y ));
+	//currentPoint = $.googleMaps.gMap.getCenter();
+	$.googleMaps.gMap.setCenter(point);
+}

@@ -1,13 +1,13 @@
 <div id="meals_distance_stream">	
 	<% @meals.each do |meal|%>
-		<%= link_to(meal) do %> 
+		<a href="#" onclick="panTo(<%= meal.lat%>, <%= meal.lon%>)">
 			<div class="meal" id="meal_<%= meal.id %>">
 				<%= meal.title %> 
 				<%= meal.description %> 
 				<input type="hidden" title="lat" value="<%= meal.lat%>" />
 				<input type="hidden" title="lon" value="<%= meal.lon%>" />
 			</div>
-		<% end %>
+		</a>
 	<%end%>
 </div>
 <div class="clear"></div>

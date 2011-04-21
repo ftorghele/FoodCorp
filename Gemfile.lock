@@ -46,6 +46,7 @@ GEM
     celerity (0.8.8)
     childprocess (0.1.8)
       ffi (~> 1.0.6)
+    chronic (0.3.0)
     configuration (1.2.0)
     culerity (0.2.15)
     devise (1.2.1)
@@ -146,6 +147,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-messageable
   capybara
+  chronic
   devise
   faker
   jquery-rails

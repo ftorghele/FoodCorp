@@ -1,5 +1,11 @@
 class MealsController < ApplicationController
   
+  require 'date'
+  require 'time'
+  
+  helper MealsHelper
+  helper_method :convert
+  
   def index
    @meals = Meal.find(:all)
   end
@@ -13,8 +19,13 @@ class MealsController < ApplicationController
   end
 
   def create
+    
     meal = Meal.new(params[:meal])
     meal.user_id = current_user.id
+    #meal.time.to_datetime().to_i
+    Date.to_date(meal.time)
+    #meal.time = meal.time.to_time().to_i
+    #meal.deadline = meal.deadline.to_time().to_i
     
     if meal.save
       redirect_to meal_path(meal.id), :notice => "meal created successfully"

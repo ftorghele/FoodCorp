@@ -1,8 +1,9 @@
 
-<h1 id="profile_name"> <%= @user.first_name %> <%= @user.last_name %></h1>
+<h1 id="profile_name"><%= @user.first_name %> <%= @user.last_name %></h1>
 
 <% if user_signed_in? %>
 <div id="calendar">CALENDAR</div>
+<%= link_to('edit Profile', edit_user_registration_path) %>
 <% end %>
 
 <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
@@ -23,8 +24,8 @@
 		<%unless current_user %>
 				<%= link_to meal_path(meal.id) do %> 
 					<div class="meal">
-						<%= meal.title %> 
-						<%= meal.description %> 
+						<div class="title"><%= meal.title %></div>
+						<div class="description"><%= meal.description %></div>
 						<input type="hidden" title="lat" value="<%= meal.lat%>" />
 						<input type="hidden" title="lon" value="<%= meal.lon%>" />
 					</div>
@@ -33,8 +34,8 @@
 			<%if current_user.id == meal.user_id %>
 				<%= link_to edit_meal_path(meal.id) do %> 
 					<div class="meal">
-						<%= meal.title %> 
-						<%= meal.description %> 
+						<div class="title"><%= meal.title %></div>
+						<div class="description"><%= meal.description %></div>
 						<input type="hidden" title="lat" value="<%= meal.lat%>" />
 						<input type="hidden" title="lon" value="<%= meal.lon%>" />
 					</div>
@@ -42,8 +43,8 @@
 			<%else%>
 				<%= link_to meal_path(meal.id) do %> 
 					<div class="meal">
-						<%= meal.title %> 
-						<%= meal.description %> 
+						<div class="title"><%= meal.title %></div>
+						<div class="description"><%= meal.description %></div>
 						<input type="hidden" title="lat" value="<%= meal.lat%>" />
 						<input type="hidden" title="lon" value="<%= meal.lon%>" />
 					</div>
@@ -51,7 +52,6 @@
 			<% end %>
 		<%end%>
 	<%end%>
-	
 </div>
 
 <% unless current_user == @user %>

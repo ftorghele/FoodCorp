@@ -18,9 +18,9 @@
 			<input type="submit" value="send meal request" />
 		<%end%>
 	<%else%>
-		<%= form_tag({:controller => "meal_arrangements", :action => "destroy"}, :method => "delete") do %>
+<!-- maybe a unnecessary feature?		<%= form_tag({:controller => "meal_arrangements", :action => "destroy"}, :method => "delete") do %>
 			<input type="hidden" value="<%= @meal.id %>" name="meal_id" />
-			<input type="submit" value="delete meal request" />
+			<input type="submit" value="delete meal request" /> -->
 		<%end%>
 	<%end%>
 	

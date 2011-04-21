@@ -1,6 +1,6 @@
 class MealArrangement < ActiveRecord::Base
   
-  attr_accessible :meal_id, :user_id
+  attr_accessible :meal_id, :user_id, :acceptance
   
   validates :user_id, :presence => true
   validates :meal_id, :presence => true

@@ -34,20 +34,29 @@ class MealArrangementsController < ApplicationController
   def update
     @meal_arrangement = MealArrangement.find(params[:id])
     
-    if @meal_arrangement.update_attributes(:acceptance => true)
-        redirect_to user_path(current_user.id), :notice => 'Meal arrangement accepted.' 
-      else
-        redirect_to user_path(current_user.id), :notice => "meal arrengement acceptance failed"
-    end
+    #if current_user.id == @meal_arrangement.meal.user_id
+      if @meal_arrangement.update_attributes(:acceptance => true)
+          redirect_to user_path(current_user.id), :notice => 'Meal arrangement accepted.' 
+        else
+          redirect_to user_path(current_user.id), :notice => "meal arrengement acceptance failed"
+      end
+   # else
+    #  redirect_to root_path, :notice=> "no rights for this action"
+    #end
   end
 
 
   def destroy
-    @meal = MealArrangement.find(:all, :conditions => { :user_id => current_user.id, :meal_id => params[:meal_id]}) 
-    if @meal[0].destroy
-      redirect_to meal_path(params[:meal_id]), :notice => 'Meal arrangement was successfully deleted.' 
+    @meal_arrangement = MealArrangement.find(params[:id])
+    
+    if current_user.id == @meal_arrangement.meal.user_id
+      if @meal_arrangement.destroy
+        redirect_to user_path(current_user.id), :notice => 'Meal arrangement was successfully deleted.' 
+      else
+          redirect_to user_path(current_user.id), :notice => "meal arrengement delete failed"
+      end
     else
-        redirect_to meal_path(params[:meal_id]), :notice => "meal arrengement delete failed"
+      redirect_to root_path, :notice => "no rights for this action"
     end
   end
 

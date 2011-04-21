@@ -7,7 +7,7 @@ $(document).ready(function() {
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	
 	// get default User inputs
-	$('form.new_meal > :input').each(function() {
+	$('form.new_meal > :input, form.edit_meal > :input').each(function() {
 		var pos1 = a.indexOf( $(this).attr('name') );
 		if (pos1 >= 0) {
 			// wenn keine Daten vorhanden sind
@@ -16,8 +16,7 @@ $(document).ready(function() {
 	});	
 	
 	// update Map when changing inputs
-	$('form.new_meal > :input').blur(function() {
-      var adress = "";
+	$('form.new_meal > :input, form.edit_meal > :input').blur(function() {
       if(jQuery.inArray($(this).attr('name'), a ) >=0) {
           var pos = a.indexOf( $(this).attr('name') );
           loc[pos] = $(this).val();
@@ -26,7 +25,7 @@ $(document).ready(function() {
     });
 
 	// Validate inputs for new meal
-	$('form.new_meal').submit(function() {
+	$('form.new_meal, form.edit_meal').submit(function() {
 		i = 0;
 		$(this).children('input').each(function() {
 			if($(this).val() == "") {
@@ -67,6 +66,7 @@ $(document).ready(function() {
 		
 		// SET LOCAL POSITION MARKER (BLUE)
 		console.log(result.Placemark);
+		
 		if(!$.mobile && typeof(result.Placemark) != 'undefined') marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
 								 'longitude': result.Placemark[0].Point.coordinates[0],
 								'draggable': true,

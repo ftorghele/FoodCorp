@@ -66,7 +66,8 @@ $(document).ready(function() {
 		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
 		
 		// SET LOCAL POSITION MARKER (BLUE)
-		if(!$.mobile && result.Placemark[0].Point.coordinates.length > 0) marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
+		console.log(result.Placemark);
+		if(!$.mobile && typeof(result.Placemark) != 'undefined') marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
 								 'longitude': result.Placemark[0].Point.coordinates[0],
 								'draggable': true,
 								icon: { 

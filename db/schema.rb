@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20110421092913) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.boolean  "use_fb_avatar"
-    t.integer  "points"
+    t.integer  "points",                              :default => 0
     t.text     "info_field"
   end
 

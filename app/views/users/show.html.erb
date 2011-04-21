@@ -1,4 +1,6 @@
-<h1 id="profile_name">Hello <%= @user.first_name %> <%= @user.last_name %></h1>
+
+<h1 id="profile_name"> <%= @user.first_name %> <%= @user.last_name %></h1>
+
 <% if user_signed_in? %>
 <div id="calendar">CALENDAR</div>
 <% end %>
@@ -13,14 +15,36 @@
 
 <div id="provided_meals">
 	<% @meals.each do |meal|%>
-		<%= link_to edit_meal_path(meal.id) do %> 
-			<div class="meal">
-				<%= meal.title %> 
-				<%= meal.description %> 
-				<input type="hidden" title="lat" value="<%= meal.lat%>" />
-				<input type="hidden" title="lon" value="<%= meal.lon%>" />
-			</div>
-		<% end %>
+		<%unless current_user %>
+				<%= link_to meal_path(meal.id) do %> 
+					<div class="meal">
+						<%= meal.title %> 
+						<%= meal.description %> 
+						<input type="hidden" title="lat" value="<%= meal.lat%>" />
+						<input type="hidden" title="lon" value="<%= meal.lon%>" />
+					</div>
+				<% end %>
+		<%else%>
+			<%if current_user.id == meal.user_id %>
+				<%= link_to edit_meal_path(meal.id) do %> 
+					<div class="meal">
+						<%= meal.title %> 
+						<%= meal.description %> 
+						<input type="hidden" title="lat" value="<%= meal.lat%>" />
+						<input type="hidden" title="lon" value="<%= meal.lon%>" />
+					</div>
+				<% end %>
+			<%else%>
+				<%= link_to meal_path(meal.id) do %> 
+					<div class="meal">
+						<%= meal.title %> 
+						<%= meal.description %> 
+						<input type="hidden" title="lat" value="<%= meal.lat%>" />
+						<input type="hidden" title="lon" value="<%= meal.lon%>" />
+					</div>
+				<% end %>
+			<% end %>
+		<%end%>
 	<%end%>
 	
 </div>
@@ -32,10 +56,14 @@
         get_following(:user => @user), :method => :delete, :id => "remove_followed" %>
     </p>
   <% else %>
-    <p>
-      <%= link_to image_tag("follow.png", :border=>0),
-        fellowships_path(:follower_id => @user), :method => :post %>
-    </p>
+  	<%if current_user %>
+	    <p>
+	      <%= link_to image_tag("follow.png", :border=>0),
+	        fellowships_path(:follower_id => @user), :method => :post %>
+	    </p>
+	<%else%>
+	
+	<%end%>
   <% end %>
 <% end %>
     

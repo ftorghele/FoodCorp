@@ -8,6 +8,9 @@ class UsersController < ApplicationController
 
   def show
     @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]])
+    
+    @meal =  MealArrangement.find(:all, :conditions => ["meal_id = ?", @meals.first ])
+
   end
 
   protected

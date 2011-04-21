@@ -6,12 +6,14 @@
 <div class="tab_container">
   <div id="New" class="tab_content">
     <%= form_tag(messages_path) do %>
-    <p><%= label_tag :receiver %></p>
-      <p><%= text_field_tag :receiver %></p>
+      <p><%= label_tag :receiver %></p>
+      <p><%= @receiver.first_name %> <%= @receiver.last_name %></p><br/>
       <p><%= label_tag :topic %></p>
       <p><%= text_field_tag :topic %></p>
       <p><%= label_tag :body %></p>
-      <p><%= text_area_tag :body %></p>
+      <p><%= text_area_tag :body, nil, :rows => 10, :cols => 40 %></p>
+
+      <%= hidden_field_tag(:receiver, @receiver.id) %>
 
       <%= submit_tag 'submit', :class => "submit" %>
     <% end %>

@@ -1,9 +1,10 @@
-
 <h1 id="profile_name"><%= @user.first_name %> <%= @user.last_name %></h1>
 
 <% if user_signed_in? %>
+
 <div id="calendar">CALENDAR</div>
 <%= link_to('edit Profile', edit_user_registration_path) %>
+
 <% end %>
 
 <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
@@ -15,9 +16,12 @@
 <%end%>
 
 <div id="user_info">
-	<% @user.id %>	
+	<% @user.info_field %>	
 </div>
 
+<div id="meal_arrangement_requests">
+
+</div>
 
 <div id="provided_meals">
 	<% @meals.each do |meal|%>
@@ -94,3 +98,5 @@
   <% end %>
   <div class="clr"></div>
 </div>
+
+<%= link_to "Send PM", new_message_path(:receiver => @user.id) %>

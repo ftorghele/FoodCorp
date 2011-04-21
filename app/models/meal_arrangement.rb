@@ -10,5 +10,6 @@ class MealArrangement < ActiveRecord::Base
   has_one :meal
 
   belongs_to :user
+  belongs_to :meal
   
 end

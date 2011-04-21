@@ -5,8 +5,9 @@
 
   <ul class="tabs">
       <li><a href="#tab1"><%=  I18n.t 'tab.general' %></a></li>
-      <li><a href="#tab2"><%=  I18n.t 'tab.avatar' %></a></li>
-      <li><a href="#tab3"><%=  I18n.t 'tab.address' %></a></li>
+      <li><a href="#tab2"><%=  I18n.t 'tab.info' %></a></li>
+      <li><a href="#tab3"><%=  I18n.t 'tab.avatar' %></a></li>
+      <li><a href="#tab4"><%=  I18n.t 'tab.address' %></a></li>
   </ul>
 
   <div class="tab_container">
@@ -43,6 +44,10 @@
 
     </div>
     <div id="tab2" class="tab_content">
+      <p><%= f.label :info_field %><br />
+      <%= f.text_area :info_field, :rows => 8 %></p>
+    </div>
+    <div id="tab3" class="tab_content">
       <div class="float_left">
         <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
       </div>
@@ -56,7 +61,7 @@
       </div>
       <div class="clr"></div>
     </div>
-    <div id="tab3" class="tab_content">
+    <div id="tab4" class="tab_content">
       <p><%= f.label :country %><br />
       <%= f.text_field :country %></p>
 
@@ -74,9 +79,5 @@
 
   <p><%= f.submit "Update" %></p>
 <% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete %>.</p>
 
 <%= link_to "Back", :back %>

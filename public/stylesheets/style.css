@@ -112,6 +112,21 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 
 /* ---- USER_PROFILE BEGIN ----*/
 
+.delete{
+	background: #ff0000;
+}
+
+.accept{
+	background: #00ff00;
+}
+
+#meal_arrangement_requests{
+	background:#ccc;
+	width:200px;
+	position:absolute;
+	left:200px;
+}
+
 #provided_meals, #meals_distance_stream {
 	background:#ccc;
 	width:200px;

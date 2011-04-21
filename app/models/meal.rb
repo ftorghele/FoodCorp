@@ -9,7 +9,8 @@ class Meal < ActiveRecord::Base
   validates :deadline, :presence => true
   validates :lon, :presence => true
   validates :lat, :presence => true
+  validates :slots, :presence => true
   
-  belongs_to :user, :dependent => :destroy
+  belongs_to :user
   
 end

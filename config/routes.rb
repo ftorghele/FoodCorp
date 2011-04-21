@@ -7,6 +7,7 @@ FoodCorp::Application.routes.draw do
   resources :users
   resources :fellowships
   resources :meals
+  resources :messages
 
   controller :pages do
      match 'about' => :about

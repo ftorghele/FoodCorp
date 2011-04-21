@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110419183114) do
+ActiveRecord::Schema.define(:version => 20110421092913) do
 
   create_table "fellowships", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20110419183114) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "acceptance"
   end
 
   create_table "meals", :force => true do |t|
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20110419183114) do
     t.string   "street_number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "slots"
   end
 
   create_table "messages", :force => true do |t|
@@ -88,6 +90,8 @@ ActiveRecord::Schema.define(:version => 20110419183114) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.boolean  "use_fb_avatar"
+    t.integer  "points"
+    t.text     "info_field"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

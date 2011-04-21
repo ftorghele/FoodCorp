@@ -133,12 +133,18 @@ $(document).ready(function() {
 	});
 	
     // TAB HANDLING
-    $(".tab_content").hide(); //Hide all content
-    $("ul.tabs li:first").addClass("active").show(); //Activate first tab
-    $(".tab_content:first").show(); //Show first tab content
+    $('.tab_content').hide();
+    if(location.hash != '') {
+        var target = location.hash.split('#')[1]
+        $(location.hash).show();
+        $('ul.tabs li:has(a[rel='+target+'])').addClass('active').show(); // NOT WORING
+    } else {
+        $("ul.tabs li:first").addClass("active").show();
+	$(".tab_content:first").show();
+    }
 
-    $("ul.tabs li").click(function() {
-
+    //On Click Event
+    $('ul.tabs li').click(function() {
         $("ul.tabs li").removeClass("active"); //Remove any "active" class
         $(this).addClass("active"); //Add "active" class to selected tab
         $(".tab_content").hide(); //Hide all tab content
@@ -147,6 +153,7 @@ $(document).ready(function() {
         $(activeTab).fadeIn(); //Fade in the active ID content
         return false;
     });
+
 		
     // DISABLE AVATAR UPLOAD IF FB AVATAR IS ENABLED
     if ($('#user_use_fb_avatar').is(':checked')) {
@@ -156,7 +163,7 @@ $(document).ready(function() {
         if ($('#user_use_fb_avatar').is(':checked')) {
             $('#user_avatar').attr('disabled', true);
             $('#user_avatar').attr('value', '');
- 		} else {
+        } else {
             $('#user_avatar').attr('disabled', false)
         }
     });

@@ -2,8 +2,8 @@
 	<% @meals.each do |meal|%>
 		<a href="#" onclick="panTo(<%= meal.lat%>, <%= meal.lon%>)">
 			<div class="meal" id="meal_<%= meal.id %>">
-				<%= meal.title %> 
-				<%= meal.description %> 
+				<div class="title"><%= meal.title %></div>
+				<div class="description"><%= meal.description %></div>
 				<input type="hidden" title="lat" value="<%= meal.lat%>" />
 				<input type="hidden" title="lon" value="<%= meal.lon%>" />
 			</div>

@@ -21,7 +21,7 @@
 </div>
 
 <%if current_user %>
-	<%if current_user.id == @meals.first.user_id %>
+	<!--<%#if current_user.id == @meals.first.user_id %>-->
 		<div id="meal_arrangement_requests">
 			<% @meals.each do |meal|%>
 				<% meal.meal_arrangements.each do |meal_arrangement| %>
@@ -35,7 +35,7 @@
 				<%end%>
 			<%end%>
 		</div>
-	<%end%>
+	<!--<%#end%>-->
 <%end%>
 
 <div id="provided_meals">

@@ -36,10 +36,13 @@ class MealArrangementsController < ApplicationController
     
     #if current_user.id == @meal_arrangement.meal.user_id
       if @meal_arrangement.update_attributes(:acceptance => true)
+          #current_user.send_message(@receiver, "params[:topic]", "params[:body]")
+          #messages_path( @receiver, :topic=> "Meal arrangement acceptance" , :body=> params[:id] )
           redirect_to user_path(current_user.id), :notice => 'Meal arrangement accepted.' 
         else
           redirect_to user_path(current_user.id), :notice => "meal arrengement acceptance failed"
       end
+      
    # else
     #  redirect_to root_path, :notice=> "no rights for this action"
     #end

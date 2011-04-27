@@ -1,14 +1,13 @@
 <h1>Your Messages</h1>
-<ul class="tabs">
-  <li><a href="#Inbox"><%=  I18n.t 'tab.inbox' %></a></li>
-  <li><a href="#Outbox"><%=  I18n.t 'tab.outbox' %></a></li>
-  <li><a href="#Trash"><%=  I18n.t 'tab.trash' %></a></li>
+<ul>
+  <li><%= link_to I18n.t('tab.inbox'), :action => "inbox" %> </li>
+  <li><%= link_to I18n.t('tab.outbox'), :action => "outbox" %> </li>
 </ul>
 
 <div class="tab_container">
   <div id="Inbox" class="tab_content">
     <ul>
-    <% current_user.received.each do |msg| %>
+    <% @messages.each do |msg| %>
       <li>
         <% if msg.opened %>
           <%= image_tag("mail_mark_read_icon.png") %>

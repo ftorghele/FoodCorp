@@ -7,6 +7,11 @@ FoodCorp::Application.routes.draw do
   resources :users
   resources :fellowships
   resources :meals
+
+  controller :messages do
+    match 'messages/in' => :inbox
+    match 'messages/out' => :outbox
+  end
   resources :messages
 
   controller :pages do

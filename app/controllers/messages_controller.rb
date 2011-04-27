@@ -1,21 +1,31 @@
 class MessagesController < ApplicationController
   
-  before_filter :check_login, :only=> [:index, :new, :create]
+  before_filter :check_login, :only=> [:inbox, :new, :create]
   before_filter :check_receiver, :only=> [:new, :create]
 
   def index
-    
+    redirect_to :action => "inbox"
+  end
+
+  def inbox
+    @messages = current_user.received
+    render :index
+  end
+
+  def outbox
+    @messages = current_user.sent
+    render :index
   end
 
   def show
-    @msg = Message.find(:first, :conditions => ["id = ?", params[:id]])
+    @msg = Message.find(params[:id])
     if @msg.received_messageable_id == current_user.id
       @msg.update_attribute(:opened, true)
     else
-      flash[:alert] = "Access denied"
-      redirect_to root_path
+      unless @msg.sent_messageable_id == current_user.id
+        redirect_to root_path, :notice => "no rights for this action"
+      end
     end
-    
   end
 
   def new

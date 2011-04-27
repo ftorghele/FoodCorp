@@ -6,7 +6,7 @@ class MealArrangement < ActiveRecord::Base
   validates :meal_id, :presence => true
 
   
-  has_many :user
+  has_one :user
   has_one :meal
 
   belongs_to :user

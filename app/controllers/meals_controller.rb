@@ -1,6 +1,6 @@
 class MealsController < ApplicationController
   
-  before_filter :check_time, :only => [:create, :edit, :update]
+  before_filter :check_time, :only => [:create, :update]
   
   def index
    @meals = Meal.find(:all)
@@ -46,16 +46,15 @@ class MealsController < ApplicationController
   private
   def check_time
     
-    params[:meal][:time] = params[:meal][:time].to_datetime.to_i
-    params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
+      params[:meal][:time] = params[:meal][:time].to_datetime.to_i
+      params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
     
-    if(params[:meal][:time] < Time.now.to_datetime.to_i) 
-      redirect_to new_meal_path,  :notice => I18n.t('meal.time_fail')
-    end
-    
-    if(params[:meal][:deadline] < Time.now.to_datetime.to_i) 
-      redirect_to new_meal_path,  :notice => I18n.t('meal.deadline_fail')
-    end
+      if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i) 
+      
+        redirect_to :back,  :alert => I18n.t('meal.time_fail')
+        
+      end
+      
   end
 
 end

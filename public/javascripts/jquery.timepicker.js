@@ -258,13 +258,13 @@ jQuery.fn.datetime = function() {
 	                    	
 	                    	$('#tpSelectedTime .selHrs').text(hours);
 	                    	
-	                    	time = fragment+'-'+$('#tpSelectedTime .selMins').text();						
+	                    	time = fragment+':'+$('#tpSelectedTime .selMins').text();						
 							break;
 						case 'minute':
 	                    	minutes = ((fragment < 10) ? '0' :'') + parseInt(fragment,10);
 	                    	$('#tpSelectedTime .selMins').text(minutes);
 	                   
-	                        time = $('#hourSlider').slider('option', 'value')+'-'+minutes;  						
+	                        time = $('#hourSlider').slider('option', 'value')+':'+minutes;  						
 							break;
 					}
 					return time;
@@ -281,7 +281,7 @@ jQuery.fn.datetime = function() {
 					}
 					
 					$($('#pickerplug').data('inputfield')).val(
-								$('#pickerplug').data('lastdate')+'T'+$('#pickerplug').data('lasttime')
+								$('#pickerplug').data('lastdate')+' '+$('#pickerplug').data('lasttime')
 					);
 				}
 				

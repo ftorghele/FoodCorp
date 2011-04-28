@@ -33,8 +33,15 @@ $(document).ready(function() {
 				i++;
 			}
 		})
+		
 		if(i>0) return false;
-		else return true;
+		
+		position = $.googleMaps.marker[0];
+		
+		$('#meal_lat').val(position.Ca.Md);
+		$('#meal_lon').val(position.Ca.Ha);
+		
+		return true;
 	});
 
 	// Grabs Locations for Meals, output them as Markers on the map

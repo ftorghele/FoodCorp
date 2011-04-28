@@ -28,3 +28,10 @@ en:
     inbox: "Inbox"
     outbox: "Outbox"
     new: "New PM"
+    
+    
+  meal:
+    time_fail: "Time not valid!"
+    deadline_fail: "Deadline not valid!"
+    create_success: "Meal successfully saved!"
+    create_fail: "information not valid, Meal could NOT be saved!"

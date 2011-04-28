@@ -1,10 +1,6 @@
 class MealsController < ApplicationController
   
-  require 'date'
-  require 'time'
-  
-  helper MealsHelper
-  helper_method :convert
+  before_filter :check_time, :only => [:create, :edit, :update]
   
   def index
    @meals = Meal.find(:all)
@@ -19,17 +15,13 @@ class MealsController < ApplicationController
   end
 
   def create
-    
     meal = Meal.new(params[:meal])
     meal.user_id = current_user.id
-    #meal.time.to_datetime().to_i
-    #meal.time = meal.time.to_time().to_i
-    #meal.deadline = meal.deadline.to_time().to_i
     
     if meal.save
-      redirect_to meal_path(meal.id), :notice => "meal created successfully"
+      redirect_to meal_path(meal.id), :notice => I18n.t('meal.create_success')
     else
-      redirect_to new_meal_path,  :alert => "not valid"
+      redirect_to new_meal_path,  :alert => I18n.t('meal.create_fail')
     end
   end
   
@@ -40,9 +32,9 @@ class MealsController < ApplicationController
   def update
       @meal = Meal.find(params[:id])
    if @meal.update_attributes(params[:meal])
-      redirect_to meal_path(@meal.id), :notice => "meal updated successfully"
+      redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
-      redirect_to edit_meal_path(@meal.id),  :alert => "not valid"
+      redirect_to edit_meal_path(@meal.id),  :alert => I18n.t('meal.create_fail')
     end
 
   end
@@ -51,4 +43,19 @@ class MealsController < ApplicationController
     
   end
   
+  private
+  def check_time
+    
+    params[:meal][:time] = params[:meal][:time].to_datetime.to_i
+    params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
+    
+    if(params[:meal][:time] < Time.now.to_datetime.to_i) 
+      redirect_to new_meal_path,  :notice => I18n.t('meal.time_fail')
+    end
+    
+    if(params[:meal][:deadline] < Time.now.to_datetime.to_i) 
+      redirect_to new_meal_path,  :notice => I18n.t('meal.deadline_fail')
+    end
+  end
+
 end

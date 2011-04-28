@@ -13,6 +13,8 @@ $(document).ready(function() {
 			// wenn keine Daten vorhanden sind
 			if($(this).val() != "") loc[pos1] = $(this).val();
 		}
+		
+		
 	});	
 	
 	// update Map when changing inputs
@@ -26,6 +28,12 @@ $(document).ready(function() {
 
 	// Validate inputs for new meal
 	$('form.new_meal, form.edit_meal').submit(function() {
+		
+		position = $.googleMaps.marker[0];
+		
+		$('#meal_lat').val(position.getPoint().lat());
+		$('#meal_lon').val(position.getPoint().lng());
+		
 		i = 0;
 		$(this).children('input').each(function() {
 			if($(this).val() == "") {
@@ -36,13 +44,9 @@ $(document).ready(function() {
 		
 		if(i>0) return false;
 		
-		position = $.googleMaps.marker[0];
-		
-		$('#meal_lat').val(position.Ca.Md);
-		$('#meal_lon').val(position.Ca.Ha);
-		
-		return true;
+		else return true;
 	});
+	
 
 	// Grabs Locations for Meals, output them as Markers on the map
 	function get_markers() {
@@ -72,9 +76,9 @@ $(document).ready(function() {
 		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
 		
 		// SET LOCAL POSITION MARKER (BLUE)
-		console.log(result.Placemark);
+		//console.log(result.Placemark);
 		
-		if(!$.mobile && typeof(result.Placemark) != 'undefined') marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
+		if(typeof(result.Placemark) != 'undefined') marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
 								 'longitude': result.Placemark[0].Point.coordinates[0],
 								'draggable': true,
 								icon: { 
@@ -84,6 +88,19 @@ $(document).ready(function() {
 								                shadowSize: '22, 20' 
 								            }
 								}];
+								
+		if($('#meal_lat').val() != "" && $('#meal_lon').val() !="" && $('#meals_distance_stream').length == 0) {
+			marker = [{'latitude': $('input#meal_lat').val(), 
+									 'longitude': $('input#meal_lon').val(),
+									'draggable': true,
+									icon: { 
+									                image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+									                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+									                iconSize: '12, 20', 
+									                shadowSize: '22, 20' 
+									            }
+									}];
+		}
 								
 		$('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
 		$('#meal_lon').val(result.Placemark[0].Point.coordinates[0]);
@@ -109,10 +126,9 @@ $(document).ready(function() {
 	} */
 		
 	function drawMap(env) {
-		console.log(marker, markers);
+		//console.log(marker, markers);
 		get_markers();
 		if(markers.length >= 1) $.merge(marker, markers);
-		console.log
 		$('#map').googleMaps({
 			geocode: env.join(', '),
 			markers: marker,

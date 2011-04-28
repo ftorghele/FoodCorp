@@ -220,7 +220,7 @@ var geo_position_js=function() {
 					alert("error="+e);
 					if(typeof(console)!="undefined")
 					{
-						console.log(e);
+						//console.log(e);
 					}
 					return false;
 				}

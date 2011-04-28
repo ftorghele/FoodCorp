@@ -1,11 +1,14 @@
 <h1 id="profile_name"><%= @user.first_name %> <%= @user.last_name %></h1>
 
 <% if user_signed_in? %>
-
-<div id="calendar">CALENDAR</div>
-
-<%= link_to('edit Profile', edit_user_registration_path) %>
-
+	<% if current_user.id == @user.id %>
+		<div id="calendar">CALENDAR
+			<% @meal_arrangements.each do |meal_arrangement| %>
+				<%= meal_arrangement.id %>
+			<% end %>
+		</div>
+		<%= link_to('edit Profile', edit_user_registration_path) %>
+	<% end %>
 <% end %>
 
 <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
@@ -21,7 +24,7 @@
 </div>
 
 <%if current_user %>
-	<!--<%#if current_user.id == @meals.first.user_id %>-->
+	<%if current_user.id == @user.id %>
 		<div id="meal_arrangement_requests">
 			<% @meals.each do |meal|%>
 				<% meal.meal_arrangements.each do |meal_arrangement| %>
@@ -35,7 +38,7 @@
 				<%end%>
 			<%end%>
 		</div>
-	<!--<%#end%>-->
+	<%end%>
 <%end%>
 
 <div id="provided_meals">
@@ -114,4 +117,6 @@
   <div class="clr"></div>
 </div>
 
-<%= link_to "Send PM", new_message_path(:receiver => @user.id) %>
+<%unless @user.id == current_user.id %>
+	<%= link_to "Send "+@user.first_name+" a PM", new_message_path(:receiver => @user.id) %>
+<%end%>

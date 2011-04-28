@@ -7,7 +7,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]])
+    currentTime = Time.now.to_datetime.to_i
+    futureTime = currentTime + (7*60*60*24)
+    @meals = Meal.find(:all, :conditions => ["user_id = ? AND (time > ? AND deadline < ?)", params[:id], currentTime, futureTime])
+    @meal_arrangements = MealArrangement.find(:all, :conditions => ["user_id = ? AND acceptance = 1", params[:id]])
   end
 
   protected

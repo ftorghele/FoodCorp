@@ -72,4 +72,5 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     
     sign_out
   end
+    
 end

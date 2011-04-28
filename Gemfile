@@ -9,6 +9,9 @@ gem 'oa-oauth', :require => 'omniauth/oauth'
 gem 'paperclip', '~> 2.3'
 gem 'acts-as-messageable'
 
+gem "cramp",:git=>'https://github.com/lifo/cramp.git'
+gem 'thin'
+
 group :development do
 
 end

@@ -22,6 +22,8 @@ FoodCorp::Application.routes.draw do
   
   root :to => "meals#index"
   
+  match "/chat"=>ChatAction
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

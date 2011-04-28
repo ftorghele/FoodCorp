@@ -190,7 +190,7 @@ $(document).ready(function() {
             $('#user_avatar').attr('disabled', false)
         }
     });
-    
+
 });
 
 function panTo(lat, lon) {
@@ -199,4 +199,34 @@ function panTo(lat, lon) {
 	//$.googleMaps.gMap.panBy(new GSize( newLoc.x, newLoc.y ));
 	//currentPoint = $.googleMaps.gMap.getCenter();
 	$.googleMaps.gMap.setCenter(point);
+}
+
+function WebSocketTest()
+{
+  if ("WebSocket" in window)
+  {
+     // Let us open a web socket
+     var ws = new WebSocket("ws://localhost:3000/chat");
+     ws.onopen = function()
+     {
+        // Web Socket is connected, send data using send()
+        ws.send("Hallo FoodCorp Server!");
+     };
+     ws.onmessage = function (evt) 
+     { 
+        var received_msg = evt.data;
+        console.log("Message is received..." + received_msg);
+		alert(received_msg);
+     };
+     ws.onclose = function()
+     { 
+        // websocket is closed.
+        console.log("Connection is closed..."); 
+     };
+  }
+  else
+  {
+     // The browser doesn't support WebSocket
+     console.log("WebSocket NOT supported by your Browser!");
+  }
 }

@@ -64,6 +64,7 @@ GEM
       rake (>= 0.8.7)
     ffi (1.0.7-x86-mingw32)
       rake (>= 0.8.7)
+    geocoder (0.9.13)
     i18n (0.5.0)
     jquery-rails (0.2.7)
       rails (~> 3.0)
@@ -147,6 +148,7 @@ DEPENDENCIES
   capybara
   devise
   faker
+  geocoder
   jquery-rails
   launchy
   machinist

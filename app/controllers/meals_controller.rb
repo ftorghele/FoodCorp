@@ -4,6 +4,7 @@ class MealsController < ApplicationController
   
   def index
    @meals = Meal.find(:all)
+   @coords = request.location;
   end
 
   def new 

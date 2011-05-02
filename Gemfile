@@ -3,6 +3,9 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.5'
 gem 'mysql2'
 gem 'jquery-rails'
+gem "geocoder"
+
+
 gem 'devise'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 

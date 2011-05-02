@@ -1,0 +1,22 @@
+<div id="calendar">CALENDAR
+  <% @user_tasks.each do |task| %>
+    <% t = find_meal(:meal_id => task[0]["meal_id"] )  %>
+    <% if task[0]["flag"] == true %>
+      <% link_to edit_meal_path(t.id) do %> 
+        <div id="calendar_provided_meal">
+          <%= Time.at(t.time).utc %>
+          <%= t.title %>
+          <%= t.description %>
+        </div>
+      <%end%>
+    <% else %>
+      <% link_to meal_path(t.id) do%> 
+        <div id="calendar_meal_arrangement">
+          <%= Time.at(t.time).utc %>
+          <%= t.title %>
+          <%= t.description %>
+        </div>
+     <%end%>
+    <%end%>
+  <%end%>
+</div>

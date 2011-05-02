@@ -11,4 +11,8 @@ module UsersHelper
     end
   end
 
+  def find_meal(args)
+    return Meal.find(args[:meal_id])
+  end
+  
 end

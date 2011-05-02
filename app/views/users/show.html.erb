@@ -1,79 +1,75 @@
 <h1 id="profile_name"><%= @user.first_name %> <%= @user.last_name %></h1>
 
 <% if user_signed_in? %>
-	<% if current_user.id == @user.id %>
-		<div id="calendar">CALENDAR
-			<% @meal_arrangements.each do |meal_arrangement| %>
-				<%= meal_arrangement.id %>
-			<% end %>
-		</div>
-		<%= link_to('edit Profile', edit_user_registration_path) %>
-	<% end %>
+  <% if current_user.id == @user.id %>
+      <%= render "calendar"%>
+      <%= link_to('edit Profile', edit_user_registration_path) %>
+  <% end %>
 <% end %>
 
 <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
 
 <% if current_user %>
-	<% if current_user.id == @user.id %>
-		<%= link_to( "provide meal", new_meal_path) %>
-	<%end%>
+  <% if current_user.id == @user.id %>
+    <%= link_to( "provide meal", new_meal_path) %>
+  <%end%>
 <%end%>
 
 <div id="user_info">
-	<% @user.info_field %>	
+  <% @user.info_field %>	
 </div>
 
 <%if current_user %>
-	<%if current_user.id == @user.id %>
-		<div id="meal_arrangement_requests">
-			<% @meals.each do |meal|%>
-				<% meal.meal_arrangements.each do |meal_arrangement| %>
-					<%if meal_arrangement.acceptance == false%>
-						<%=meal.title%>: <%= meal.description %><br/>
-						<%= meal_arrangement.user.first_name %>
-						<%= meal_arrangement.user.last_name %><br/>
-						<%= link_to "Delete", meal_arrangement_path( meal_arrangement.id), :method => 'delete', :confirm => 'Really delete?', :class => 'delete' %>
-						<%= link_to "Accept", meal_arrangement_path( meal_arrangement.id), :method => 'put', :confirm => 'Really accept?', :class => 'accept' %>
-					<%end%>
-				<%end%>
-			<%end%>
-		</div>
-	<%end%>
+  <%if current_user.id == @user.id %>
+    <div id="meal_arrangement_requests">
+      <% @meals.each do |meal|%>
+        <% meal.meal_arrangements.each do |meal_arrangement| %>
+          <%if meal_arrangement.acceptance == false%>
+            <%=meal.title%>: <%= meal.description %><br/>
+            <%= meal_arrangement.user.first_name %>
+            <%= meal_arrangement.user.last_name %><br/>
+            <%= link_to "Delete", meal_arrangement_path( meal_arrangement.id), :method => 'delete', :confirm => 'Really delete?', :class => 'delete' %>
+            <%= link_to "Accept", meal_arrangement_path( meal_arrangement.id), :method => 'put', :confirm => 'Really accept?', :class => 'accept' %>
+          <%end%>
+        <%end%>
+      <%end%>
+    </div>
+  <%end%>
 <%end%>
 
 <div id="provided_meals">
-	<% @meals.each do |meal|%>
-		<%unless current_user %>
-				<%= link_to meal_path(meal.id) do %> 
-					<div class="meal">
-						<div class="title"><%= meal.title %></div>
-						<div class="description"><%= meal.description %></div>
-						<input type="hidden" title="lat" value="<%= meal.lat%>" />
-						<input type="hidden" title="lon" value="<%= meal.lon%>" />
-					</div>
-				<% end %>
-		<%else%>
-			<%if current_user.id == meal.user_id %>
-				<%= link_to edit_meal_path(meal.id) do %> 
-					<div class="meal">
-						<div class="title"><%= meal.title %></div>
-						<div class="description"><%= meal.description %></div>
-						<input type="hidden" title="lat" value="<%= meal.lat%>" />
-						<input type="hidden" title="lon" value="<%= meal.lon%>" />
-					</div>
-				<% end %>
-			<%else%>
-				<%= link_to meal_path(meal.id) do %> 
-					<div class="meal">
-						<div class="title"><%= meal.title %></div>
-						<div class="description"><%= meal.description %></div>
-						<input type="hidden" title="lat" value="<%= meal.lat%>" />
-						<input type="hidden" title="lon" value="<%= meal.lon%>" />
-					</div>
-				<% end %>
-			<% end %>
-		<%end%>
-	<%end%>
+  <% @meals.each do |meal|%>
+    <%unless current_user %>
+      <%= link_to meal_path(meal.id) do %> 
+        <div class="meal">
+          <div class="title"><%= meal.title %></div>
+          <div class="description"><%= meal.description %></div>
+          <input type="hidden" title="lat" value="<%= meal.lat%>" />
+          <input type="hidden" title="lon" value="<%= meal.lon%>" />
+	</div>
+      <% end %>
+    <%else%>
+      <%if current_user.id == meal.user_id %>
+        <%= link_to edit_meal_path(meal.id) do %> 
+	<div class="meal">
+          <div class="title"><%= meal.title %></div>
+          <div class="description"><%= meal.description %></div>
+          <input type="hidden" title="lat" value="<%= meal.lat%>" />
+          <input type="hidden" title="lon" value="<%= meal.lon%>" />
+        </div>
+          <% end %>
+        <%else%>
+          <%= link_to meal_path(meal.id) do %> 
+          <div class="meal">
+            <div class="title"><%= meal.title %></div>
+            <div class="description"><%= meal.description %></div>
+            <input type="hidden" title="lat" value="<%= meal.lat%>" />
+            <input type="hidden" title="lon" value="<%= meal.lon%>" />
+           </div>
+         <% end %>
+        <% end %>
+      <%end%>
+    <%end%>
 </div>
 
 <% unless current_user == @user %>
@@ -83,14 +79,12 @@
         get_following(:user => @user), :method => :delete, :id => "remove_followed" %>
     </p>
   <% else %>
-  	<%if current_user %>
-	    <p>
-	      <%= link_to image_tag("follow.png", :border=>0),
-	        fellowships_path(:follower_id => @user), :method => :post %>
-	    </p>
-	<%else%>
-	
-	<%end%>
+    <%if current_user %>
+      <p>
+        <%= link_to image_tag("follow.png", :border=>0),
+          fellowships_path(:follower_id => @user), :method => :post %>
+      </p>
+    <%end%>
   <% end %>
 <% end %>
     
@@ -105,7 +99,6 @@
   <div class="clr"></div>
 </div>
 
-
 <h2>is followed by</h2>
 <div id="profile_followers">
   <% for user in @user.inverse_followers %>
@@ -118,5 +111,5 @@
 </div>
 
 <%unless @user.id == current_user.id %>
-	<%= link_to "Send "+@user.first_name+" a PM", new_message_path(:receiver => @user.id) %>
+  <%= link_to "Send "+@user.first_name+" a PM", new_message_path(:receiver => @user.id) %>
 <%end%>

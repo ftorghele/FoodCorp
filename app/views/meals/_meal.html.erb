@@ -6,7 +6,7 @@
 <%= @meal.street %>
 <%= @meal.street_number%>
 <%= @meal.zip_code %>
-<%= @meal.time %>
+<%= Time.at(@meal.time).utc %>
 <%= @meal.deadline %>
 <%= @meal.lat %>
 <%= @meal.lon %>

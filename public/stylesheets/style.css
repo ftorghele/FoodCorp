@@ -149,6 +149,16 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 	font-size:10px;
 }
 
+#calendar{
+    background-color: #1c94c4;
+    width: 200px;
+}
+#calendar_meal_arrangement{
+    background-color: deeppink;
+}
+#calendar_provided_meal{
+    background-color: turquoise;
+}
 /* ---- USER_PROFILE END ----*/
 
  

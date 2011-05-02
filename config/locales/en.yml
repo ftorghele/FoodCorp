@@ -19,6 +19,9 @@ en:
 
   application:
     title: "FoodCorp"
+    access_denied: "Access denied"
+    no_such_user: "No such User"
+    rights_fail: "no rights for this action"
 
   tab:
     general: "Gerneral"
@@ -35,3 +38,24 @@ en:
     deadline_fail: "Deadline not valid!"
     create_success: "Meal successfully saved!"
     create_fail: "information not valid, Meal could NOT be saved!"
+
+  meal_arrangements:
+    create_success: "Meal arrangement was successfully created"
+    create_fail: "meal arrengement failed"
+    accept_success: "Meal arrangement accepted"
+    accept_fail: "Meal arrengement acceptance failed"
+    delete_success: "Meal arrangement was successfully deleted"
+    delete_fail: "Meal arrengement delete failed"
+    
+  message:
+    reject: "Meal arrangement rejected"
+    sorry: "sorry..."
+    accept: "Meal arrangement acceptance"
+    info: "body of msg"
+    
+  fellowships:
+    create_success: "following..."
+    create_fail: "Unable to follow"
+    destroy_success:  "Removed fellowship"
+    destroy_fail: "Unable to remove fellowship"
+    

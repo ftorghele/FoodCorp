@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   
-  has_many :meal
+  has_many :meals
   has_many :meal_arrangements
 
   # Followers

@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
       @msg.update_attribute(:opened, true)
     else
       unless @msg.sent_messageable_id == current_user.id
-        redirect_to root_path, :notice => "no rights for this action"
+        redirect_to root_path, :notice => I18n.t('application.rights_fail')
       end
     end
   end
@@ -40,14 +40,14 @@ class MessagesController < ApplicationController
   protected
   def check_login
     unless current_user
-      flash[:alert] = "Access denied"
+      flash[:alert] = I18n.t('application.access_denied')
       redirect_to root_path
     end
   end
 
   def check_receiver
     unless @receiver = User.find(:first, :conditions => [ "id = ?", params[:receiver]])
-      flash[:alert] = "No such User"
+      flash[:alert] = I18n.t('application.no_such_user')
       redirect_to root_path
     end
   end

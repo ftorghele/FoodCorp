@@ -17,28 +17,28 @@ class MealArrangementsController < ApplicationController
                         :acceptance => false)
 
     if @meal_arrangement.save
-      redirect_to meal_path(params[:meal_id]), :notice => 'Meal arrangement was successfully created.'
+      redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_success')
     else
-      redirect_to meal_path(params[:meal_id]), :notice => "meal arrengement failed"
+      redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_fail')
     end
   end
 
 
   def update
     if @meal_arrangement.update_attribute(:acceptance, true)
-        current_user.send_message(@meal_arrangement.user, "Meal arrangement acceptance", "body of msg")
-        redirect_to user_path(current_user.id), :notice => 'Meal arrangement accepted.'
+        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), I18n.t('message.info') )
+        redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.accept_success')
       else
-        redirect_to user_path(current_user.id), :notice => "meal arrengement acceptance failed"
+        redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.accept_fail')
     end
   end
 
   def destroy
     if @meal_arrangement.destroy
-      current_user.send_message(@meal_arrangement.user, "Meal arrangement rejected", "sorry...")
-      redirect_to user_path(current_user.id), :notice => 'Meal arrangement was successfully deleted.'
+      current_user.send_message(@meal_arrangement.user, I18n.t('message.reject'), I18n.t('message.sorry') )
+      redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.delete_success') 
     else
-        redirect_to user_path(current_user.id), :notice => "meal arrengement delete failed"
+        redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.delete_fail') 
     end
   end
 
@@ -49,7 +49,7 @@ class MealArrangementsController < ApplicationController
 
   def check_user
     unless current_user.id == @meal_arrangement.meal.user_id
-      redirect_to root_path, :notice => "no rights for this action"
+      redirect_to root_path, :notice => I18n.t('application.rights_fail')
     end
   end
 

@@ -82,7 +82,6 @@ ActiveRecord::Schema.define(:version => 20110428120416) do
     t.string   "zip_code"
     t.string   "street"
     t.string   "street_number"
-    t.string   "room_number"
     t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"

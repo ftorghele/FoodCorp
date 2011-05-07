@@ -1,12 +1,11 @@
 <form action="#" onsubmit="showAddress(this.address.value, this.countrycode.value); return false">
   <p>
-    Country code: <input type="text" size="2" id="countrycode" name="countrycode" value="" />
-    &nbsp; Address: <input type="text" size="30" id="addressInput" name="address" value="" />
+    Address: <input type="text" size="30" id="addressInput" name="address" value="" />
     <input type="submit" value="Go!" />
-
   </p>
 </form>
-<%= @coords.inspect %>
+<%=  #@coords.inspect
+ %>
 
 <div id="map" style="height:360px; width: 400px;"></div>
 <%= render 'meals_distance_stream' %>

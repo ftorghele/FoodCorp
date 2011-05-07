@@ -12,16 +12,80 @@
 	padding:0px;
 	text-decoration:none;
 	font-size:12px;
+	font-family:Verdana, Arial;
 }
 
-#navigation {
-	list-style:none;
+html, body {
+	height:100%;
+	width:100%;
 }
 
-#navigation > li {
+/* HEADER & NAVIGATION */
+
+#header, #header a {
+	color:#fff;
+}
+
+h1 {
+	font-size:45px;
+	display:block;
 	float:left;
-	margin:0 10px 0 0;
+	padding:0 0 0 40px;
+	height:40px;
 }
+
+#header div.black {
+	background:#000;
+	padding:40px 0 0 0;
+	height:86px;
+}
+
+#header div.login {
+	height:90px;
+	float:right;
+	width:300px;
+	margin:-10px 60px 0 0;
+}
+
+#header div.login img {
+	margin:0 10px 0 0;
+	float:left;
+}
+
+#header div.login div.signup_form {
+	display:none;
+}
+
+#header div.login div.signup_form input.field {
+	width:120px;
+	margin:5px 10px 0 0;
+}
+
+#header div.login div.signup_form input {
+	margin:5px 0 0 0;
+}
+
+#header div.login div.signup_form #user_submit {
+	margin:6px 80px 0 0;
+}
+
+.navigation {
+	list-style:none;
+	height:65px;
+	padding: 0 0 0 100px;
+	background-color:#ff505a;
+}
+
+.navigation a {
+	text-transform:uppercase;
+	letter-spacing:2px;
+	float:left;
+	font-size:20px;
+	font-weight:100;
+	margin:25px 80px 0 0;
+}
+
+/* HEADER & FOOTER END */
 
 #footer {
 	position:absolute;

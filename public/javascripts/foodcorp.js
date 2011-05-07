@@ -1,5 +1,19 @@
 $(document).ready(function() {
 	
+	// Sign Up Animation
+	$('.signup_form_animate').click(function() {
+		if($('.signup_form_animate').html() == "Login") {
+			$('#fb_sign_in').hide(100);
+			$('.signup_form').slideToggle(400);
+			$('.signup_form_animate').html('Register');
+			return false;
+		}
+		else {
+			return true;
+		}
+	});
+	
+		
 	// MAPS
 	marker = [];
 	markers = [];

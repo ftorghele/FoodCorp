@@ -5,7 +5,7 @@
 		
 		<div class="login">
 		<% if user_signed_in? %>
-				<%= image_tag get_thumb_avatar_url(current_user) %>
+				<%= link_to image_tag(get_thumb_avatar_url(current_user)), user_path(current_user.id) %>
 				<%= link_to(current_user.first_name + " " + current_user.last_name, user_path(current_user.id) )%><br>
 		  	<%= link_to('personal Messages', messages_path)%><br>
 		  	<%= link_to('Logout', destroy_user_session_path) %><br>
@@ -28,8 +28,11 @@
 	</div>
 	
 	<ul class="navigation">
-		<%= link_to( "Eat", meals_path) %>
-		<%= link_to( "Cook", new_meal_path) %>
+		<% if user_signed_in? %>
+			<%= link_to( "Eat", meals_path) %>
+			<%= link_to( "Cook", new_meal_path) %>
+		<%end%>
+		
 		<li class="calendar">&nbsp;</li>
 	</ul>
 	

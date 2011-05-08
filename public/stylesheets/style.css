@@ -20,12 +20,6 @@ html, body {
 	width:100%;
 }
 
-/* HEADER & NAVIGATION */
-
-#header, #header a {
-	color:#fff;
-}
-
 h1 {
 	font-size:45px;
 	display:block;
@@ -34,10 +28,33 @@ h1 {
 	height:40px;
 }
 
+h2, h2 a {
+	font-family:Georgia;
+	font-weight:normal;
+	font-size:45px;
+}
+
+h2 a {
+	color:#ff505a;
+	text-decoration:underline;
+	font-style:italic;
+}
+
+#main {
+	width:850px;
+	margin:38px auto 0 auto;
+}
+
+/* HEADER & NAVIGATION */
+
+#header, #header a {
+	color:#fff;
+}
+
 #header div.black {
 	background:#000;
-	padding:40px 0 0 0;
-	height:86px;
+	padding:30px 0 0 0;
+	height:85px;
 }
 
 #header div.login {
@@ -71,7 +88,7 @@ h1 {
 
 .navigation {
 	list-style:none;
-	height:65px;
+	height:78px;
 	padding: 0 0 0 100px;
 	background-color:#ff505a;
 }
@@ -85,7 +102,64 @@ h1 {
 	margin:25px 80px 0 0;
 }
 
-/* HEADER & FOOTER END */
+/* HEADER & NAVIGATION END */
+
+/* HOME PAGE */
+
+#main .mealfind {
+	margin:20px 0 15px 0;
+}
+
+#main #currentLocation {
+	font-weight:bold;
+}
+
+#searchLocation {
+	width:295px;
+	font-size:14px;
+	padding:3px 2px 3px 20px;
+	margin:0 0 20px 0;
+	background:url('/images/search.png') center left no-repeat, -webkit-gradient(
+	    linear,
+	    left bottom,
+	    left top,
+	    color-stop(0.23, rgb(254,254,254)),
+	    color-stop(0.62, rgb(230,230,230))
+	);
+	background:url('/images/search.png') center left no-repeat, -moz-linear-gradient(#e6e6e6, #fefefe);
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	border:1px solid #999;
+}
+
+#main #radius {
+	list-style:none;
+	background:#ff505a;
+	width:150px;
+	padding:2px 12px 2px 12px;
+	margin:0 0 30px 0;
+}
+
+#main #radius div {
+	display:none;
+}
+
+.wrapper {
+	color:#fff;
+	font-size:10px;
+	font-weight:bold;
+	background:url('/images/wrapper.png') top left no-repeat;
+	padding:3px 0 0 6px;
+	z-index:1000;
+}
+
+.wrapper div {
+	top:2px;
+	z-index:100;
+}
+
+/* HOME PAGE END */
 
 #footer {
 	position:absolute;
@@ -166,7 +240,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 /* ---- HOME BEGIN ---- */
 
 #map{
-	float:left;
 }
 
 .clear{

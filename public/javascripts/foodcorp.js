@@ -20,6 +20,9 @@ $(document).ready(function() {
 	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	
+	// Home Page currentLocation div
+	$('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city() )
+	
 	// get default User inputs
 	$('form.new_meal > :input, form.edit_meal > :input').each(function() {
 		var pos1 = a.indexOf( $(this).attr('name') );
@@ -87,7 +90,7 @@ $(document).ready(function() {
 	}
 	
 	function addToMap(result) {
-		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);
+		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);		
 		
 		// SET LOCAL POSITION MARKER (BLUE)
 		//console.log(result.Placemark);
@@ -103,7 +106,7 @@ $(document).ready(function() {
 								            }
 								}];
 								
-		if($('#meal_lat').val() != "" && $('#meal_lon').val() !="" && $('#meals_distance_stream').length == 0) {
+		if($('#currentLocation').val() != "" && $('#meal_lon').val() !="" && $('#meals_distance_stream').length == 0) {
 			marker = [{'latitude': $('input#meal_lat').val(), 
 									 'longitude': $('input#meal_lon').val(),
 									'draggable': true,
@@ -118,7 +121,7 @@ $(document).ready(function() {
 								
 		$('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
 		$('#meal_lon').val(result.Placemark[0].Point.coordinates[0]);
-			
+		console.log(marker);
 		drawMap(loc);
 	}
 	
@@ -148,10 +151,14 @@ $(document).ready(function() {
 			markers: marker,
 			controls: {
 			            mapType: [{ 
-			                remove: 'G_SATELLITE_MAP' 
-			            }, { 
-			                remove: 'G_NORMAL_MAP' 
-			            }]
+						                remove: 'G_SATELLITE_MAP' 
+						            }, { 
+						                remove: 'G_NORMAL_MAP' 
+						            }],
+						type: {},
+									zoom: {
+										control: 'GSmallZoomControl'
+							}
 			        }
 		});
 		

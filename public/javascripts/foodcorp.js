@@ -130,8 +130,9 @@ $(document).ready(function() {
 	// determine if the handset has client side geo location capabilities
 	if (navigator.geolocation) {
 	  navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+	  drawMap();
 	} else {
-	  error('not supported');
+	  drawMap(loc);
 	}
 	
 	if (geo_position_js.init()) {
@@ -139,7 +140,7 @@ $(document).ready(function() {
 	}
 	
 	function geo_error() {
-	 	console.log('geo.js not supported, switching to IP Localization');
+	 	drawMap(loc);
 	}
 	
 	function geo_success(p) {
@@ -151,19 +152,12 @@ $(document).ready(function() {
 	}
 		
 	function drawMap(env) {
-		//console.log(marker, markers);
 		get_markers();
-		if(markers.length >= 1) $.merge(marker, markers);
-		if(geojsmarker && !(markers.length >= 1)) {
-			console.log('active')
-			$('#map').googleMaps({
-			    	latitude: geojsmarker[0].latitude,
-			        longitude: geojsmarker[0].longitude,
-					markers: geojsmarker
-			    });
-		}
-		else {
-			$('#map').googleMaps({
+		
+		if(markers.length >= 1) $.merge(marker, markers); // merge current position marker with meal list markers
+		
+		if(env && !window.geojsmarker)
+		$('#map').googleMaps({
 				geocode: env.join(', '),
 				markers: marker,
 				controls: {
@@ -177,7 +171,26 @@ $(document).ready(function() {
 											control: 'GSmallZoomControl'
 								}
 				        }
-			});
+		});
+		
+		if (window.geojsmarker && geojsmarker[0].latitude) {
+			console.log('active')
+			$('#map').googleMaps({
+			    	latitude: geojsmarker[0].latitude,
+			        longitude: geojsmarker[0].longitude,
+					markers: geojsmarker,
+					controls: {
+					            mapType: [{ 
+								                remove: 'G_SATELLITE_MAP' 
+								            }, { 
+								                remove: 'G_NORMAL_MAP' 
+								            }],
+								type: {},
+											zoom: {
+												control: 'GSmallZoomControl'
+									}
+					        }
+			    });
 		}
 	}
 	

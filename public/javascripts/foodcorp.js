@@ -121,12 +121,19 @@ $(document).ready(function() {
 								
 		$('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
 		$('#meal_lon').val(result.Placemark[0].Point.coordinates[0]);
-		console.log(marker);
+		
 		drawMap(loc);
 	}
 	
+	
 	// SLOW!
-	/* determine if the handset has client side geo location capabilities
+	// determine if the handset has client side geo location capabilities
+	if (navigator.geolocation) {
+	  navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+	} else {
+	  error('not supported');
+	}
+	
 	if (geo_position_js.init()) {
 		geo_position_js.getCurrentPosition(geo_success, geo_error);
 	}
@@ -137,31 +144,41 @@ $(document).ready(function() {
 	
 	function geo_success(p) {
 		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
-		marker = [{'latidtude' : p.coords.latitude,
+		geojsmarker = [{'latitude' : p.coords.latitude,
 		 		   'longitude' : p.coords.longitude,
 				   'draggable' : true}];
-	} */
+		drawMap();
+	}
 		
 	function drawMap(env) {
 		//console.log(marker, markers);
 		get_markers();
 		if(markers.length >= 1) $.merge(marker, markers);
-		$('#map').googleMaps({
-			geocode: env.join(', '),
-			markers: marker,
-			controls: {
-			            mapType: [{ 
-						                remove: 'G_SATELLITE_MAP' 
-						            }, { 
-						                remove: 'G_NORMAL_MAP' 
-						            }],
-						type: {},
-									zoom: {
-										control: 'GSmallZoomControl'
-							}
-			        }
-		});
-		
+		if(geojsmarker && !(markers.length >= 1)) {
+			console.log('active')
+			$('#map').googleMaps({
+			    	latitude: geojsmarker[0].latitude,
+			        longitude: geojsmarker[0].longitude,
+					markers: geojsmarker
+			    });
+		}
+		else {
+			$('#map').googleMaps({
+				geocode: env.join(', '),
+				markers: marker,
+				controls: {
+				            mapType: [{ 
+							                remove: 'G_SATELLITE_MAP' 
+							            }, { 
+							                remove: 'G_NORMAL_MAP' 
+							            }],
+							type: {},
+										zoom: {
+											control: 'GSmallZoomControl'
+								}
+				        }
+			});
+		}
 	}
 	
 	// Create new geocoding object

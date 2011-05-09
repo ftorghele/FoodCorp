@@ -126,7 +126,8 @@ h2 a {
 	width:43px;
 	height:33px;
 	background: url('../images/calendar.png') top left no-repeat;
-        color:#000;
+	font-family:"Times New Roman";
+	font-size:24px;
 }
 
 #calendar_body {

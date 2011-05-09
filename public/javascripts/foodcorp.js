@@ -146,8 +146,14 @@ $(document).ready(function() {
 	function geo_success(p) {
 		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
 		geojsmarker = [{'latitude' : p.coords.latitude,
-		 		   'longitude' : p.coords.longitude,
-				   'draggable' : true}];
+		 		   		'longitude' : p.coords.longitude,
+				   		'draggable' : true,
+						icon: { 
+					                image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+					                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+					                iconSize: '12, 20', 
+					                shadowSize: '22, 20' 
+					   }}];
 		drawMap();
 	}
 		
@@ -174,7 +180,6 @@ $(document).ready(function() {
 		});
 		
 		if (window.geojsmarker && geojsmarker[0].latitude) {
-			console.log('active')
 			$('#map').googleMaps({
 			    	latitude: geojsmarker[0].latitude,
 			        longitude: geojsmarker[0].longitude,

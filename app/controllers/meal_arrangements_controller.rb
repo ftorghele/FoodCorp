@@ -12,29 +12,38 @@ class MealArrangementsController < ApplicationController
   end
 
   def create
-    @meal_arrangement = MealArrangement.new(:user_id => current_user.id,
-                        :meal_id => params[:meal_id],
-                        :acceptance => false)
+    if current_user.points > -2
+      @meal_arrangement = MealArrangement.new(:user_id => current_user.id,
+                          :meal_id => params[:meal_id],
+                          :acceptance => false)
 
-    if @meal_arrangement.save
-      redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_success')
-    else
-      redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_fail')
+      if @meal_arrangement.save
+        redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_success')
+        current_user.points -= 1
+        
+      else
+        redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_fail')
+      end
+    
+    else 
+      redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.point_fail')
     end
   end
 
 
   def update
     if @meal_arrangement.update_attribute(:acceptance, true)
+        current_user.points += 1
         current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), I18n.t('message.info') )
         redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.accept_success')
-      else
+    else
         redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.accept_fail')
     end
   end
 
   def destroy
     if @meal_arrangement.destroy
+      @meal_arrangement.user.points += 1
       current_user.send_message(@meal_arrangement.user, I18n.t('message.reject'), I18n.t('message.sorry') )
       redirect_to user_path(current_user.id), :notice => I18n.t('meal_arrangements.delete_success') 
     else

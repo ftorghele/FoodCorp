@@ -14,7 +14,7 @@ class MealsController < ApplicationController
   
   def show
     @meal = Meal.find(params[:id])
-    @meal_arrangement = MealArrangement.where(:meal_id => @meal.id, :user_id => current_user.id).first
+    @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first
   end
 
   def create

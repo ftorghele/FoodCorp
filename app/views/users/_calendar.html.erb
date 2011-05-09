@@ -7,8 +7,6 @@
        
       
           <% t = find_meal(:meal_id => task[0]["meal_id"] )  %>
-
-
             
                 <% if task[0]["flag"] == true %>
                   <% link_to edit_meal_path(t.id) do %> 
@@ -27,8 +25,6 @@
                     </div>
                   <%end%>
                 <%end%>
-
-
 
         <%end%>
       <%end%>

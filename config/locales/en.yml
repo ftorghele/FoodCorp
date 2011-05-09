@@ -41,11 +41,12 @@ en:
 
   meal_arrangements:
     create_success: "Meal arrangement was successfully created"
-    create_fail: "meal arrengement failed"
+    create_fail: "meal arrangement failed"
     accept_success: "Meal arrangement accepted"
-    accept_fail: "Meal arrengement acceptance failed"
+    accept_fail: "Meal arrangement acceptance failed"
     delete_success: "Meal arrangement was successfully deleted"
-    delete_fail: "Meal arrengement delete failed"
+    delete_fail: "Meal arrangement delete failed"
+    acceptance_given_fail: "Meal arrangement already accepted - Can't be deleted!"
     
   message:
     reject: "Meal arrangement rejected"

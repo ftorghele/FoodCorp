@@ -15,7 +15,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   should "user should be able to visit his/her profile" do
     sign_in_as("user1@gmail.com", "123456")
 
-    click_on('Profile')
+    click_on('Hans Testuser')
     assert page.has_css?('h1#profile_name', :count => 1)
     
     sign_out
@@ -25,8 +25,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     sign_in_as("user1@gmail.com", "123456")
 
-    click_on('Profile')
-    click_on('provide meal')
+    click_on('Cook')
     assert page.has_css?('form', :count => 1)
 
     click_on("submit")
@@ -39,8 +38,9 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     fill_in 'Zip code', :with => '5020'
     fill_in 'Street', :with => 'Getreidegasse'
     fill_in 'Street number', :with => '3'
-    fill_in 'Time', :with => '2011-04-15T20:00Z'
-    fill_in 'Deadline', :with => '2011-04-15T16:00Z'
+    select '3', :from => 'Slots'
+    fill_in 'Time', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
+    fill_in 'Deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
 
     page.find('#meal_lat').set('34.00000000')
     page.find('#meal_lon').set('34.00000000')
@@ -48,8 +48,9 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert_difference("Meal.count") do
       click_on("submit")
     end
+    
 
-    assert page.has_content?('meal created successfully')
+    assert page.has_content?('Meal successfully saved!')
     sign_out
 
     visit '/'
@@ -61,14 +62,14 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     sign_in_as("user2@gmail.com", "123456")
 
-    click_on('Gulasch scharf und mit Knödel')
+    click_on('show')
     click_on('send meal request')
 
-    assert page.has_content?('Meal arrangement was successfully created.')
+    assert page.has_content?('Meal arrangement was successfully created')
     assert page.has_css?('form', :count => 1)
     click_on('delete meal request')
 
-    assert page.has_content?('Meal arrangement was successfully deleted.')
+    assert page.has_content?('Meal arrangement was successfully deleted')
     
     sign_out
   end

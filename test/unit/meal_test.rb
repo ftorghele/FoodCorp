@@ -8,6 +8,7 @@ class MealTest < ActiveSupport::TestCase
   should validate_presence_of(:deadline)
   should validate_presence_of(:lat)
   should validate_presence_of(:lon)
+  should validate_presence_of(:slots)
   
   should "provide information of itself" do
     meal = Meal.new(:title => "title", 
@@ -16,7 +17,8 @@ class MealTest < ActiveSupport::TestCase
                     :deadline => Time.now,
                     :time => Time.now,
                     :lat => 47.7992391,
-                    :lon => 13.0440699
+                    :lon => 13.0440699,
+                    :slots => 3
                     )
     meal.save
     

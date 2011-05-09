@@ -18,10 +18,10 @@ FoodCorp::Application.routes.draw do
      match 'about' => :about
      match 'imprint' => :imprint
      match 'terms' => :terms
-     match 'home' => :home
+     match 'tour' => :tour
   end
   
-  root :to => "pages#home"
+  root :to => "meals#index"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

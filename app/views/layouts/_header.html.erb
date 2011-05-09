@@ -29,12 +29,12 @@
 	</div>
 	
 	<ul class="navigation">
+		<li><%= link_to( "Eat", meals_path) %></li>
 		<% if user_signed_in? %>
-			<%= link_to( "Eat", meals_path) %>
-			<%= link_to( "Cook", new_meal_path) %>
+			<li><%= link_to( "Cook", new_meal_path) %></li>
 		<%end%>
 		
-		<li class="calendar">&nbsp;</li>
+		<li><%= link_to Time.now.localtime.strftime("%d"), "#", :class => "calendar" %></li>
 	</ul>
 	
 </div>

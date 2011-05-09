@@ -2,8 +2,7 @@
 
 <% if user_signed_in? %>
   <% if current_user.id == @user.id %>
-      <%= render "calendar"%>
-      <%= link_to('edit Profile', edit_user_registration_path) %>
+    <%= link_to('edit Profile', edit_user_registration_path) %>
   <% end %>
 <% end %>
 

@@ -20,6 +20,10 @@ FoodCorp::Application.routes.draw do
      match 'terms' => :terms
      match 'tour' => :tour
   end
+
+  controller :ajax do
+     match 'ajax/calendar' => :calendar
+  end
   
   root :to => "meals#index"
   

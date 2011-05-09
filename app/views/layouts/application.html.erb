@@ -3,39 +3,24 @@
 <head>
   <title><%= I18n.t 'application.title'  %> </title>
   <%= stylesheet_link_tag :all %>
-  
- <script src="https://www.google.com/jsapi?key=ABQIAAAACgNO_c14SUkJV3aDiCr7MxRJT3b0KPQOnBR8dmunPTpFM86vyRQJk0oK7F9eiq3o3fsZI2rygmkd2w" type="text/javascript"></script>
-<script language="Javascript" type="text/javascript">
-    //<![CDATA[
-
-    google.load("maps", "true");
-
-		//]]>
-</script>
-
   <%= csrf_meta_tag %>
-	<script language="JavaScript" src="/javascripts/jquery.min.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/jquery-ui.min.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/jquery.maps.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/jquery.timepicker.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/geo.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/foodcorp.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/cufon.js" type="text/javascript"></script>
-	<script language="JavaScript" src="/javascripts/bellopro_400.font.js" type="text/javascript"></script>
-	<script language="Javascript" type="text/javascript">
-			Cufon.replace('#header h1');
-	</script>
-	<script language="JavaScript" src="http://www.geoplugin.net/javascript.gp" type="text/javascript"></script>
+  <script src="https://www.google.com/jsapi?key=ABQIAAAACgNO_c14SUkJV3aDiCr7MxRJT3b0KPQOnBR8dmunPTpFM86vyRQJk0oK7F9eiq3o3fsZI2rygmkd2w" type="text/javascript"></script>
+  <script language="Javascript" type="text/javascript">
+    //<![CDATA[
+      google.load("maps", "true");
+    //]]>
+  </script>
+  <%= javascript_include_tag "jquery.min", "jquery-ui.min", "rails", "jquery.maps", "jquery.cookie", "jquery.timepicker", "geo", "foodcorp", "http://www.geoplugin.net/javascript.gp" %>
 </head>
 <body>
-	
-
   <%= render 'layouts/header' %>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-
-  <%= yield %>
-  
+  <div id="notifications">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  </div>
+  <div id="main">
+    <%= yield %>
+  </div>
   <div id="footer">
   	<%= link_to "About", about_path %> 
 	<%= link_to "Imprint", imprint_path %> 

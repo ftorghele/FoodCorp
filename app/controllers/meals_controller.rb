@@ -1,6 +1,7 @@
 class MealsController < ApplicationController
   
   before_filter :check_time, :only => [:create, :update]
+  before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
   
   def index
    @meals = Meal.find(:all)
@@ -56,6 +57,14 @@ class MealsController < ApplicationController
         
       end
       
+  end
+  
+  protected
+  def check_login
+    unless current_user
+      flash[:alert] = I18n.t('application.access_denied')
+      redirect_to root_path
+    end
   end
 
 end

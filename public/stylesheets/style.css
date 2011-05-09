@@ -6,6 +6,19 @@
         Purpose of the stylesheet follows.
 */
 
+/* ---- FONTS BEGIN ----*/
+@font-face {
+    font-family: 'BelloProRegular';
+    src: url('../fonts/bellopro-webfont.eot');
+    src: url('../fonts/bellopro-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/bellopro-webfont.woff') format('woff'),
+         url('../fonts/bellopro-webfont.ttf') format('truetype'),
+         url('../fonts/bellopro-webfont.svg#BelloProRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* ---- FONTS END ----*/
+
 /* ---- BASIC BEG ----- */
 * {
 	margin:0px;
@@ -26,6 +39,11 @@ h1 {
 	float:left;
 	padding:0 0 0 40px;
 	height:40px;
+}
+
+h1#logo {
+    font-family: BelloProRegular;
+    font-weight: 400;
 }
 
 h2, h2 a {
@@ -162,8 +180,7 @@ h2 a {
 /* HOME PAGE END */
 
 #footer {
-	position:absolute;
-	bottom:15px;
+
 }
 
 .float_right {
@@ -304,4 +321,3 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 }
 /* ---- USER_PROFILE END ----*/
 
- 

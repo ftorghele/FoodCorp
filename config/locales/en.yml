@@ -46,6 +46,7 @@ en:
     accept_fail: "Meal arrengement acceptance failed"
     delete_success: "Meal arrangement was successfully deleted"
     delete_fail: "Meal arrengement delete failed"
+    point_fail: "You don't have enough credits to make a request!"
     
   message:
     reject: "Meal arrangement rejected"

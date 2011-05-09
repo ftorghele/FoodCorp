@@ -19,57 +19,26 @@
   <% @user.info_field %>	
 </div>
 
-<%if current_user %>
-  <%if current_user.id == @user.id %>
-    <div id="meal_arrangement_requests">
-      <% @meals.each do |meal|%>
-        <% meal.meal_arrangements.each do |meal_arrangement| %>
-          <%if meal_arrangement.acceptance == false%>
-            <%=meal.title%>: <%= meal.description %><br/>
-            <%= meal_arrangement.user.first_name %>
-            <%= meal_arrangement.user.last_name %><br/>
-            <%= link_to "Delete", meal_arrangement_path( meal_arrangement.id), :method => 'delete', :confirm => 'Really delete?', :class => 'delete' %>
-            <%= link_to "Accept", meal_arrangement_path( meal_arrangement.id), :method => 'put', :confirm => 'Really accept?', :class => 'accept' %>
-          <%end%>
-        <%end%>
-      <%end%>
-    </div>
-  <%end%>
-<%end%>
+<%= render "meal_arrangement_requests" %>
 
 <div id="provided_meals">
   <% @meals.each do |meal|%>
     <%unless current_user %>
       <%= link_to meal_path(meal.id) do %> 
-        <div class="meal">
-          <div class="title"><%= meal.title %></div>
-          <div class="description"><%= meal.description %></div>
-          <input type="hidden" title="lat" value="<%= meal.lat%>" />
-          <input type="hidden" title="lon" value="<%= meal.lon%>" />
-	</div>
-      <% end %>
+        <%= render "meal", :meal => meal %>
+    	<% end %>
     <%else%>
       <%if current_user.id == meal.user_id %>
         <%= link_to edit_meal_path(meal.id) do %> 
-	<div class="meal">
-          <div class="title"><%= meal.title %></div>
-          <div class="description"><%= meal.description %></div>
-          <input type="hidden" title="lat" value="<%= meal.lat%>" />
-          <input type="hidden" title="lon" value="<%= meal.lon%>" />
-        </div>
-          <% end %>
-        <%else%>
-          <%= link_to meal_path(meal.id) do %> 
-          <div class="meal">
-            <div class="title"><%= meal.title %></div>
-            <div class="description"><%= meal.description %></div>
-            <input type="hidden" title="lat" value="<%= meal.lat%>" />
-            <input type="hidden" title="lon" value="<%= meal.lon%>" />
-           </div>
-         <% end %>
-        <% end %>
-      <%end%>
-    <%end%>
+					<%= render "meal", :meal => meal %>
+      	<% end %>
+    	<%else%>
+				<%= link_to meal_path(meal.id) do %> 
+					<%= render "meal", :meal => meal %>
+				<% end %>
+			<% end %>
+		<%end%>
+  <%end%>
 </div>
 
 <% unless current_user == @user %>

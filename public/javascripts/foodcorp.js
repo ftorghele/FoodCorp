@@ -21,7 +21,10 @@ $(document).ready(function() {
 	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	
 	// Home Page currentLocation div
-	$('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city() )
+	$('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
+	
+	//if location is determined, set cookie for geo.js
+	($.cookie("longitude") && $.cookie("latitude"))? geo_set = true : geo_set = false;
 	
 	// get default User inputs
 	$('form.new_meal > :input, form.edit_meal > :input').each(function() {
@@ -118,9 +121,9 @@ $(document).ready(function() {
 									            }
 									}];
 		}
-								
-		$('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
-		$('#meal_lon').val(result.Placemark[0].Point.coordinates[0]);
+		
+		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
+		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
 		
 		drawMap(loc);
 	}
@@ -128,11 +131,14 @@ $(document).ready(function() {
 	
 	// SLOW!
 	// determine if the handset has client side geo location capabilities
-	if (navigator.geolocation) {
-	  navigator.geolocation.getCurrentPosition(geo_success, geo_error);
-	  drawMap();
-	} else {
-	  drawMap(loc);
+	if(geo_set) {
+		if (navigator.geolocation) {
+	  		navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+
+	  		drawMap();
+		} else {
+	  		drawMap(loc);
+			} 
 	}
 	
 	if (geo_position_js.init()) {
@@ -146,9 +152,18 @@ $(document).ready(function() {
 	function geo_success(p) {
 		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
 		geojsmarker = [{'latitude' : p.coords.latitude,
-		 		   'longitude' : p.coords.longitude,
-				   'draggable' : true}];
+		 		   		'longitude' : p.coords.longitude,
+				   		'draggable' : true,
+						icon: { 
+					                image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+					                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+					                iconSize: '12, 20', 
+					                shadowSize: '22, 20' 
+					   }}];
 		drawMap();
+		
+		$.cookie("longitude", p.coords.longitude);
+		$.cookie("latitude", p.coords.latitude);
 	}
 		
 	function drawMap(env) {
@@ -174,7 +189,6 @@ $(document).ready(function() {
 		});
 		
 		if (window.geojsmarker && geojsmarker[0].latitude) {
-			console.log('active')
 			$('#map').googleMaps({
 			    	latitude: geojsmarker[0].latitude,
 			        longitude: geojsmarker[0].longitude,

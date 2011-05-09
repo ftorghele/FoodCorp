@@ -76,7 +76,7 @@ var geo_position_js=function() {
                         }
                         else if (typeof(navigator.geolocation)!="undefined")
                         {
-                                provider=navigator.geolocation;
+                                //provider=navigator.geolocation;
                                 pub.getCurrentPosition = function(successCallback, errorCallback, options)
                                 {
                                         function _successCallback(p)

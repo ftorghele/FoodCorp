@@ -35,12 +35,12 @@
 			</div>
 		<%else%>
 			<div class="meal_show_buttons">
-				<%= link_to "Sign in", user_path %>
+				<%= link_to "Sign in", user_session_path %>
 			</div>
 		<%end%>
 	<%else%>	
 		<div class="meal_show_buttons">
-			<%= link_to "Sign in", user_path %>
+			<%= link_to "Sign in", user_session_path %>
 		</div>
 	<%end%>
 <% end %>

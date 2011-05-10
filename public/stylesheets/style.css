@@ -58,6 +58,10 @@ h2 a {
 	font-style:italic;
 }
 
+h3{
+	color:#000;
+}
+
 #main {
 	width:850px;
 	margin:38px auto 0 auto;
@@ -121,6 +125,7 @@ h2 a {
 }
 
 .navigation a#calendar{
+	color:#000;
 	margin:14px 80px 0 300px;
 	padding:18px 0 0 13px;
 	width:43px;
@@ -298,7 +303,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 #provided_meals, #meals_distance_stream {
 	background:#ccc;
 	width:200px;
-	position:absolute;
 	left:400px;
 }
 
@@ -317,6 +321,32 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 	font-size:10px;
 }
 
+
+.menu{
+	width:400px;
+	list-style:none;
+	height:78px;
+	padding: 0 0 0 100px;
+	background-color:#c6c6c6;
+	float:left;
+}
+.menu a{
+	color: #fff;
+	text-transform:uppercase;
+	letter-spacing:2px;
+	float:left;
+	font-size:20px;
+	font-weight:100;
+	margin:25px 80px 0 0;
+}
+#user_information{
+	width: 150px;
+	float:left;
+}
+
+
+/* ---- USER_PROFILE END ----*/
+
 .calendar_meal_arrangement{
     background-color: deeppink;
 }
@@ -328,5 +358,3 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 	height:50px;
 	background-color: green;
 }
-/* ---- USER_PROFILE END ----*/
-

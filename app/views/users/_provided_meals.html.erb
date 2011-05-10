@@ -1,0 +1,19 @@
+<div id="provided_meals">
+  <% @meals.each do |meal|%>
+    <%unless current_user %>
+      <%= link_to meal_path(meal.id) do %> 
+        <%= render "meal", :meal => meal %>
+    	<% end %>
+    <%else%>
+      <%if current_user.id == meal.user_id %>
+        <%= link_to edit_meal_path(meal.id) do %> 
+					<%= render "meal", :meal => meal %>
+      	<% end %>
+    	<%else%>
+				<%= link_to meal_path(meal.id) do %> 
+					<%= render "meal", :meal => meal %>
+				<% end %>
+			<% end %>
+		<%end%>
+  <%end%>
+</div>

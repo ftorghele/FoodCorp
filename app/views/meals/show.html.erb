@@ -1,5 +1,5 @@
-<div id="meal_show">
-	
-	<%= render 'meal' %>
-		
-</div>
+<%= render(:partial => 'layouts/menu', :user => @user ) %>
+<%= render 'layouts/user_information' %>
+<div class="clear"></div>
+
+<%= render 'meal' %>	

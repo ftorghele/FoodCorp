@@ -1,4 +1,6 @@
+
 $(document).ready(function() {
+	
 	
 	// Sign Up Animation
 	$('.signup_form_animate').click(function() {

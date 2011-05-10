@@ -9,12 +9,14 @@ class MealsController < ApplicationController
   end
 
   def new 
+    @user = current_user
     @meal = Meal.new
   end 
   
   def show
     @meal = Meal.find(params[:id])
     @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first
+    @user = User.find( @meal.user_id )
   end
 
   def create
@@ -39,25 +41,19 @@ class MealsController < ApplicationController
     else
       redirect_to edit_meal_path(@meal.id),  :alert => I18n.t('meal.create_fail')
     end
-
   end
   
   def destroy
-    
   end
   
   private
   def check_time
-    
       params[:meal][:time] = params[:meal][:time].to_datetime.to_i
       params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
     
-      if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i) 
-      
-        redirect_to :back,  :alert => I18n.t('meal.time_fail')
-        
-      end
-      
+    if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i) 
+      redirect_to :back,  :alert => I18n.t('meal.time_fail')
+    end
   end
   
   protected
@@ -67,5 +63,4 @@ class MealsController < ApplicationController
       redirect_to root_path
     end
   end
-
 end

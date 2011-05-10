@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 	
 
@@ -18,9 +17,9 @@ $(document).ready(function() {
 			return true;
 		}
 	});
-	
 		
 	// MAPS
+	depth = 15;
 	marker = [];
 	markers = [];
 	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
@@ -29,7 +28,7 @@ $(document).ready(function() {
 	// Home Page currentLocation div
 	$('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
 	
-	//if location is determined, set cookie for geo.js
+	// check if HTML5 geolocation cookie available
 	($.cookie("longitude") && $.cookie("latitude"))? geo_set = true : geo_set = false;
 	
 	// get default User inputs
@@ -39,8 +38,6 @@ $(document).ready(function() {
 			// wenn keine Daten vorhanden sind
 			if($(this).val() != "") loc[pos1] = $(this).val();
 		}
-		
-		
 	});	
 	
 	// update Map when changing inputs
@@ -48,9 +45,9 @@ $(document).ready(function() {
       if(jQuery.inArray($(this).attr('name'), a ) >=0) {
           var pos = a.indexOf( $(this).attr('name') );
           loc[pos] = $(this).val();
-		  geocoder.getLocations(loc.join(', '), addToMap);
+		  		geocoder.getLocations(loc.join(', '), addToMap);
       }
-    });
+  });
 
 	// Validate inputs for new meal
 	$('form.new_meal, form.edit_meal').submit(function() {
@@ -73,45 +70,6 @@ $(document).ready(function() {
 		else return true;
 	});
 	
-
-	
-	
-	function addToMap(result) {
-		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);		
-		
-		// SET LOCAL POSITION MARKER (BLUE)
-		//console.log(result.Placemark);
-		
-		if(typeof(result.Placemark) != 'undefined') marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
-								 'longitude': result.Placemark[0].Point.coordinates[0],
-								'draggable': true,
-								icon: { 
-								                image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
-								                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
-								                iconSize: '12, 20', 
-								                shadowSize: '22, 20' 
-								            }
-								}];
-								
-		if($('#currentLocation').val() != "" && $('#meal_lon').val() !="" && $('#meals_distance_stream').length == 0) {
-			marker = [{'latitude': $('input#meal_lat').val(), 
-									 'longitude': $('input#meal_lon').val(),
-									'draggable': true,
-									icon: { 
-									                image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
-									                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
-									                iconSize: '12, 20', 
-									                shadowSize: '22, 20' 
-									            }
-									}];
-		}
-		
-		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
-		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
-		
-		drawMap(loc);
-	}
-	
 	
 	// SLOW!
 	// determine if the handset has client side geo location capabilities
@@ -119,7 +77,7 @@ $(document).ready(function() {
 		if (navigator.geolocation) {
 	  		navigator.geolocation.getCurrentPosition(geo_success, geo_error);
 
-	  		drawMap();
+	  		drawMap(loc);
 		} else {
 	  		drawMap(loc);
 			} 
@@ -134,7 +92,6 @@ $(document).ready(function() {
 	}
 	
 	function geo_success(p) {
-		console.log('geo.js: LAT'+ p.coords.latitude + ' LON' + p.coords.longitude)
 		geojsmarker = [{'latitude' : p.coords.latitude,
 		 		   		'longitude' : p.coords.longitude,
 				   		'draggable' : true,
@@ -144,13 +101,11 @@ $(document).ready(function() {
 					                iconSize: '12, 20', 
 					                shadowSize: '22, 20' 
 					   }}];
-		drawMap();
+		drawMap(loc);
 		
 		$.cookie("longitude", p.coords.longitude);
 		$.cookie("latitude", p.coords.latitude);
 	}
-		
-	
 	
 	// Create new geocoding object
 	geocoder = new GClientGeocoder();
@@ -211,49 +166,36 @@ function panTo(lat, lon) {
 }
 
 function drawMap(env, rails) {
-                
-                get_markers();
-
-		if(!rails && markers.length >= 1) $.merge(marker, markers); // merge current position marker with meal list markers
-
-                if(rails) marker = geocoder.getLocations(env.join(', '), alert('Markers not working'));
-                
-		if(env && !window.geojsmarker)
+		get_markers();
+		
+		if(rails) { // Rails request - Update map
+			railsenv = true;
+			geocoder.getLocations(env.join(', '), addToMap);
+			return true;
+		}
+     
+		mergeMarkers(marker, markers);
+		
+		if(geo_set)
+		mergeMarkers(marker, geojsmarker);
+		
 		$('#map').googleMaps({
 				geocode: env.join(', '),
 				markers: marker,
+				depth: depth,
 				controls: {
-				            mapType: [{
-							                remove: 'G_SATELLITE_MAP'
-							            }, {
-							                remove: 'G_NORMAL_MAP'
-							            }],
-							type: {},
-										zoom: {
-											control: 'GSmallZoomControl'
-								}
-				        }
-		});
-
-		if (window.geojsmarker && geojsmarker[0].latitude) {
-			$('#map').googleMaps({
-			    	latitude: geojsmarker[0].latitude,
-			        longitude: geojsmarker[0].longitude,
-					markers: geojsmarker,
-					controls: {
-					            mapType: [{
-								                remove: 'G_SATELLITE_MAP'
-								            }, {
-								                remove: 'G_NORMAL_MAP'
-								            }],
-								type: {},
-											zoom: {
-												control: 'GSmallZoomControl'
-									}
-					        }
-			    });
-		}
-	}
+					mapType: [{
+						remove: 'G_SATELLITE_MAP'
+					}, {
+						remove: 'G_NORMAL_MAP'
+						}],
+						type: {},
+						zoom: {
+							control: 'GSmallZoomControl'
+						}
+					}
+				});
+			}
 
         // Grabs Locations for Meals, output them as Markers on the map
 	function get_markers() {
@@ -277,4 +219,44 @@ function drawMap(env, rails) {
 
 		return markers;
 
+	}
+	
+	function mergeMarkers(marker1, marker2) {
+		$.merge(marker1, marker2);
+	}
+
+	function addToMap(result) {
+		
+		if(typeof(result) != 'undefined') 
+		marker = [{'latitude': result.Placemark[0].Point.coordinates[1], 
+							'longitude': result.Placemark[0].Point.coordinates[0],
+							'draggable': true,
+							icon: { 
+										 image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+										 shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+										 iconSize: '12, 20', 
+										 shadowSize: '22, 20' 
+							}
+		}];
+
+		else if($('#currentLocation').val() != "" && $('#meal_lon').val() !="" && $('#meals_distance_stream').length == 0) {
+			marker = [{'latitude': $('input#meal_lat').val(), 
+								'longitude': $('input#meal_lon').val(),
+								'draggable': true,
+								icon: { 
+											 	image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+				                shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
+				                iconSize: '12, 20', 
+				                shadowSize: '22, 20' 
+				        }
+			}];
+		}
+
+		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
+		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
+		
+		if(typeof railsenv != 'undefined')
+		drawMap(env);
+		else drawMap(loc);
+	
 	}

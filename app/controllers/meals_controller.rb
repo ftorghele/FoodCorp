@@ -4,7 +4,7 @@ class MealsController < ApplicationController
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
   
   def index
-   @meals = Meal.find(:all, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
+   @meals = Meal.find(:all, :order => "created_at desc", :limit => 10, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
    @coords = request.location;
   end
 

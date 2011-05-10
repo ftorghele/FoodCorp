@@ -197,14 +197,14 @@ ul.navigation a#calendar{
 	color:#fff;
 	font-size:10px;
 	font-weight:bold;
-	background:url('/images/wrapper.png') top left no-repeat;
+	background:url('/images/wrapper.png') top left repeat-x;
 	padding:3px 0 0 6px;
-	z-index:10;
+        margin-right: 40px;
+        float: left;
 }
 
 .wrapper div {
 	top:2px;
-	z-index:10;
 }
 
 /* HOME PAGE END */
@@ -314,8 +314,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 #provided_meals, #meals_distance_stream {
 	background:#ccc;
 	width:200px;
-	position:absolute;
-	left:400px;
 }
 
 #provided_meals div.meal, #meals_distance_stream div.meal{

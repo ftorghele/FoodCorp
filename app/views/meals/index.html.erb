@@ -2,15 +2,17 @@
 
 <div class="mealfind">You are in: <span id="currentLocation"></span></div>
 
-<input type="text" id="searchLocation" placeholder="Search your Location..." />
-<div id="radius" class="hoverSelect">
-        <span>Radius...</span>
-        <div>5km</div>
-        <div>10km</div>
-        <div>15km</div>
-        <div>20km</div>
-</div>
+<%= form_tag(ajax_updatemap_path, :remote => true,  :id => "address") do %>
+  <%= text_field_tag :searchLocation, nil, :placeholder => 'enter your location...' %>
+  Radius: <%= select_tag :radius, options_for_select([ 5, 10, 15, 20 ], 10), :class => "hoverSelect" %> km
+  <%= submit_tag 'GO' %>
+<% end %>
+
 <div class="wrapper">Your Neighborhood
-        <div id="map" style="height:300px; width: 301px;"></div>
+  <div id="map" style="height:300px; width: 450px;"></div>
 </div>
-<%= render 'meals_distance_stream' %>
+
+<div class="wrapper">Latest Meals
+  <%= render 'meals_distance_stream' %>
+</div>
+  <div class="clr"></div>

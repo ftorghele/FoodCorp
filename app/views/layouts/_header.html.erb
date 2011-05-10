@@ -35,8 +35,10 @@
 			<li><%= link_to( "Cook", new_meal_path) %></li>
 		<%end%>
 		
-		<li><% link_to(Time.now.localtime.strftime("%d"), url_for(:controller => :ajax, :action => "calendar"), :remote => true, :id => "calendar") %></li>
-                <li id="calendar_body"></li>
+		<li><% link_to(Time.now.localtime.strftime("%d"), url_for(:action => "calendar", :controller => "ajax"), :remote => true, :id => "calendar") %></li>
+		<div class="clear"></div>
 	</ul>
+	
+	<div id="calendar_container"></div>
 	
 </div>

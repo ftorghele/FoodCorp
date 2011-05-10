@@ -59,6 +59,7 @@ h2 a {
 }
 
 #main {
+	position:relative;
 	width:850px;
 	margin:38px auto 0 auto;
 }
@@ -120,18 +121,33 @@ h2 a {
 	margin:25px 80px 0 0;
 }
 
-.navigation a#calendar{
+ul.navigation a#calendar{
 	margin:14px 80px 0 300px;
 	padding:18px 0 0 13px;
 	width:43px;
-	height:33px;
+	height:45px;
 	background: url('../images/calendar.png') top left no-repeat;
 	font-family:"Times New Roman";
 	font-size:24px;
+	color:#000;
 }
 
 #calendar_body {
-    background-color: #000;
+	margin:0 0 0 600px;
+	position:absolute;
+	border:3px solid #999;
+	width:200px;
+	height:400px;
+	z-index:11;
+	display:block;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	background:#ccc;
+}
+
+#calendar_body .day {
+	margin:10px;
 }
 
 /* HEADER & NAVIGATION END */
@@ -183,12 +199,12 @@ h2 a {
 	font-weight:bold;
 	background:url('/images/wrapper.png') top left no-repeat;
 	padding:3px 0 0 6px;
-	z-index:1000;
+	z-index:10;
 }
 
 .wrapper div {
 	top:2px;
-	z-index:100;
+	z-index:10;
 }
 
 /* HOME PAGE END */
@@ -317,13 +333,14 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 	font-size:10px;
 }
 
-.calendar_meal_arrangement{
+#calendar .calendar_meal_arrangement{
     background-color: deeppink;
 }
-.calendar_provided_meal{
+#calendar .calendar_provided_meal{
     background-color: red;
 }
-.day{
+
+#calendar .day{
 	width:300px;
 	height:50px;
 	background-color: green;

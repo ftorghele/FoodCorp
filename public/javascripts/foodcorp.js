@@ -1,5 +1,8 @@
 $(document).ready(function() {
 	
+	// notifications/FLash Messages
+	$('p.notice').fadeOut(5000);
+	
 	// Sign Up Animation
 	$('.signup_form_animate').click(function() {
 		if($('.signup_form_animate').html() == "Login") {

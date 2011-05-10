@@ -4,5 +4,21 @@
 %>
 
 env = [<%=raw  @searchLocation %>]
+<%
+case @radius.to_i
+when 5
+	depth = 17
+when 10
+	depth = 16
+when 15
+	depth = 14
+when 20
+	depth = 13
+else
+	depth = 12
+end
+%>
 
-drawMap(env, 'true');
+depth = <%=raw  depth %>
+
+drawMap(env, 'true', depth);

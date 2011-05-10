@@ -165,12 +165,13 @@ function panTo(lat, lon) {
 	$.googleMaps.gMap.setCenter(point);
 }
 
-function drawMap(env, rails) {
+function drawMap(env, rails, railsdepth) {
 		get_markers();
 		
 		if(rails) { // Rails request - Update map
 			railsenv = true;
 			geocoder.getLocations(env.join(', '), addToMap);
+			depth = railsdepth;
 			return true;
 		}
      

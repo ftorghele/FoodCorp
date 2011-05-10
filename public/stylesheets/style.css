@@ -63,6 +63,7 @@ h3{
 }
 
 #main {
+	position:relative;
 	width:850px;
 	margin:38px auto 0 auto;
 }
@@ -129,14 +130,29 @@ h3{
 	margin:14px 80px 0 300px;
 	padding:18px 0 0 13px;
 	width:43px;
-	height:33px;
+	height:45px;
 	background: url('../images/calendar.png') top left no-repeat;
 	font-family:"Times New Roman";
 	font-size:24px;
+	color:#000;
 }
 
 #calendar_body {
-    background-color: #000;
+	margin:0 0 0 600px;
+	position:absolute;
+	border:3px solid #999;
+	width:200px;
+	height:400px;
+	z-index:11;
+	display:block;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	border-radius: 15px;
+	background:#ccc;
+}
+
+#calendar_body .day {
+	margin:10px;
 }
 
 /* HEADER & NAVIGATION END */
@@ -186,14 +202,14 @@ h3{
 	color:#fff;
 	font-size:10px;
 	font-weight:bold;
-	background:url('/images/wrapper.png') top left no-repeat;
+	background:url('/images/wrapper.png') top left repeat-x;
 	padding:3px 0 0 6px;
-	z-index:1000;
+        margin-right: 40px;
+        float: left;
 }
 
 .wrapper div {
 	top:2px;
-	z-index:100;
 }
 
 /* HOME PAGE END */
@@ -303,7 +319,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 #provided_meals, #meals_distance_stream {
 	background:#ccc;
 	width:200px;
-	left:400px;
 }
 
 #provided_meals div.meal, #meals_distance_stream div.meal{
@@ -320,7 +335,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 #provided_meals div.meal div.description, #meals_distance_stream div.meal div.description {
 	font-size:10px;
 }
-
 
 .menu{
 	width:400px;
@@ -347,13 +361,11 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 
 /* ---- USER_PROFILE END ----*/
 
-.calendar_meal_arrangement{
-    background-color: deeppink;
-}
-.calendar_provided_meal{
+#calendar .calendar_provided_meal{
     background-color: red;
 }
-.day{
+
+#calendar .day{
 	width:300px;
 	height:50px;
 	background-color: green;

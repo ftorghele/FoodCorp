@@ -1,6 +1,11 @@
 class AjaxController < ApplicationController
   respond_to :js
 
+  def update_map
+    @searchLocation = params[:searchLocation].split(" ")
+    @radius = params[:radius]
+  end
+
   def calendar
     currentTime = Time.now.to_datetime.to_i
     futureTime = currentTime + (7*60*60*24)

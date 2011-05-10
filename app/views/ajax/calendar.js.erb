@@ -3,4 +3,12 @@
 # and open the template in the editor.
 %>
 
-$("#calendar_body").append('<div id="calendar_body">CALENDAR<% for i in 0..6%><div class="day"><% @user_tasks.each do |task| %><%if Time.now.day+i ==  Time.at(task[0]["time"]).day %><% t = find_meal(:meal_id => task[0]["meal_id"] )  %><% if task[0]["flag"] == true %><% link_to edit_meal_path(t.id) do %><div class="calendar_provided_meal"><%= Time.at(t.time).utc %><%= t.title %><%= t.description %></div><%end%><% else %><% link_to meal_path(t.id) do%><div class="calendar_meal_arrangement"><%= Time.at(t.time).utc %><%= t.title %><%= t.description %></div><%end%><%end%><%end%><%end%></div><% end %></div>');
+if($('#calendar_body').length <= 0) {
+$("#calendar_container").append('<div id="calendar_body"><% for i in 0..6%><div class="day"><% @user_tasks.each do |task| %><%if Time.now.day+i ==  Time.at(task[0]["time"]).day %><% t = find_meal(:meal_id => task[0]["meal_id"] )  %><% if task[0]["flag"] == true %><% link_to edit_meal_path(t.id) do %><div class="calendar_provided_meal"><%= Time.at(t.time).utc %><%= t.title %><%= t.description %></div><%end%><% else %><% link_to meal_path(t.id) do%><div class="calendar_meal_arrangement"><%= Time.at(t.time).utc %><%= t.title %><%= t.description %></div><%end%><%end%><%end%><%end%></div><% end %></div>').hide();
+$("#calendar_container").fadeIn(500);
+}
+
+else {
+	$("#calendar_container").fadeOut(500);
+	$("#calendar_body").remove();
+}

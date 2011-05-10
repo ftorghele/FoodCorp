@@ -1,6 +1,10 @@
 
 $(document).ready(function() {
 	
+
+	// notifications/FLash Messages
+	$('p.notice').fadeOut(5000);
+
 	
 	// Sign Up Animation
 	$('.signup_form_animate').click(function() {
@@ -70,29 +74,7 @@ $(document).ready(function() {
 	});
 	
 
-	// Grabs Locations for Meals, output them as Markers on the map
-	function get_markers() {
-		$('div.meal').each(function() {
-			$(this).children('input').each(function() {
-				if($(this).attr('title') == 'lat') lat = $(this).val();
-				else lon = $(this).val();
-				
-				// meal hidden, shown at markerclick
-				//info = '#'+$(this).parent('div').attr('id');
-			})
-			markers.push({'latitude': lat, 
-						  'longitude': lon,
-						  'draggable': false,
-							icon: {  
-							      shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow', 
-							      shadowSize: '22, 20' 
-								} 
-						});
-		})
-		
-		return markers;
-		
-	}
+	
 	
 	function addToMap(result) {
 		//console.log("other: LAT"+ result.Placemark[0].Point.coordinates[1] +" LON"+ result.Placemark[0].Point.coordinates[0]);		
@@ -168,47 +150,7 @@ $(document).ready(function() {
 		$.cookie("latitude", p.coords.latitude);
 	}
 		
-	function drawMap(env) {
-		get_markers();
-		
-		if(markers.length >= 1) $.merge(marker, markers); // merge current position marker with meal list markers
-		
-		if(env && !window.geojsmarker)
-		$('#map').googleMaps({
-				geocode: env.join(', '),
-				markers: marker,
-				controls: {
-				            mapType: [{ 
-							                remove: 'G_SATELLITE_MAP' 
-							            }, { 
-							                remove: 'G_NORMAL_MAP' 
-							            }],
-							type: {},
-										zoom: {
-											control: 'GSmallZoomControl'
-								}
-				        }
-		});
-		
-		if (window.geojsmarker && geojsmarker[0].latitude) {
-			$('#map').googleMaps({
-			    	latitude: geojsmarker[0].latitude,
-			        longitude: geojsmarker[0].longitude,
-					markers: geojsmarker,
-					controls: {
-					            mapType: [{ 
-								                remove: 'G_SATELLITE_MAP' 
-								            }, { 
-								                remove: 'G_NORMAL_MAP' 
-								            }],
-								type: {},
-											zoom: {
-												control: 'GSmallZoomControl'
-									}
-					        }
-			    });
-		}
-	}
+	
 	
 	// Create new geocoding object
 	geocoder = new GClientGeocoder();
@@ -267,3 +209,72 @@ function panTo(lat, lon) {
 	//currentPoint = $.googleMaps.gMap.getCenter();
 	$.googleMaps.gMap.setCenter(point);
 }
+
+function drawMap(env, rails) {
+                
+                get_markers();
+
+		if(!rails && markers.length >= 1) $.merge(marker, markers); // merge current position marker with meal list markers
+
+                if(rails) marker = geocoder.getLocations(env.join(', '), alert('Markers not working'));
+                
+		if(env && !window.geojsmarker)
+		$('#map').googleMaps({
+				geocode: env.join(', '),
+				markers: marker,
+				controls: {
+				            mapType: [{
+							                remove: 'G_SATELLITE_MAP'
+							            }, {
+							                remove: 'G_NORMAL_MAP'
+							            }],
+							type: {},
+										zoom: {
+											control: 'GSmallZoomControl'
+								}
+				        }
+		});
+
+		if (window.geojsmarker && geojsmarker[0].latitude) {
+			$('#map').googleMaps({
+			    	latitude: geojsmarker[0].latitude,
+			        longitude: geojsmarker[0].longitude,
+					markers: geojsmarker,
+					controls: {
+					            mapType: [{
+								                remove: 'G_SATELLITE_MAP'
+								            }, {
+								                remove: 'G_NORMAL_MAP'
+								            }],
+								type: {},
+											zoom: {
+												control: 'GSmallZoomControl'
+									}
+					        }
+			    });
+		}
+	}
+
+        // Grabs Locations for Meals, output them as Markers on the map
+	function get_markers() {
+		$('div.meal').each(function() {
+			$(this).children('input').each(function() {
+				if($(this).attr('title') == 'lat') lat = $(this).val();
+				else lon = $(this).val();
+
+				// meal hidden, shown at markerclick
+				//info = '#'+$(this).parent('div').attr('id');
+			})
+			markers.push({'latitude': lat,
+						  'longitude': lon,
+						  'draggable': false,
+							icon: {
+							      shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow',
+							      shadowSize: '22, 20'
+								}
+						});
+		})
+
+		return markers;
+
+	}

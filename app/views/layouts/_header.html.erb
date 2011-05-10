@@ -35,7 +35,13 @@
 			<li><%= link_to( "Cook", new_meal_path) %></li>
 		<%end%>
 		
-		<li><%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") %></li>
+		<li>
+			<% if user_signed_in? %>
+			<%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") %>
+			<% else %>
+			<%= link_to(Time.now.localtime.strftime("%d"), "#", :id => "calendar") %>
+			<% end %>
+		</li>
 		<div class="clear"></div>
 	</ul>
 	

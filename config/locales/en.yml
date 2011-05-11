@@ -18,7 +18,7 @@ en:
         info_field: "Some Information about you which is displayed on your profile page:"
 
   application:
-    title: "FoodCorp"
+    title: "DinnerCollective"
     access_denied: "Access denied"
     no_such_user: "No such User"
     rights_fail: "no rights for this action"

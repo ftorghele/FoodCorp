@@ -15,4 +15,7 @@
 <div class="wrapper">Latest Meals
   <%= render 'meals_distance_stream' %>
 </div>
-  <div class="clr"></div>
+
+<%= render(:partial => 'users/meal_arrangement_requests', :user_meals => @user_meals)  %>
+
+<div class="clr"></div>

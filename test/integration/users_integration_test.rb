@@ -5,10 +5,10 @@ require 'test_integration_helper'
 class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   should "show facebook sign in page" do
-    #visit '/'
+    visit '/'
     # checking the html structure
-    #assert page.has_css?('a#fb_sign_in', :count => 1)
-    #click_button "Sign in with facebook"
+    assert page.has_css?('a#fb_sign_in', :count => 1)
+    click_on("Sign in with Facebook") 
     #assert page.has_content?('Make Together')
   end
     
@@ -16,15 +16,14 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_in_as("user1@gmail.com", "123456")
 
     click_on('Hans Testuser')
-    assert page.has_css?('h1#profile_name', :count => 1)
+    assert page.has_css?('h3#profile_name', :count => 1)
     
     sign_out
   end
 
-  should "be able to create new meal" do
-
+  should "be able to create new meal send request for meal and accept request" do
+    #Create Meal
     sign_in_as("user1@gmail.com", "123456")
-
     click_on('Cook')
     assert page.has_css?('form', :count => 1)
 
@@ -53,6 +52,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Meal successfully saved!')
     sign_out
 
+    #check created Meal
     visit '/'
     assert page.has_css?('div#meals_distance_stream', :count => 1)
     assert page.has_css?('div.meal', :count => 1)
@@ -60,6 +60,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Gulasch')
     assert page.has_content?('scharf und mit Knödel')
 
+    #create Meal Arrangement
     sign_in_as("user2@gmail.com", "123456")
 
     click_on('show')
@@ -70,6 +71,10 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     click_on('delete meal request')
 
     assert page.has_content?('Meal arrangement was successfully deleted')
+    click_on('send meal request')
+
+
+
     
     sign_out
   end

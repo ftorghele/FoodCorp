@@ -312,8 +312,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 #meal_arrangement_requests{
 	background:#ccc;
 	width:200px;
-	position:absolute;
-	left:200px;
 }
 
 #provided_meals, #meals_distance_stream {

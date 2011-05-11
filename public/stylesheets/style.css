@@ -390,6 +390,12 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
     color: #000;
 }
 
+#meal_show{
+	padding: 10px;
+	margin-top: 4px;
+	background: #ccc;
+}
+
 #provide_meal {
     width: 350px;
 }

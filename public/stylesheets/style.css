@@ -209,7 +209,6 @@ h3{
 }
 
 .wrapper div {
-	top:2px;
 }
 
 /* HOME PAGE END */
@@ -292,6 +291,7 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 /* ---- HOME BEGIN ---- */
 
 #map{
+	z-index:100;
 }
 
 .clear{

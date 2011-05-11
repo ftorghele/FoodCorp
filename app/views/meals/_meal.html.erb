@@ -10,14 +10,14 @@
 				<%= @meal.zip_code %><br>
 				<%= @meal.city %><br>
 				<%= @meal.street %>
-				<%= @meal.street_number%><br><br>
+				<%= @meal.street_number%><br>
 			<% end %>
 		<% end %>
 	<% end %>
-
+	<br>
 	Latitude:  <%= @meal.lat %><br>
 	Longitude: <%= @meal.lon %><br>
-
+	<br>
 	<% if current_user && current_user.id != @meal.user_id %>
 		<%if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
 			<%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>

@@ -31,15 +31,11 @@
 	
 	<ul class="navigation">
 		<li><%= link_to( "Eat", meals_path) %></li>
-		<% if user_signed_in? %>
-			<li><%= link_to( "Cook", new_meal_path) %></li>
-		<%end%>
-
-		<li><%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") if user_signed_in? %></li>
+                <li><%= link_to( "Cook", new_meal_path) if user_signed_in? %></li>
+                <li id="calendar_holder"><%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") if user_signed_in? %><div id="calendar_container"></div></li>
 		<div class="clear"></div>
-
 	</ul>
 	
-	<div id="calendar_container"></div>
+	
 	
 </div>

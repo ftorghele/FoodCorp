@@ -63,7 +63,6 @@ h3{
 }
 
 #main {
-	position:relative;
 	width:850px;
 	margin:38px auto 0 auto;
 }
@@ -78,13 +77,14 @@ h3{
 	background:#000;
 	padding:30px 0 0 0;
 	height:85px;
+        min-width: 850px;
 }
 
 #header div.login {
 	height:90px;
 	float:right;
 	width:300px;
-	margin:-10px 60px 0 0;
+	margin:-10px 0 0 0;
 }
 
 #header div.login img {
@@ -114,6 +114,7 @@ h3{
 .navigation {
 	list-style:none;
 	height:78px;
+        min-width: 750px;
 	padding: 0 0 0 100px;
 	background-color:#ff505a;
 }
@@ -129,7 +130,7 @@ h3{
 
 .navigation a#calendar{
 	color:#000;
-	margin:14px 80px 0 300px;
+	margin:14px 245px 0 0;
 	padding:18px 0 0 13px;
 	width:45px;
 	height:45px;
@@ -139,9 +140,15 @@ h3{
 	color:#000;
 }
 
+li#calendar_holder {
+    position: relative;
+    float: right;
+}
+
 #calendar_body {
-	margin:0 0 0 600px;
 	position:absolute;
+        right: 100px;
+        top: 70px;
 	border:3px solid #999;
 	width:200px;
 	height:400px;
@@ -151,6 +158,10 @@ h3{
 	-webkit-border-radius: 15px;
 	border-radius: 15px;
 	background:#ccc;
+}
+
+#calendar_body a {
+    color: #000;
 }
 
 #calendar_body .day {
@@ -293,7 +304,7 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 /* ---- HOME BEGIN ---- */
 
 #map{
-	z-index:100;
+	
 }
 
 .clear{
@@ -361,10 +372,13 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 
 /* ---- USER_PROFILE END ----*/
 
-#calendar .calendar_provided_meal{
+.calendar_provided_meal{
     background-color: red;
 }
 
+.calendar_meal_arrangement {
+    background-color: green;
+}
 #calendar .day{
 	width:300px;
 	height:50px;

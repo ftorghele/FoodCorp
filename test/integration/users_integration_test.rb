@@ -71,6 +71,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     assert page.has_content?('Meal successfully saved!')
 
+    click_on('Back to Profile')
     click_on('meals')
     assert page.has_content?('Gulasch')
     assert page.has_content?('scharf und mit Knödel')

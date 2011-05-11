@@ -12,10 +12,20 @@
   <div id="map" style="height:300px; width: 450px;"></div>
 </div>
 
+<% if current_user %>
+	<% @user_meals.each do |meal|%>
+		<% meal.meal_arrangements.each do |meal_arrangement| %>
+			<% if meal_arrangement.acceptance == false %>
+				<div class="wrapper">Meal Requests
+					<%= render(:partial => 'users/meal_arrangement_requests', :user_meals => @user_meals)  %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+<% end %>
+
 <div class="wrapper">Latest Meals
   <%= render 'meals_distance_stream' %>
 </div>
-
-<%= render(:partial => 'users/meal_arrangement_requests', :user_meals => @user_meals)  %>
 
 <div class="clr"></div>

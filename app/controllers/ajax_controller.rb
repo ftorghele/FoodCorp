@@ -2,7 +2,7 @@ class AjaxController < ApplicationController
   respond_to :js
 
   def update_map
-    @searchLocation = params[:searchLocation].split(" ")
+    @searchLocation = params[:searchLocation]
     @radius = params[:radius]
   end
 

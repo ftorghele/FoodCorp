@@ -47,9 +47,11 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert_difference("Meal.count") do
       click_on("submit")
     end
-    
-
     assert page.has_content?('Meal successfully saved!')
+
+    click_on('meals')
+    assert page.has_content?('Gulasch')
+    assert page.has_content?('scharf und mit Knödel')
     sign_out
 
     #check created Meal
@@ -72,11 +74,25 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     assert page.has_content?('Meal arrangement was successfully deleted')
     click_on('send meal request')
-
-
-
-    
     sign_out
+
+    click_on('Login')
+    fill_in 'user_email', :with => 'user1@gmail.com'
+    fill_in 'user_password', :with => '123456'
+    click_on('Sign in')
+    click_on('Accept')
+    sign_out
+
+    click_on('Login')
+    fill_in 'user_email', :with => 'user2@gmail.com'
+    fill_in 'user_password', :with => '123456'
+    click_on('Sign in')
+    click_on('personal Messages')
+    assert page.has_content?('Meal arrangement acceptance')
+    sign_out
+
+
+
   end
     
 end

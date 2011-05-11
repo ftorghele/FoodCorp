@@ -1,5 +1,5 @@
 <div id="provide_meal">
-<%= now = Time.now %>
+  <br>
 
 <%= form_for @meal do |f| %>
   <%= f.label :title %>
@@ -18,10 +18,12 @@
   <%= f.text_field :street, :value => current_user.street %><br />
   <%= f.label :street_number %>
   <%= f.text_field :street_number, :value => current_user.street_number %><br />
+  <%= f.label :slots %>
+  <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
 	<%= f.label :time %>
-  <%= f.text_field :time, :class => "datepicker", :value => now.to_formatted_s(:db) %><br />
+  <%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
   <%= f.label :deadline %>
-  <%= f.text_field :deadline, :class => "datepicker", :value => now.to_formatted_s(:db) %><br />
+  <%= f.text_field :deadline, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
   <%else%>
    <%= f.label :country %>
   <%= f.text_field :country%><br />
@@ -33,20 +35,17 @@
   <%= f.text_field :street %><br />
   <%= f.label :street_number %>
   <%= f.text_field :street_number%><br />
+  <%= f.label :slots %>
+  <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
 	<%= f.label :time %>
   <%= f.text_field :time, :class => "datepicker", :value => Time.zone.at(@meal.time).to_formatted_s(:db) %><br />
   <%= f.label :deadline %>
   <%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
   <%end%>
-  <%= f.label :slots %>
-  <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %> <span>Number of People you want to invite</span><br/>
-  
 
   <%= f.hidden_field(:lat) %>
   <%= f.hidden_field(:lon) %>
   
   <%= f.submit 'submit', :class => "submit" %>
 <% end %>
-
-<div id="map" style="width: 450px; height: 300px"></div>
 </div>

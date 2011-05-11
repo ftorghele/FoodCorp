@@ -6,9 +6,7 @@ class MealsController < ApplicationController
   def index
    @meals = Meal.find(:all, :order => "created_at desc", :limit => 5, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
    @coords = request.location;
-   if current_user
-    @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id])
-   end
+   @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
   end
 
   def new 
@@ -18,7 +16,7 @@ class MealsController < ApplicationController
   
   def show
     @meal = Meal.find(params[:id])
-    @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first
+    @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first if current_user
     @user = User.find( @meal.user_id )
   end
 

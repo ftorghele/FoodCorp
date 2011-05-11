@@ -1,17 +1,13 @@
-<%if current_user %>
-  <div class="wrapper">Meal Requests
-    <div id="meal_arrangement_requests">Meal Requests
-      <% @user_meals.each do |meal|%>
-        <% meal.meal_arrangements.each do |meal_arrangement| %>
-          <%if meal_arrangement.acceptance == false%>
-            <%= meal.title%>: <%= meal.description %><br/>
-            <%= meal_arrangement.user.first_name %>
-            <%= meal_arrangement.user.last_name %><br/>
-            <%= link_to "Delete", meal_arrangement_path( meal_arrangement.id), :method => 'delete', :class => 'delete' %>
-            <%= link_to "Accept", meal_arrangement_path( meal_arrangement.id), :method => 'put', :class => 'accept' %>
-          <%end%>
-        <%end%>
-      <%end%>
-    </div>
-  </div>
-<%end%>
+<div id="meal_arrangement_requests">
+	<% @user_meals.each do |meal|%>
+		<% meal.meal_arrangements.each do |meal_arrangement| %>
+			<% if meal_arrangement.acceptance == false %>
+				<%= meal.title%>: <%= meal.description %><br/>
+				<%= meal_arrangement.user.first_name %>
+				<%= meal_arrangement.user.last_name %><br/>
+				<%= link_to "Accept", meal_arrangement_path( meal_arrangement.id), :method => 'put', :class => 'accept' %>
+				<%= link_to "Delete", meal_arrangement_path( meal_arrangement.id), :method => 'delete', :class => 'delete' %>
+			<%end%>
+		<%end%>
+	<%end%>
+</div>

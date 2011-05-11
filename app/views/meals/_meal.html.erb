@@ -2,12 +2,18 @@
 <br>
 	Description:
 	<%= @meal.description %><br>
-
-	<%= @meal.country %><br>
-	<%= @meal.zip_code %><br>
-	<%= @meal.city %><br>
-	<%= @meal.street %>
-	<%= @meal.street_number%><br><br>
+	<% if current_user %>
+		<% if @meal_arrangement != nil %>
+			<% if @meal.user_id == current_user.id || 
+			    @meal_arrangement.acceptance == true %>
+				<%= @meal.country %><br>
+				<%= @meal.zip_code %><br>
+				<%= @meal.city %><br>
+				<%= @meal.street %>
+				<%= @meal.street_number%><br><br>
+			<% end %>
+		<% end %>
+	<% end %>
 
 	Latitude:  <%= @meal.lat %><br>
 	Longitude: <%= @meal.lon %><br>

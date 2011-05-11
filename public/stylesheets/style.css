@@ -201,10 +201,12 @@ li#calendar_holder {
 
 #main #radius {
 	list-style:none;
-	background:#ff505a;
 	width:150px;
-	padding:2px 12px 2px 12px;
+	padding:2px 0 3px 10px;
 	margin:0 0 30px 0;
+	-webkit-appearance: button;
+	-webkit-border-radius: 0px;
+	background:#ff505a url('/images/radiusdropdown.png') center right no-repeat;
 }
 
 #main #radius div {

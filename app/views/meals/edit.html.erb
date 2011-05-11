@@ -1,10 +1,10 @@
 
-<%if current_user %>
-	<%if current_user.id == @meal.user_id %>
-	<%= render 'meal_form'%>
-	<%else%>
-	nix
-	<%end%>
-<%else%>
-nix
-<%end%>
+		<div class="wrapper">Create new Meal
+		  <%= render 'meal_form' %>
+		</div>
+
+		<div class="wrapper">Location Preview
+		  <div id="map" style="width: 350px; height: 250px"></div>
+		</div>
+
+		<div class="clr"></div>

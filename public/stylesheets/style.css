@@ -227,7 +227,7 @@ li#calendar_holder {
 /* HOME PAGE END */
 
 #footer {
-
+	display:none;
 }
 
 .float_right {

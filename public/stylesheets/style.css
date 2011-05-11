@@ -423,13 +423,23 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 
 .calendar_provided_meal{
     background-color: red;
+    width:179px;
+    text-transform:none;
+	letter-spacing:0px;
+	font-size:0.5em;
+	font-weight:100;
 }
 
 .calendar_meal_arrangement {
     background-color: green;
+    width:179px;
+    text-transform:none;
+	letter-spacing:0px;
+	font-size:0.5em;
+	font-weight:100;
 }
-#calendar .day{
-	width:300px;
-	height:50px;
-	background-color: green;
+.day{
+	width:180px;
+	height:45px;
+	background-color: #ddd;
 }

@@ -1,5 +1,11 @@
+<div class="wrapper">...
 <%= render(:partial => 'layouts/menu', :user => @user)  %>
+</div>
+
+<div class="wrapper">About <%= @user.first_name %> <%= @user.last_name %>
 <%= render 'layouts/user_information' %>
+</div>
+
 <div class="clear"></div>
 
 <%= render "provided_meals" %>

@@ -1,8 +1,4 @@
-<h1>New Messages</h1>
-<ul class="tabs">
-  <li><a href="#New"><%=  I18n.t 'tab.new' %></a></li>
-</ul>
-
+<div class="wrapper">New Message to <%= @receiver.first_name %> <%= @receiver.last_name %>
 <div class="tab_container">
   <div id="New" class="tab_content">
     <%= form_tag(messages_path) do %>
@@ -19,3 +15,6 @@
     <% end %>
   </div>
 </div>
+</div>
+
+<div class="clr"></div>

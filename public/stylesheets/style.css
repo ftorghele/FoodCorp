@@ -293,6 +293,7 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 	overflow: hidden;
 	clear: both;
 	float: left; width: 100%;
+        color: #000;
 	background: #fff;
 }
 .tab_content {
@@ -304,7 +305,7 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 /* ---- HOME BEGIN ---- */
 
 #map{
-	
+    border: 1px solid #000;
 }
 
 .clear{
@@ -313,6 +314,11 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 /* ---- HOME END ---- */
 
 /* ---- USER_PROFILE BEGIN ----*/
+
+#profile_avatar {
+    border: 1px solid #000;
+    width: 197px;
+}
 
 .delete{
 	background: #ffae24;
@@ -335,7 +341,12 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 #provided_meals div.meal, #meals_distance_stream div.meal{
 	display:block;
 	padding:5px;
-	background:#ddd;
+        border: 1px solid #999;
+        background: #fff;
+}
+
+#provided_meals div:hover.meal, #meals_distance_stream div:hover.meal{
+        background: #eee;
 }
 
 #provided_meals div.meal div.title, #meals_distance_stream div.meal div.title  {
@@ -365,14 +376,18 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 	margin:25px 80px 0 0;
 }
 #user_information{
-	width: 150px;
-	float:left;
+	width: 200px;
 }
 
 
 /* ---- USER_PROFILE END ----*/
 
 /* ---- PROVIDE MEAL BEGIN ----*/
+.display_meal {
+    width: 400px;
+    color: #000;
+}
+
 #provide_meal {
     width: 350px;
 }

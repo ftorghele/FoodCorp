@@ -187,9 +187,7 @@ function drawMap(env, rails, railsdepth) {
 				controls: {
 					mapType: [{
 						remove: 'G_SATELLITE_MAP'
-					}, {
-						remove: 'G_NORMAL_MAP'
-						}],
+					}],
 						type: {},
 						zoom: {
 							control: 'GSmallZoomControl'

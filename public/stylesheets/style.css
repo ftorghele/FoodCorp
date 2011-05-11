@@ -372,6 +372,32 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 
 /* ---- USER_PROFILE END ----*/
 
+/* ---- PROVIDE MEAL BEGIN ----*/
+#provide_meal {
+    width: 350px;
+}
+#provide_meal label {
+    width: 120px;
+    margin-right: 15px;
+    display: block;
+    color: #000;
+    float: left;
+    text-align: right;
+}
+
+#provide_meal input {
+    width: 200px;
+    height: 20px;
+}
+
+#provide_meal .submit {
+    width: 200px;
+    height: 25px;
+    margin: 10px 0 0 110px;
+}
+
+/* ---- PROVIDE MEAL END ----*/
+
 .calendar_provided_meal{
     background-color: red;
 }

@@ -67,7 +67,7 @@ $(document).ready(function() {
 		
 		if(i>0) return false;
 		
-		else return false;
+		else return true;
 		
 	});
 	

@@ -231,7 +231,7 @@ li#calendar_holder {
 #main #radius {
 	list-style:none;
 	width:150px;
-	padding:2px 0 3px 10px;
+	padding:2px 10px 3px 10px;
 	margin:0 0 30px 0;
 	-webkit-appearance: button;
 	-webkit-border-radius: 0px;

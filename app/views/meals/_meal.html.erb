@@ -3,7 +3,7 @@
 	Description:
 	<%= @meal.description %><br>
 	<% if current_user %>
-		<% if @meal_arrangement != nil %>
+		<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
 			<% if @meal.user_id == current_user.id || 
 			    @meal_arrangement.acceptance == true %>
 				<%= @meal.country %><br>

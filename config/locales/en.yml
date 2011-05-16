@@ -62,3 +62,7 @@ en:
     destroy_success:  "Removed fellowship"
     destroy_fail: "Unable to remove fellowship"
     
+  meal_comment:
+    create_success: "Comment created successfully"
+    create_fail: "Comment creation failed"
+    default_body: "Insert Comment"

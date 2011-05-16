@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110428120416) do
+ActiveRecord::Schema.define(:version => 20110515151843) do
+
+  create_table "comments", :force => true do |t|
+    t.text     "body"
+    t.integer  "user_id"
+    t.integer  "meal_id"
+    t.integer  "report_count", :default => 0
+    t.boolean  "visible",      :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fellowships", :force => true do |t|
     t.integer  "user_id"

@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   
   has_many :meals
   has_many :meal_arrangements
+  has_many :comments
 
   # Followers
   has_many :fellowships

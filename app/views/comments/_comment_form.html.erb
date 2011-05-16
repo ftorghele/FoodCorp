@@ -1,0 +1,8 @@
+<%= form_for @comment do |f| %>
+  <%= f.label :body %>
+  <%= f.text_field :body %><br>
+  <%= f.hidden_field :visible, {:value => true} %>
+
+  <%= f.submit 'submit', :class => "submit" %>
+<% end %>
+

@@ -2,7 +2,7 @@
 	<% if @user_meals %>
 		<% @user_meals.each do |meal|%>
 			<% meal.meal_arrangements.each do |meal_arrangement| %>
-				<% if meal_arrangement.acceptance == false %>
+				<% if meal_arrangement.acceptance == false  && meal.slots > 0 %>
 					<%= meal.title%>: <%= meal.description %><br/>
 					<%= meal_arrangement.user.first_name %>
 					<%= meal_arrangement.user.last_name %><br/>

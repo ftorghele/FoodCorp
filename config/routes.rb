@@ -1,5 +1,7 @@
 FoodCorp::Application.routes.draw do
 
+  resources :comments
+
   resources :meal_arrangements
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",

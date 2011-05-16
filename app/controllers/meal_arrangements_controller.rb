@@ -34,7 +34,7 @@ class MealArrangementsController < ApplicationController
         comment.save
         current_user.update_attribute(:points, current_user.points)
         puts(current_user.points)
-        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), "<a href="+edit_comment_path(comment.id)+">Give a Comment</a>" )
+        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), '<a href="'+edit_comment_path(comment.id)+'">Give a Comment</a>' )
         redirect_to :back, :notice => I18n.t('meal_arrangements.accept_success')
     else
         redirect_to :back, :notice => I18n.t('meal_arrangements.accept_fail')

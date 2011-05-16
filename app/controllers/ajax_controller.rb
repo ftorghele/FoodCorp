@@ -3,7 +3,25 @@ class AjaxController < ApplicationController
 
   def update_map
     @searchLocation = params[:searchLocation]
-    @radius = params[:radius]
+    @radius = params[:searchRadius].to_i
+
+    case @radius.to_i
+      when 5
+              @depth = 15
+      when 10
+              @depth = 14
+      when 15
+              @depth = 13
+      when 20
+              @depth = 12
+      else
+              @depth = 12
+    end
+
+    @lat = params[:searchLat].to_f
+    @lon = params[:searchLon].to_f
+    
+    @meals = Meal.near([@lat, @lon], @radius).find(:all, :limit => 5, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
   end
 
   def calendar

@@ -4,6 +4,17 @@
   <input type="hidden" title="lat" value="<%= meal.lat%>" />
   <input type="hidden" title="lon" value="<%= meal.lon%>" />
   
+  <% if current_user %>
+    <% if current_user.id == meal.user_id && meal.meal_arrangements.count > 0 %>
+      Accepted Users:<br>
+      <% meal.meal_arrangements.each do |mealArrangement| %>
+        <% if mealArrangement.acceptance %>
+          <%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <% meal.comments.each do |comment| %>
   	<% if comment.visible == true %>
   		<%= link_to comment.user.first_name+" "+comment.user.last_name, user_path(comment.user_id) %><br>

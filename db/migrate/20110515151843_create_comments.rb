@@ -11,6 +11,9 @@ class CreateComments < ActiveRecord::Migration
     end
   end
 
+  add_index :comments, :user_id,                :unique => true
+  add_index :comments, :meal_id,                :unique => true
+
   def self.down
     drop_table :comments
   end

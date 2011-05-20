@@ -18,6 +18,8 @@ class CreateMeals < ActiveRecord::Migration
     end
   end
 
+  add_index :meals, :user_id,           :unique => true
+
   def self.down
     drop_table :meals
   end

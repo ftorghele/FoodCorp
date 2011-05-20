@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	
 
 	// notifications/FLash Messages
@@ -27,9 +28,6 @@ $(document).ready(function() {
 	
 	// Home Page currentLocation div
 	$('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
-	
-	// check if HTML5 geolocation cookie available
-	($.cookie("longitude") && $.cookie("latitude"))? geo_set = true : geo_set = false;
 	
 	// get default User inputs
 	$('form.new_meal > :input, form.edit_meal > :input').each(function() {
@@ -70,19 +68,37 @@ $(document).ready(function() {
 		else return true;
 		
 	});
+
+        //fraenk
+        // get / set new position
+	$('#searchSubmit').click(function() {
+             geocoder.getLatLng(
+                $('#searchLocation').val(),
+                function(point) {
+                  if (!point) {
+                    //alert($('#searchLocation').val() + " not found");
+                    $('#searchLon').val($.cookie("longitude"));
+                    $('#searchLat').val($.cookie("latitude"));
+                    $('#address').submit();
+                  } else {
+                    $('#searchLon').val(point.x);
+                    $('#searchLat').val(point.y);
+                    $('#address').submit();
+                  }
+                }
+             );
+	});
 	
 	
 	// SLOW!
 	// determine if the handset has client side geo location capabilities
-	if(geo_set) {
-		if (navigator.geolocation) {
-	  		navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(geo_success, geo_error);
 
-	  		drawMap(loc);
-		} else {
-	  		drawMap(loc);
-			} 
-	}
+            drawMap(loc);
+        } else {
+            drawMap(loc);
+        }
 	
 	if (geo_position_js.init()) {
 		geo_position_js.getCurrentPosition(geo_success, geo_error);
@@ -106,6 +122,11 @@ $(document).ready(function() {
 		
 		$.cookie("longitude", p.coords.longitude);
 		$.cookie("latitude", p.coords.latitude);
+
+                // fraenk
+                $('#searchLat').val(p.coords.latitude);
+                $('#searchLon').val(p.coords.longitude);
+                $('#address').submit();
 	}
 	
 	// Create new geocoding object
@@ -178,9 +199,6 @@ function drawMap(env, rails, railsdepth) {
      
 		mergeMarkers(marker, markers);
 		
-		if(geo_set)
-		mergeMarkers(marker, geojsmarker);
-		
 		$('#map').googleMaps({
 				geocode: env.join(', '),
 				markers: marker,
@@ -251,9 +269,6 @@ function drawMap(env, rails, railsdepth) {
 				        }
 			}];
 		}
-
-		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
-		(geo_set)? $('#meal_lat').val($.cookie('latitude')) : $('#meal_lat').val(result.Placemark[0].Point.coordinates[1]);
 		
 		if(typeof railsenv != 'undefined')
 		drawMap(env);

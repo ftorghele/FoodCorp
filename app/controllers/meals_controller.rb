@@ -4,7 +4,6 @@ class MealsController < ApplicationController
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
   
   def index
-   @meals = Meal.find(:all, :order => "created_at desc", :limit => 5, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
    @coords = request.location;
    @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
   end

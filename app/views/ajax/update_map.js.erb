@@ -1,24 +1,22 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+env = ["<%= @lat %>, <%= @lon %>"];
+depth = <%= @depth %>
 
-env = ["<%= @searchLocation %>"]
-<%
-case @radius.to_i
-when 5
-	depth = 17
-when 10
-	depth = 16
-when 15
-	depth = 14
-when 20
-	depth = 13
-else
-	depth = 12
-end
-%>
-
-depth = <%=raw  depth %>
+// set meals
+var x = [];
+var i = 0;
+<% @meals.each do |meal|%>
+  x[i++] = '<a href="#" onclick="panTo(<%= meal.lat%>, <%= meal.lon%>)">';
+  x[i++] = ' <div class="meal" id="meal_<%= meal.id %>">';
+  x[i++] = '   <div class="title"><%= meal.title %></div>';
+  x[i++] = '   <div class="description"><%= meal.description %></div>';
+  x[i++] = '   <%= link_to("show", meal_path(meal.id)) %>';
+  x[i++] = '   <input type="hidden" title="lat" value="<%= meal.lat%>" />';
+  x[i++] = '   <input type="hidden" title="lon" value="<%= meal.lon%>" />';
+  x[i++] = ' </div>';
+  x[i++] = '</a>';
+<%  end %>
+  
+$('#meals_distance_stream').empty();
+$('#meals_distance_stream').append(x.join(''));
 
 drawMap(env, 'true', depth);

@@ -1,6 +1,7 @@
-/* 
+@charset "utf-8";
+/*
     Document   : style
-    Created on : 18.04.2011, 11:57:32
+    Created on : 23.05.2011, 11:57:32
     Author     : FT
     Description:
         Purpose of the stylesheet follows.
@@ -21,16 +22,59 @@
 
 /* ---- BASIC BEG ----- */
 * {
-	margin:0px;
-	padding:0px;
-	text-decoration:none;
-	font-size:12px;
-	font-family:Verdana, Arial;
+	padding: 0px;
+	margin: 0px;
 }
 
-html, body {
-	height:100%;
-	width:100%;
+body {
+	background: #000 url(../images/bg.jpg);
+}
+
+#wrapper {
+	width: 960px;
+	margin: 0 auto;
+}
+
+#logo {
+	width: 178px;
+	height: 122px;
+	border: none;
+	float: left;
+}
+
+#top_navigation_container {
+	width: 782px;
+	height: 122px;
+	float: right;
+}
+
+#main {
+    background: #fff;
+    width: 820px;
+    -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
+    margin: 0 0 0 130px;
+    padding: 5px;
+}
+
+#footer {
+    text-align: center;
+}
+
+#footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.clr {
+	clear: both;
+}
+
+.float_right {
+    float: right;
+}
+
+.float_left {
+    float: left;
 }
 
 h1 {
@@ -39,11 +83,6 @@ h1 {
 	float:left;
 	padding:0 0 0 40px;
 	height:40px;
-}
-
-h1#logo {
-    font-family: BelloProRegular;
-    font-weight: 400;
 }
 
 h2, h2 a {
@@ -62,150 +101,91 @@ h3{
 	color:#000;
 }
 
-#main {
-	width:850px;
-	margin:38px auto 0 auto;
+#map{
+    border: 1px solid #000;
 }
 
-/* HEADER & NAVIGATION */
+/* ---- BASIC END ----- */
 
-#header, #header a {
-	color:#fff;
+/* ---- TOPNAV BEG ----- */
+
+#topnav {
+	margin: 0 0 0 20px;
 }
 
-#header div.black {
-	background:#000;
-	padding:30px 0 0 0;
-	height:85px;
-        min-width: 850px;
-}
-
-#header div.login {
-	height:90px;
-	float:right;
-	width:300px;
-	margin:-10px 0 0 0;
-}
-
-#header div.login img {
-	width:50px;
-	height:50px;
-	margin:0 10px 0 0;
+#topnav li {
 	float:left;
+	list-style-type:none;
 }
 
-#header div.login div.signup_form {
-	display:none;
+#topnav li a {
+	display: block;
+	width:93px;
+	height:49px;
+	padding: 20px 5px 0 0;
+	margin-top: -10px;
+	overflow: hidden;
+	outline: none;
+	background: url(../images/topnav_bg.png) no-repeat;
+	font-family: "BelloProRegular";
+	color: #333333;
+	font-size: 20px;
+	text-decoration: none;
+	text-align:center;
 }
 
-#header div.login div.signup_form input.field {
-	width:120px;
-	margin:5px 10px 0 0;
+#topnav li a:hover, #topnav a.nav_active {
+	background-position: 0px -69px;
+	margin-top: 0px;
+	color: #fff;
 }
 
-#header div.login div.signup_form input {
-	margin:5px 0 0 0;
+/* ---- TOPNAV END ----- */
+
+/* ---- LOGIN BEG ----- */
+
+#login {
+    width: 250px;
+    height: 82px;
+    margin: 30px 0 0 0;
 }
 
-#header div.login div.signup_form #user_submit {
-	margin:6px 80px 0 0;
+#login img {
+    margin: 0 0 30px 10px;
+    width:50px;
+    height:50px;
 }
 
-.navigation {
-	list-style:none;
-	height:78px;
-        min-width: 750px;
-	padding: 0 0 0 100px;
-	background-color:#ff505a;
+#login p, #login p a {
+    color: #fff;
+    font-size: 12px;
+    text-align: right;
 }
 
-.navigation a {
-	text-transform:uppercase;
-	letter-spacing:2px;
-	float:left;
-	font-size:20px;
-	font-weight:100;
-	margin:25px 80px 0 0;
+#signup_form {
+    display:none;
 }
 
-.navigation a#calendar{
-	color:#000;
-	margin:14px 245px 0 0;
-	padding:18px 0 0 13px;
-	width:45px;
-	height:45px;
-	background: url('../images/calendar.png') top left no-repeat;
-	font-family:"Times New Roman";
-	font-size:24px;
-	color:#000;
+#signup_form input {
+    width:130px;
+    margin:5px 10px 0 50px;
 }
 
-li#calendar_holder {
-    position: relative;
-    float: right;
+#signup_form #user_submit {
+    width: 50px;
+    height: 50px;
+    margin: 3px 0 0 0;
 }
 
-#calendar_body {
-	position:absolute;
-        right: 100px;
-        top: 70px;
-	border:3px solid #999;
-	width:200px;
-	height:400px;
-	z-index:11;
-	display:block;
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-	border-radius: 15px;
-	background:#ccc;
-}
+/* ---- LOGIN END ----- */
 
-#calendar_body a {
-    color: #000;
-}
+/* ---- MAIN PAGE BEG ----- */
 
-#calendar_body .day {
-
-}
-
-.day{
-	margin:10px;
-	width:180px;
-	height:45px;
-	background-color: #ddd;
-}
-
-.calendar_provided_meal{
-    background-color: red;
-    width:179px;
-        height: 10px;
-    text-transform:none;
-	letter-spacing:0px;
-	font-size:0.5em;
-	font-weight:100;
-	margin: 0px;
-}
-
-.calendar_meal_arrangement {
-    background-color: green;
-    width:179px;
-    height: 20px;
-    text-transform:none;
-	letter-spacing:0px;
-	font-size:0.5em;
-	font-weight:100;
-	margin: 0px;
-}
-
-/* HEADER & NAVIGATION END */
-
-/* HOME PAGE */
-
-#main .mealfind {
+#mealfind {
 	margin:20px 0 15px 0;
 }
 
-#main #currentLocation {
+#currentLocation {
 	font-weight:bold;
 }
 
@@ -228,7 +208,7 @@ li#calendar_holder {
 	border:1px solid #999;
 }
 
-#main #radius {
+#radius {
 	list-style:none;
 	width:150px;
 	padding:2px 10px 3px 10px;
@@ -238,49 +218,14 @@ li#calendar_holder {
 	background:#ff505a url('/images/radiusdropdown.png') center right no-repeat;
 }
 
-#main #radius div {
+#radius div {
 	display:none;
 }
 
-.wrapper {
-	color:#fff;
-	font-size:10px;
-	font-weight:bold;
-	background:url('/images/wrapper.png') top left repeat-x;
-	padding:3px 0 0 6px;
-  margin: 0 40px 10px 0;
-  float: left;
-}
-
-.wrapper div {
-}
-
-/* HOME PAGE END */
-
-#footer {
-	display:none;
-}
-
-.float_right {
-    float: right;
-}
-.float_left {
-    float: left;
-}
-
-.clr {
-    clear: both;
-}
-
-.space_left {
-    margin-left: 15px;
-}
-/* ---- BASIC END ----- */
+/* ---- MAIN PAGE END ----- */
 
 /* ---- TABS BEG ----- */
 ul.tabs {
-	margin: 0;
-	padding: 0;
 	float: left;
 	list-style: none;
 	height: 32px;
@@ -290,8 +235,6 @@ ul.tabs {
 }
 ul.tabs li {
 	float: left;
-	margin: 0;
-	padding: 0;
 	height: 31px;
 	line-height: 31px;
 	border: 1px solid #999;
@@ -333,17 +276,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 }
 /* ---- TABS END ----- */
 
-/* ---- HOME BEGIN ---- */
-
-#map{
-    border: 1px solid #000;
-}
-
-.clear{
-	clear: both;
-}
-/* ---- HOME END ---- */
-
 /* ---- USER_PROFILE BEGIN ----*/
 
 #profile_avatar {
@@ -358,58 +290,6 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 .accept{
 	background: #b8e40a;
 }
-
-#meal_arrangement_requests{
-	background:#ccc;
-	width:200px;
-}
-
-#provided_meals, #meals_distance_stream {
-	background:#ccc;
-	width:200px;
-}
-
-#provided_meals div.meal, #meals_distance_stream div.meal{
-	display:block;
-	padding:5px;
-        border: 1px solid #999;
-        background: #fff;
-}
-
-#provided_meals div:hover.meal, #meals_distance_stream div:hover.meal{
-        background: #eee;
-}
-
-#provided_meals div.meal div.title, #meals_distance_stream div.meal div.title  {
-	font-weight:bold;
-	font-size:12px;
-}
-
-#provided_meals div.meal div.description, #meals_distance_stream div.meal div.description {
-	font-size:10px;
-}
-
-.menu{
-	width:400px;
-	list-style:none;
-	height:78px;
-	padding: 0 0 0 100px;
-	background-color:#c6c6c6;
-	float:left;
-}
-.menu a{
-	color: #fff;
-	text-transform:uppercase;
-	letter-spacing:2px;
-	float:left;
-	font-size:20px;
-	font-weight:100;
-	margin:25px 80px 0 0;
-}
-#user_information{
-	width: 200px;
-}
-
 
 /* ---- USER_PROFILE END ----*/
 
@@ -449,6 +329,3 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
 }
 
 /* ---- PROVIDE MEAL END ----*/
-
-
-

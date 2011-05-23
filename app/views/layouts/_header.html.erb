@@ -1,40 +1,33 @@
-<div id="header" >
-	<div class="black">
-		
-		<a href="/"><h1 id="logo">Dinner Collective</h1></a>
-		
-		<div class="login">
-		<% if user_signed_in? %>
-				<%= link_to image_tag(get_thumb_avatar_url(current_user), :title => "my Profile"), user_path(current_user.id) %>
-				<%= link_to(current_user.first_name + " " + current_user.last_name, user_path(current_user.id) )%><br>
-		  	<%= link_to('personal Messages', messages_path)%><br>
-				<%= current_user.points %> - 
-        <%= link_to('edit Profile', edit_user_registration_path) %><br>
-		  	<%= link_to('Logout', destroy_user_session_path) %><br>
-		<% else %>
-			<%= link_to "Login", new_user_registration_path, :class => "signup_form_animate" %><br>
-			<%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook), :id => "fb_sign_in" %>
-	  	<div class="signup_form">
-	  	<%= form_for("user", :url => user_session_path) do |f| %>
-	    	<%= f.text_field :email, :class => "field", :placeholder => "e-mail" %>
-	    	<%= f.password_field :password, :class => "field", :placeholder => "password" %><br>
-	    	<%= f.check_box :remember_me %>
-	    	<%= f.label :remember_me %><br>
-	    	<%= f.submit 'Sign in' %>
-	    	<%= link_to "Forgot your password?", new_password_path('user') %>
-	  	<% end %>
-			</div>
-		<% end %>
-		</div>
-		<div class="clear"></div>
-	</div>
-	
-	<ul class="navigation">
-		<li><%= link_to( "Eat", meals_path) %></li>
-                <li><%= link_to( "Cook", new_meal_path) if user_signed_in? %></li>
-                <li><%= link_to( "Profile", user_path(current_user.id)) if user_signed_in? %></li>
-                <li id="calendar_holder"><%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") if user_signed_in? %><div id="calendar_container"></div></li>
-		<div class="clear"></div>
-	</ul>
-	
-</div>
+<div id="logo"><a href="/"><img src="/images/logo.png" /></a></div>
+<div id="top_navigation_container">
+
+  <ul id="topnav">
+    <li><%= link_to("eat", meals_path, :id => "topnav_eat") %></li>
+    <li><%= link_to("register", new_user_registration_path, :id => "topnav_register") unless user_signed_in? %></li>
+    <li><%= link_to("cook", new_meal_path, :id => "topnav_cook") if user_signed_in? %></li>
+    <li><%= link_to("profile", user_path(current_user.id), :id => "topnav_profile") if user_signed_in? %></li>
+    <li id="calendar_holder"><%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") if user_signed_in? %><div id="calendar_container"></div></li>
+  </ul>
+
+  <div id="login" class="float_right">
+    <% if user_signed_in? %>
+      <%= link_to image_tag(get_thumb_avatar_url(current_user), :title => "my Profile"), user_path(current_user.id), :class => "float_right" %>
+      <p><%= link_to(current_user.first_name + " " + current_user.last_name, user_path(current_user.id) )%><br>
+	 <%= link_to('personal Messages', messages_path)%><br>
+	 <%= current_user.points %> - <%= link_to('edit Profile', edit_user_registration_path) %> - 
+	 <%= link_to('Logout', destroy_user_session_path) %></p>
+    <% else %>
+      <p><%= link_to "Login", "#", :id => "signup_form_animate" %> or 
+	 <%= link_to "Login in with Facebook", user_omniauth_authorize_path(:facebook), :id => "fb_sign_in" %>
+      </p>
+      <div id="signup_form">
+         <%= form_for("user", :url => user_session_path) do |f| %>
+           <%= f.submit 'Sign in', :class =>"float_right" %>
+           <%= f.text_field :email, :placeholder => "e-mail" %>
+           <%= f.password_field :password, :placeholder => "password" %>
+         <% end %>
+      </div>
+    <% end %>
+  </div>
+  </div>
+<div class="clr"></div>

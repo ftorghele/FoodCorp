@@ -13,6 +13,7 @@
   <%= javascript_include_tag "jquery.min", "jquery-ui.min", "rails", "jquery.maps", "jquery.cookie", "jquery.timepicker", "jquery.hoverintent", "geo", "foodcorp", "http://www.geoplugin.net/javascript.gp" %>
 </head>
 <body>
+  <div id="wrapper">
   <%= render 'layouts/header' %>
   <div id="notifications">
     <p class="notice"><%= notice %></p>
@@ -25,6 +26,7 @@
   	<%= link_to "About", about_path %> 
 	<%= link_to "Imprint", imprint_path %> 
 	<%= link_to "Terms of service", terms_path %> 
+  </div>
   </div>
 </body>
 </html>

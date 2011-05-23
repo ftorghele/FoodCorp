@@ -8,7 +8,9 @@ $(document).ready(function() {
     else if (current == "/about" || current == "/imprint" || current == "/terms") {}
     else $('#topnav_profile').addClass('nav_active');
 
-	
+    $("#calendar").mouseleave(function(){
+        $("#calendar_container").empty();
+    });
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);

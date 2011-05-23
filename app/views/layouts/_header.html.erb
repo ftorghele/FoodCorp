@@ -6,8 +6,16 @@
     <li><%= link_to("register", new_user_registration_path, :id => "topnav_register") unless user_signed_in? %></li>
     <li><%= link_to("cook", new_meal_path, :id => "topnav_cook") if user_signed_in? %></li>
     <li><%= link_to("profile", user_path(current_user.id), :id => "topnav_profile") if user_signed_in? %></li>
-    <li id="calendar_holder"><%= link_to(Time.now.localtime.strftime("%d"), ajax_calendar_path, :remote => true, :id => "calendar") if user_signed_in? %><div id="calendar_container"></div></li>
   </ul>
+
+  <div id="calendar">
+      <div id="calendar_container">
+      
+      </div>
+      <div id="calendar_pull">
+        <%= link_to(image_tag("calendar_pull.png"), ajax_calendar_path, :remote => true) if user_signed_in? %>
+      </div>
+  </div>
 
   <div id="login" class="float_right">
     <% if user_signed_in? %>

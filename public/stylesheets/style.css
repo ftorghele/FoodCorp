@@ -46,6 +46,7 @@ body {
 	width: 782px;
 	height: 122px;
 	float: right;
+        position: relative;
 }
 
 #main {
@@ -141,6 +142,25 @@ h3{
 }
 
 /* ---- TOPNAV END ----- */
+
+/* ---- CALENDAR END ----- */
+
+#calendar {
+    position: absolute;
+    top: 0;
+    right: 190px;
+    z-index: 100000;
+}
+
+#calendar_container {
+    background: url("../images/calendar_bg.png") repeat-y;
+}
+
+.day {
+    height: 50px;
+}
+
+/* ---- CALENDAR END ----- */
 
 /* ---- LOGIN BEG ----- */
 

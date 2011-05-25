@@ -9,7 +9,7 @@
       Accepted Users:<br>
       <% meal.meal_arrangements.each do |mealArrangement| %>
         <% if mealArrangement.acceptance %>
-          <%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %>
+          <%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %><br>
         <% end %>
       <% end %>
     <% end %>
@@ -18,7 +18,7 @@
   <% meal.comments.each do |comment| %>
   	<% if comment.visible == true %>
   		<%= link_to comment.user.first_name+" "+comment.user.last_name, user_path(comment.user_id) %><br>
-  		<%= comment.body %>
+  		<div class="comments"><%= comment.body %></div>
   	<% end %>
   <% end %>
 

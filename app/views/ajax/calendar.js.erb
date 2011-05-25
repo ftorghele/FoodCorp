@@ -1,7 +1,35 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+// show calendar
+var x = [];
+var i = 0;
+<% for j in 0..6%>
+
+x[i++] = '<div class="day_nothing">';
+x[i++] =   '<div class="day_date"><%= l(Date.today+j, :format => :calendar) %></div>';
+x[i++] =   '<%= link_to image_tag("button_eat.png", :title => "eat"), :controller => :meals, :action => :index, :date => Date.today+j %>';
+x[i++] =   ' or ';
+x[i++] =   '<%= link_to image_tag("button_cook.png", :title => "eat"), :controller => :meals, :action => :new, :date => Date.today+j %>';
+x[i++] = '</div>';
+
+         <% @user_tasks.each do |task| %>
+           <% if Time.now.day+j ==  Time.at(task[0]["time"]).day %>
+             <% if task[0]["own"] %>
+x[i++] =      '<%= link_to meal_path(task[0]["meal_id"]) do %>';
+x[i++] =       '<div class="day_meal">';
+x[i++] =         '<div class="day_date"><%= l(Date.today+j, :format => :calendar) %></div>';
+x[i++] =         '<div class="meal_title"><%= task[0]["title"].delete("'") %></div>at <%= task[0]["cook"].delete("'") %>s place';
+x[i++] =       '</div>';
+x[i++] =     '<% end %>';
+             <% else  %>
+x[i++] =      '<%= link_to meal_path(task[0]["meal_id"]) do %>';
+x[i++] =       '<div class="day_arrangement">';
+x[i++] =          '<div class="day_date"><%= l(Date.today+j, :format => :calendar) %></div>';
+x[i++] =          '<div class="meal_title"><%= task[0]["title"].delete("'") %></div>at <%= task[0]["cook"].delete("'") %>s place';
+x[i++] =        '</div>';
+x[i++] =       '<% end %>';
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
 
 $("#calendar_container").empty();
-$("#calendar_container").append('test<% for i in 0..6%><div class="day"><% @user_tasks.each do |task| %><%if Time.now.day+i ==  Time.at(task[0]["time"]).day %><% t = find_meal(:meal_id => task[0]["meal_id"] )  %><% if task[0]["flag"] == true %><% link_to edit_meal_path(t.id) do %><div class="calendar_provided_meal"><%= Time.at(t.time).utc %><%= t.title %><%= t.description %></div><%end%><% else %><% link_to meal_path(t.id) do%><div class="calendar_meal_arrangement"><%= Time.at(t.time).utc %><%= t.title %><%= t.description %></div><%end%><%end%><%end%><%end%></div><% end %>');
+$("#calendar_container").append(x.join(''));

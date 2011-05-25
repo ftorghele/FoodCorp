@@ -66,3 +66,7 @@ en:
     create_success: "Comment created successfully"
     create_fail: "Comment creation failed"
     default_body: "Insert Comment"
+
+  date:
+    formats:
+      calendar: "%a %d.%m"

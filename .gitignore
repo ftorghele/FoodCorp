@@ -1,9 +1,8 @@
 .bundle
 log/*.log
 tmp/**/*
-config/boot.rb
 config/database.yml
-config/**/*
+config/initializers/devise.rb
 log/*.log
 *.swp
 tmp/*
@@ -13,3 +12,5 @@ db/*.sqlite3
 .tmp_*
 nbproject
 public/system/avatars
+*.DS_Store
+bin/*.*

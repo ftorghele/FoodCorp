@@ -448,6 +448,10 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
     margin: 10px 0 0 110px;
 }
 
+.comments{
+  color: blue;
+  background: #ccc;
+}
 /* ---- PROVIDE MEAL END ----*/
 
 

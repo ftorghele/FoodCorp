@@ -6,9 +6,10 @@ class CreateFellowships < ActiveRecord::Migration
 
       t.timestamps
     end
+      add_index :fellowships, :user_id,                :unique => true
   end
 
-  add_index :fellowships, :user_id,                :unique => true
+
 
   def self.down
     drop_table :fellowships

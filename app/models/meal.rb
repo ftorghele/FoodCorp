@@ -18,4 +18,12 @@ class Meal < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   reverse_geocoded_by :lat, :lon
   
+#  acts_as_commentable
+
+  def self.get_user_meal arg
+    where(:user_id => arg)
+  end
+
+
+
 end

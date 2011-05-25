@@ -5,7 +5,7 @@ class MealsController < ApplicationController
   
   def index
    @coords = request.location;
-   @user_meals = Meal.get_user_meal current_user.id if current_user
+   @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
   end
 
   def new 

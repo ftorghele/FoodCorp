@@ -68,7 +68,7 @@ class MealArrangementsController < ApplicationController
 
   private
   def get_meal
-    @meal_arrangement = MealArrangement.get_meal_arrangement params[:id]
+    @meal_arrangement = MealArrangement.find(params[:id])
   end
 
   def check_user

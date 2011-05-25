@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
   end
 
-  add_index "fellowships", ["user_id"], :name => "index_fellowships_on_user_id", :unique => true
+  add_index "fellowships", ["user_id"], :name => "index_fellowships_on_user_id"
 
   create_table "meal_arrangements", :force => true do |t|
     t.integer  "meal_id"
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.boolean  "acceptance"
   end
 
-  add_index "meal_arrangements", ["meal_id"], :name => "index_meal_arrangements_on_meal_id", :unique => true
-  add_index "meal_arrangements", ["user_id"], :name => "index_meal_arrangements_on_user_id", :unique => true
+  add_index "meal_arrangements", ["meal_id"], :name => "index_meal_arrangements_on_meal_id"
+  add_index "meal_arrangements", ["user_id"], :name => "index_meal_arrangements_on_user_id"
 
   create_table "meals", :force => true do |t|
     t.string   "title"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.integer  "slots"
   end
 
-  add_index "meals", ["user_id"], :name => "index_meals_on_user_id", :unique => true
+  add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
 
   create_table "messages", :force => true do |t|
     t.string  "topic"

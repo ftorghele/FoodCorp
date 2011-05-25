@@ -12,12 +12,6 @@ class MealArrangement < ActiveRecord::Base
   belongs_to :user
   belongs_to :meal
   
-  def self.get_meal_arrangement arg
-    where(:id => arg)
-  end
 
-  def self.get_meal_arrangement_from_user_and_meal args
-    #where(:meal_id => args[0] AND :user_id => args[1]).first
-  end
 
 end

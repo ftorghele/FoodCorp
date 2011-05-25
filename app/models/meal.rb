@@ -20,10 +20,4 @@ class Meal < ActiveRecord::Base
   
 #  acts_as_commentable
 
-  def self.get_user_meal arg
-    where(:user_id => arg)
-  end
-
-
-
 end

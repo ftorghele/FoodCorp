@@ -21,7 +21,7 @@ class AjaxController < ApplicationController
     @lat = params[:searchLat].to_f
     @lon = params[:searchLon].to_f
     
-    @meals = Meal.near([@lat, @lon], @radius).find(:all, :limit => 5, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
+    @meals = Meal.near([@lat, @lon], @radius).find(:all, :limit => 10, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
   end
 
   def calendar
@@ -33,11 +33,11 @@ class AjaxController < ApplicationController
     @user_tasks = []
 
     @meals.each do |meal|
-      @user_tasks << ["meal_id"=>meal.id, "flag"=>true, "time"=>meal.time ]
+      @user_tasks << ["meal_id"=>meal.id, "own"=>true, "time"=>meal.time, "title"=>meal.title, "cook"=>meal.user.first_name ]
     end
 
     @meal_arrangements.each do |meal_arrangement|
-      @user_tasks << ["meal_id"=>meal_arrangement.meal_id, "flag"=>false, "time"=>meal_arrangement.meal.time ]
+      @user_tasks << ["meal_id"=>meal_arrangement.meal_id, "own"=>false, "time"=>meal_arrangement.meal.time, "title"=>meal_arrangement.meal.title, "cook"=>meal_arrangement.meal.user.first_name ]
     end
     @user_tasks.sort! { |a,b| a[0]["time"] <=> b[0]["time"] }
 

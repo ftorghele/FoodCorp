@@ -11,7 +11,7 @@ class FellowshipsController < ApplicationController
   end
 
   def destroy
-    @fellowship = current_user.fellowships.find(params[:id])
+    @fellowship = current_user.fellowships.get_fellowship params[:id]
     if @fellowship.destroy
       flash[:notice] = I18n.t('fellowships.destroy_success') 
       redirect_to :back

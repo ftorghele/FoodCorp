@@ -30,11 +30,9 @@ class MealArrangementsController < ApplicationController
         meal = Meal.find(current_meal_id)
         meal.slots -= 1
         meal.save
-        comment = Comment.new(:user_id => @meal_arrangement.user_id, :meal_id => current_meal_id, :body => I18n.t('meal_comment.default_body') )
-        comment.save
         current_user.update_attribute(:points, current_user.points)
         puts(current_user.points)
-        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), '<a href="'+edit_comment_path(comment.id)+'">Give a Comment</a>' )
+        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), I18n.t('message.info') )
         redirect_to :back, :notice => I18n.t('meal_arrangements.accept_success')
     else
         redirect_to :back, :notice => I18n.t('meal_arrangements.accept_fail')

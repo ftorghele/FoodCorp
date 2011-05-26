@@ -15,12 +15,7 @@
     <% end %>
   <% end %>
 
-  <% meal.comments.each do |comment| %>
-  	<% if comment.visible == true %>
-  		<%= link_to comment.user.first_name+" "+comment.user.last_name, user_path(comment.user_id) %><br>
-  		<div class="comments"><%= comment.body %></div>
-  	<% end %>
-  <% end %>
+
 
 </div>
 

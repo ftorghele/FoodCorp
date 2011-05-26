@@ -5,7 +5,7 @@ gem 'mysql2'
 gem 'jquery-rails'
 gem "geocoder"
 
-
+gem 'acts_as_commentable_with_threading'
 gem 'devise'
 gem 'oa-oauth', :require => 'omniauth/oauth'
 

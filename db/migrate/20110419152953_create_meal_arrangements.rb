@@ -7,10 +7,12 @@ class CreateMealArrangements < ActiveRecord::Migration
 
       t.timestamps
     end
+
+  add_index :meal_arrangements, :meal_id
+  add_index :meal_arrangements, :user_id
+
   end
 
-  add_index :meal_arrangements, :meal_id,                :unique => true
-  add_index :meal_arrangements, :user_id,                :unique => true
 
   def self.down
     drop_table :meal_arrangements

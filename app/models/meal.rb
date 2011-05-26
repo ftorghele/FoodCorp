@@ -18,4 +18,6 @@ class Meal < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   reverse_geocoded_by :lat, :lon
   
+#  acts_as_commentable
+
 end

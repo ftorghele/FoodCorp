@@ -1,5 +1,7 @@
 class Meal < ActiveRecord::Base
 
+  acts_as_commentable
+  
   attr_accessible :title, :description, :time, :deadline, :lon, :lat,
                   :country, :city, :zip_code, :street, :slots, :street_number
   
@@ -18,6 +20,6 @@ class Meal < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   reverse_geocoded_by :lat, :lon
   
-#  acts_as_commentable
+
 
 end

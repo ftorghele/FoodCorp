@@ -4,6 +4,7 @@
   <input type="hidden" title="lat" value="<%= meal.lat%>" />
   <input type="hidden" title="lon" value="<%= meal.lon%>" />
   
+
   <% if current_user %>
     <% if current_user.id == meal.user_id && meal.meal_arrangements.count > 0 %>
       Accepted Users:<br>
@@ -12,10 +13,22 @@
           <%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %><br>
         <% end %>
       <% end %>
+    <% else %>
+      <% if comment_admit(meal.id) %>
+        <%= form_tag({:action => "create_comment"}, :method => "post") do %>
+          <input type="hidden" name="meal_id" value="<%=meal.id%>" />
+          <input type="text" value="write a comment" name="body" />
+
+          <input type="submit" value="create comment" />
+        <%end%>
+      <%end%>
     <% end %>
   <% end %>
 
-
-
+  <div class="comment">
+    <% meal.comment_threads.each do |comment|%>
+      <%=comment.body%><br>
+      <%=get_user_name(comment.user_id).first_name%><br>
+    <%end%>
+  </div>
 </div>
-

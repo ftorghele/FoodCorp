@@ -6,6 +6,11 @@ FoodCorp::Application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }
+  
+  controller :users do
+    match 'users/create_comment'
+  end
+
   resources :users
   resources :fellowships
   resources :meals

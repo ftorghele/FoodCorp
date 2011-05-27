@@ -11,4 +11,16 @@ module UsersHelper
     end
   end
 
+  def get_user_name(args)
+    return User.find(args)
+  end
+
+  def comment_admit(args)
+    if MealArrangement.where("acceptance = 1 AND user_id = ? AND meal_id = ? ", current_user.id, args ).count > 0
+      return true
+    else
+      return false
+    end
+  end
+
 end

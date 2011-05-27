@@ -1,5 +1,8 @@
 class AjaxController < ApplicationController
-  respond_to :js
+  respond_to do
+    :js
+    :html
+  end
 
   def update_map
     @searchLocation = params[:searchLocation]

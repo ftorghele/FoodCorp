@@ -1,4 +1,21 @@
 $(document).ready(function() {
+	
+		$('#calendar').hoverIntent(
+			function(){
+			    $.ajax({
+					  url: "/ajax/calendar",
+					  context: document.body,
+					  success: function(data){
+							$('#calendar_container').css({'height': 0});
+					    $('#calendar_container').html(data);
+					  }
+					});
+					
+				$('#calendar_container').animate({'height': 'auto'})
+			  }, function(){
+			    $('#calendar_container').animate({ 'height': 0});
+			  }
+			);
 
     // TOPNAV HANDLING
     current = document.location.pathname;

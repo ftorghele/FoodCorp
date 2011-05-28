@@ -1,0 +1,5 @@
+<%= form_tag({:action => "create_comment"}, :method => "post") do %>
+  <input type="hidden" name="meal_id" value="<%=meal.id%>" />
+  <input type="text" value="write a comment" name="body" />
+  <input type="submit" value="create comment" />
+<%end%>

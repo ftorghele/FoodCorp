@@ -1,21 +1,26 @@
 $(document).ready(function() {
 	
-		$('#calendar').hoverIntent(
-			function(){
-			    $.ajax({
-					  url: "/ajax/calendar",
-					  context: document.body,
-					  success: function(data){
-							$('#calendar_container').css({'height': 0});
-					    $('#calendar_container').html(data);
-					  }
-					});
-					
-				$('#calendar_container').animate({'height': 'auto'})
-			  }, function(){
-			    $('#calendar_container').animate({ 'height': 0});
-			  }
-			);
+		fetchedData = false;
+		calendarData = {};
+		calendarHeight = 0;
+		
+		getCalendar();
+		
+		$('#calendar').hoverIntent(function(){
+					getCalendar();
+					$('#calendar_container').fadeIn(500);
+				}, function() {
+					$('#calendar_container').fadeOut(300);
+		});
+			
+		function getCalendar() {
+			fetchedData = true;
+			$.ajax({url:'/ajax/calendar', success:function(data) {
+														$('#calendar_container').html(data);
+			}});
+			return calendarData;
+		}
+
 
     // TOPNAV HANDLING
     current = document.location.pathname;
@@ -24,10 +29,6 @@ $(document).ready(function() {
     else if (current == "/users/sign_up") $('#topnav_register').addClass('nav_active');
     else if (current == "/about" || current == "/imprint" || current == "/terms") {}
     else $('#topnav_profile').addClass('nav_active');
-
-    $("#calendar").mouseleave(function(){
-        $("#calendar_container").empty();
-    });
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);
@@ -163,25 +164,20 @@ $(document).ready(function() {
 	});
 	
     // TAB HANDLING
-    $('.tab_content').hide();
-    if(location.hash != '') {
-        var target = location.hash.split('#')[1]
-        $(location.hash).show();
-        $('ul.tabs li:has(a[rel='+target+'])').addClass('active').show(); // NOT WORING
-    } else {
-        $("ul.tabs li:first").addClass("active").show();
-	$(".tab_content:first").show();
-    }
+    $(".tab_content").hide(); //Hide all content
+    $("ul.tabs li:first a").addClass("nav_active").show(); //Activate first tab
+    $(".tab_content:first").show(); //Show first tab content
 
     //On Click Event
-    $('ul.tabs li').click(function() {
-        $("ul.tabs li").removeClass("active"); //Remove any "active" class
-        $(this).addClass("active"); //Add "active" class to selected tab
-        $(".tab_content").hide(); //Hide all tab content
+    $("ul.tabs li").click(function() {
 
-        var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-        $(activeTab).fadeIn(); //Fade in the active ID content
-        return false;
+            $("ul.tabs li a").removeClass("nav_active"); //Remove any "active" class
+            $(this).children().addClass("nav_active"); //Add "active" class to selected tab
+            $(".tab_content").hide(); //Hide all tab content
+
+            var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+            $(activeTab).fadeIn(); //Fade in the active ID content
+            return false;
     });
 
 		

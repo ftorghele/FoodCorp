@@ -7,14 +7,15 @@
     <li><%= link_to("cook", user_path(current_user.id), :id => "topnav_cook", :class => is_active?("nav_active")) if user_signed_in? %></li>
   </ul>
 
+  <% if user_signed_in? %>
   <div id="calendar">
       <div id="calendar_container">
-      
       </div>
       <div id="calendar_pull">
       	<img src="/images/calendar_pull.png" />
       </div>
   </div>
+  <% end %>
 
   <div id="login" class="float_right">
     <% if user_signed_in? %>

@@ -36,8 +36,6 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
   end
 
-  add_index "fellowships", ["user_id"], :name => "index_fellowships_on_user_id"
-
   create_table "meal_arrangements", :force => true do |t|
     t.integer  "meal_id"
     t.integer  "user_id"
@@ -45,9 +43,6 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
     t.boolean  "acceptance"
   end
-
-  add_index "meal_arrangements", ["meal_id"], :name => "index_meal_arrangements_on_meal_id"
-  add_index "meal_arrangements", ["user_id"], :name => "index_meal_arrangements_on_user_id"
 
   create_table "meals", :force => true do |t|
     t.string   "title"
@@ -66,8 +61,6 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
     t.integer  "slots"
   end
-
-  add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
 
   create_table "messages", :force => true do |t|
     t.string  "topic"
@@ -106,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.string   "zip_code"
     t.string   "street"
     t.string   "street_number"
-    t.string   "room_number"
     t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -115,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.boolean  "use_fb_avatar"
-    t.integer  "points",                              :default => 1
+    t.integer  "points",                              :default => 0
     t.text     "info_field"
   end
 

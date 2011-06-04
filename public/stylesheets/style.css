@@ -27,7 +27,7 @@
 }
 
 body {
-	background: #000 url(../images/bg.jpg);
+	background: #000 url('../images/bg.jpg');
 }
 
 #wrapper {
@@ -50,10 +50,17 @@ body {
 }
 
 #main {
-    background: #fff;
-    width: 820px;
-    -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
     margin: 0 0 0 130px;
+    width: 820px;
+}
+
+#main_header {
+    min-height: 50px;
+}
+
+#main_body {
+    background: #fff;
+    -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
     padding: 5px;
 }
 
@@ -98,8 +105,10 @@ h2 a {
 	font-style:italic;
 }
 
-h3{
-	color:#000;
+h3 {
+    color: #e63600;
+    font-family: Helvetica;
+    font-weight: bold;
 }
 
 img {
@@ -124,6 +133,7 @@ img {
 }
 
 #topnav li a {
+	position:relative;
 	display: block;
 	width:93px;
 	height:49px;
@@ -131,7 +141,7 @@ img {
 	margin-top: -10px;
 	overflow: hidden;
 	outline: none;
-	background: url(../images/topnav_bg.png) no-repeat;
+	background: url('../images/topnav_bg.png') no-repeat;
 	font-family: "BelloProRegular";
 	color: #333333;
 	font-size: 20px;
@@ -147,55 +157,93 @@ img {
 
 /* ---- TOPNAV END ----- */
 
+/* ---- TABNAV BEG ----- */
+
+#tabnav {
+    margin: 0 0 20px 20px;
+}
+
+#tabnav li {
+    float:left;
+    list-style-type:none;
+}
+
+#tabnav li a {
+    display: block;
+    width:208px;
+    height:32px;
+    padding: 15px 0 0 0;
+    overflow: hidden;
+    outline: none;
+    background: url('../images/tab_bg.png') no-repeat;
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
+    text-align:center;
+    font-family: Helvetica;
+}
+
+#tabnav li a:hover, #tabnav a.nav_active {
+    background-position: 0px -47px;
+    color: #333333;
+}
+
+/* ---- TABNAV END ----- */
+
 /* ---- CALENDAR END ----- */
 
 #calendar {
-    position: absolute;
-    top: 0;
-    right: 190px;
-    z-index: 100000;
+	display:block;
+	position:absolute;
+	left:300px;
+	top:0px;
+	z-index: 100000;
+	width:260px;
 }
 
 #calendar a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 #calendar_container {
-    width: 255px;
-		display:hidden;
-    border-left: 2px solid #aaa;
-    border-right: 2px solid #aaa;
+	display:none;
+	height:0px;
+	position:relative;
+	top:0px;
+	width: 255px;
+	border-left: 2px solid #aaa;
+	border-right: 2px solid #aaa;
 }
 
 #calendar_pull a {
-    outline: none;
+	outline:none;
 }
 
 .day_meal, .day_arrangement, .day_nothing {
-    height: 50px;
-    width: 255px;
-    display: block;
-    font-size: 12px;
-    color: #000;
+  height: 50px;
+  width: 255px;
+  display: block;
+  font-size: 12px;
+  color: #000;
 }
 
 .meal_title {
-    font-size: 16px;
-    padding: 6px 0 0 0;
+  font-size: 16px;
+  padding: 6px 0 0 0;
 }
 
 .day_meal {
-    background: url(/images/calendar_bg.png) 0px -50px repeat-x;
+    background: url('/images/calendar_bg.png') 0px -50px repeat-x;
     color: #fff;
 }
 
 .day_arrangement {
-    background: url(/images/calendar_bg.png) 0px -100px repeat-x;
+    background: url('/images/calendar_bg.png') 0px -100px repeat-x;
     color: #fff;
 }
 
 .day_nothing {
-    background: url(/images/calendar_bg.png) 0px 0px repeat-x;
+    background: url('/images/calendar_bg.png') 0px 0px repeat-x;
     line-height: 50px;
     text-align: center;
 }
@@ -216,6 +264,9 @@ img {
 /* ---- LOGIN BEG ----- */
 
 #login {
+		position:absolute;
+		right:20px;
+		top:30px;
     width: 250px;
     height: 82px;
     margin: 30px 0 0 0;
@@ -296,54 +347,14 @@ img {
 /* ---- MAIN PAGE END ----- */
 
 /* ---- TABS BEG ----- */
-ul.tabs {
-	float: left;
-	list-style: none;
-	height: 32px;
-	border-bottom: 1px solid #999;
-	border-left: 1px solid #999;
-	width: 100%;
-}
-ul.tabs li {
-	float: left;
-	height: 31px;
-	line-height: 31px;
-	border: 1px solid #999;
-	border-left: none;
-	margin-bottom: -1px;
-	overflow: hidden;
-	position: relative;
-	background: #e0e0e0;
-}
-ul.tabs li a {
-	text-decoration: none;
-	color: #000;
-	display: block;
-	font-size: 1.2em;
-	padding: 0 20px;
-	border: 1px solid #fff;
-	outline: none;
-}
-ul.tabs > li a:hover {
-	background: #ccc;
+
+.tab_content {
+    padding: 20px;
+    font-size: 1.2em;
 }
 
-ul.tabs li.active, html ul.tabs li.active a:hover  {
-	background: #fff;
-	border-bottom: 1px solid #fff;
-}
-.tab_container {
-	border: 1px solid #999;
-	border-top: none;
-	overflow: hidden;
-	clear: both;
-	float: left; width: 100%;
-        color: #000;
-	background: #fff;
-}
-.tab_content {
-	padding: 20px;
-	font-size: 1.2em;
+.space_left {
+    margin: 0 0 0 30px;
 }
 /* ---- TABS END ----- */
 

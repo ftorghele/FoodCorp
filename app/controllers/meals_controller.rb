@@ -31,11 +31,11 @@ class MealsController < ApplicationController
   end
   
   def edit
-    @meal = Meal.find(params[:id])
+    @meal = Meal.find(params[:id] && :user_id => current_user.id)
   end
   
   def update
-      @meal = Meal.find(params[:id])
+      @meal = Meal.find(params[:id] && :user_id => current_user.id)
    if @meal.update_attributes(params[:meal])
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else

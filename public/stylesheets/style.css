@@ -27,7 +27,7 @@
 }
 
 body {
-	background: #000 url(../images/bg.jpg);
+	background: #000 url('../images/bg.jpg');
 }
 
 #wrapper {
@@ -150,9 +150,8 @@ img {
 /* ---- CALENDAR END ----- */
 
 #calendar {
-    position: absolute;
-    top: 0;
-    right: 190px;
+		position:absolute;
+		right:190px;
     z-index: 100000;
 }
 

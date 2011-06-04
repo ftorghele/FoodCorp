@@ -1,19 +1,23 @@
 $(document).ready(function() {
 	
+		fetchedData = false;
+	
 		$('#calendar').hoverIntent(
 			function(){
-			    $.ajax({
+				if(!fetchedData) $.ajax({
 					  url: "/ajax/calendar",
 					  context: document.body,
 					  success: function(data){
-							$('#calendar_container').css({'height': 0});
-					    $('#calendar_container').html(data);
+							$('#calendar_container').html(data);
+							fetchedData = true;
 					  }
 					});
 					
-				$('#calendar_container').animate({'height': 'auto'})
+			  
+					
+				$('#calendar_container').fadeIn();
 			  }, function(){
-			    $('#calendar_container').animate({ 'height': 0});
+			    $('#calendar_container').fadeOut();
 			  }
 			);
 

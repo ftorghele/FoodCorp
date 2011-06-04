@@ -17,4 +17,8 @@ module ApplicationHelper
   
   def convert
   end
+
+  def is_active?(page_name)
+    "nav_active" if params[:action] == page_name
+  end
 end

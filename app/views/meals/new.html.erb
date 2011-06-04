@@ -1,15 +1,17 @@
-<div class="wrapper">Create new Meal
+<div id="main_header">
+  <h3>Create new Meal</h3>
   <%= render 'layouts/menu', :user => @user %>
+</div>
+<div id="main_body">
   <%= render 'meal_form' %>
+
+  <div>Location Preview
+    <div id="map" style="width: 350px; height: 250px"></div>
+  </div>
+
+  <div>About <%= @user.first_name %> <%= @user.last_name %>
+    <%= render 'layouts/user_information' %>
+  </div>
+
+  <div class="clr"></div>
 </div>
-
-<div class="wrapper">Location Preview
-  <div id="map" style="width: 350px; height: 250px"></div>
-</div>
-
-<div class="wrapper">About <%= @user.first_name %> <%= @user.last_name %>
-  <%= render 'layouts/user_information' %>
-</div>
-
-<div class="clr"></div>
-

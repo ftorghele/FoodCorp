@@ -1,13 +1,13 @@
-<div class="wrapper"><%= @meal.title %>: <%= @meal.city %> am <%= Time.at(@meal.time).utc %>
+<div id="main_body">
+<div><%= @meal.title %>: <%= @meal.city %> am <%= Time.at(@meal.time).utc %>
 <div class="display_meal">
    <%= render 'meal' %>
 </div>
 </div>
 
-<div class="wrapper">About <%= @user.first_name %> <%= @user.last_name %>
+<div>About <%= @user.first_name %> <%= @user.last_name %>
 <%= render 'layouts/user_information' %>
 </div>
 
 <div class="clear"></div>
-
-	
+</div>

@@ -1,11 +1,11 @@
-<div id="menu">
-<div id="black" ></div>
-	<ul class="menu">
+<div id="submenu">
+	<ul class="submenu">
 		<li><%= link_to "meals", user_path(@user.id) %></li>
 		<% if current_user %>
 		  <% if current_user.id == @user.id %>
-		    <%= link_to("new meal", new_meal_path) %>
+		    <li><%= link_to("new meal", new_meal_path) %></li>
 		  <%end%>
 		<%end%>
 	</ul>
 </div>
+<div class="clr"></div>

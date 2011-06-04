@@ -1,25 +1,25 @@
 $(document).ready(function() {
 	
 		fetchedData = false;
-	
-		$('#calendar').hoverIntent(
-			function(){
-				if(!fetchedData) $.ajax({
-					  url: "/ajax/calendar",
-					  context: document.body,
-					  success: function(data){
-							$('#calendar_container').html(data);
-							fetchedData = true;
-					  }
-					});
-					
-			  
-					
-				$('#calendar_container').fadeIn();
-			  }, function(){
-			    $('#calendar_container').fadeOut();
-			  }
-			);
+		calendarData = {};
+		calendarHeight = 0;
+		
+		getCalendar();
+		
+		$('#calendar').hoverIntent(function(){
+					getCalendar();
+					$('#calendar_container').fadeIn(500);
+				}, function() {
+					$('#calendar_container').fadeOut(300);
+		});
+			
+		function getCalendar() {
+			fetchedData = true;
+			$.ajax({url:'/ajax/calendar', success:function(data) {
+														$('#calendar_container').html(data);
+			}});
+			return calendarData;
+		}
 
     // TOPNAV HANDLING
     current = document.location.pathname;
@@ -28,10 +28,6 @@ $(document).ready(function() {
     else if (current == "/users/sign_up") $('#topnav_register').addClass('nav_active');
     else if (current == "/about" || current == "/imprint" || current == "/terms") {}
     else $('#topnav_profile').addClass('nav_active');
-
-    $("#calendar").mouseleave(function(){
-        $("#calendar_container").empty();
-    });
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);

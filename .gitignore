@@ -3,6 +3,7 @@ log/*.log
 tmp/**/*
 config/database.yml
 config/initializers/devise.rb
+config/initializers/secret_token.rb
 log/*.log
 *.swp
 tmp/*

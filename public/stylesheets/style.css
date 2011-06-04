@@ -28,6 +28,7 @@
 
 body {
 	background: #000 url('../images/bg.jpg');
+	font-family:'Helvetica Neue', 'Helvetica', 'Arial', 'Lucida Grande', 'sans-serif';
 }
 
 #wrapper {
@@ -55,7 +56,7 @@ body {
 }
 
 #main_header {
-    min-height: 50px;
+	height:69px;
 }
 
 #main_body {
@@ -207,7 +208,6 @@ img {
 
 #calendar_container {
 	display:none;
-	height:0px;
 	position:relative;
 	top:0px;
 	width: 255px;

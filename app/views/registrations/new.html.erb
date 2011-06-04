@@ -1,35 +1,42 @@
-<h2>Sign up</h2>
+<div id="main_header">
+  <h3>Sign up</h3>
+</div>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+<div id="main_body">
+<br>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
 
-    <div class="float_left">
+    <div class="float_left space_left">
 
       <p><%= f.label :first_name %><br />
-      <%= f.text_field :first_name %></p>
+        <%= f.text_field :first_name %></p>
 
       <p><%= f.label :last_name %><br />
-      <%= f.text_field :last_name %></p>
+        <%= f.text_field :last_name %></p>
 
       <p><%= f.label :gender %><br />
-      <%= f.select( :gender, {"male" => "male", "female" => "female"}, {:include_blank => "Select"}) %></p>
+        <%= f.select( :gender, {"male" => "male", "female" => "female"}, {:include_blank => "Select"}) %></p>
 
     </div>
     <div class="float_left space_left">
 
       <p><%= f.label :email %><br />
-      <%= f.email_field :email %></p>
+        <%= f.email_field :email %></p>
 
       <p><%= f.label :password %><br />
-      <%= f.password_field :password, :value => ""%></p>
+        <%= f.password_field :password, :value => ""%></p>
 
       <p><%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation %></p>
+        <%= f.password_field :password_confirmation %></p>
+      <br>
+      <p><%= f.submit "Sign up" %></p>
 
     </div>
     <div class="clr"></div>
-
-  <p><%= f.submit "Sign up" %></p>
-<% end %>
-
-<%= render :partial => "devise/shared/links" %>
+  <% end %>
+  <br>
+  <div class="space_left">
+    <%= render :partial => "devise/shared/links" %>
+  </div>
+</div>

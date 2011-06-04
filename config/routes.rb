@@ -8,7 +8,7 @@ FoodCorp::Application.routes.draw do
                                        :registrations => "registrations" }
   
   controller :users do
-    match 'users/create_comment'
+    match 'users/create_comment' => :create_comment
   end
 
   resources :users

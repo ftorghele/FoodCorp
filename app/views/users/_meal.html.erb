@@ -1,9 +1,30 @@
 <div class="meal">
-  <div class="title"><%= meal.title %></div>
-  <div class="description"><%= meal.description %></div>
-  <input type="hidden" title="lat" value="<%= meal.lat%>" />
-  <input type="hidden" title="lon" value="<%= meal.lon%>" />
-  
+
+  <%unless current_user %>
+
+    <%= link_to meal_path(meal.id) do %> 
+      <div class="title"><%= meal.title %></div>
+      <div class="description"><%= meal.description %></div>
+      <input type="hidden" title="lat" value="<%= meal.lat%>" />
+      <input type="hidden" title="lon" value="<%= meal.lon%>" />
+    <% end %>
+    <%else%>
+      <%if current_user.id == meal.user_id %>
+        <%= link_to edit_meal_path(meal.id) do %> 
+          <div class="title"><%= meal.title %></div>
+          <div class="description"><%= meal.description %></div>
+          <input type="hidden" title="lat" value="<%= meal.lat%>" />
+          <input type="hidden" title="lon" value="<%= meal.lon%>" />
+        <%end%>
+      <%else%>
+        <%= link_to meal_path(meal.id) do %> 
+          <div class="title"><%= meal.title %></div>
+          <div class="description"><%= meal.description %></div>
+          <input type="hidden" title="lat" value="<%= meal.lat%>" />
+          <input type="hidden" title="lon" value="<%= meal.lon%>" />
+        <%end%>
+      <%end%>
+  <% end %>
 
   <% if current_user %>
     <% if current_user.id == meal.user_id && meal.meal_arrangements.count > 0 %>

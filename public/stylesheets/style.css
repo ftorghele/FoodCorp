@@ -398,3 +398,28 @@ ul.tabs li.active, html ul.tabs li.active a:hover  {
     height: 25px;
     margin: 10px 0 0 110px;
 }
+
+
+/* ---- PROVIDE MEAL End ----*/
+
+/* ---- SUBMENU BEGIN ----*/
+
+#submenu{
+  width: 100%;
+  height: 50px;
+}
+
+.submenu li{
+  position:relative;
+  top: -50px;
+  float:left;
+  list-style: none;
+  margin: 2px;
+  background: red;
+}
+
+.submenu a{
+  text-decoration: none;
+}
+
+/* ---- SUBMENU END ----*/

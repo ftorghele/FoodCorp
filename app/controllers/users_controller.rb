@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :get_user, :only=> [:show, :info]
+  before_filter :get_user, :only=> [:show]
 
   def index
     redirect_to root_path
@@ -21,9 +21,6 @@ class UsersController < ApplicationController
       else
         redirect_to :back,  :alert => I18n.t('application.rights_fail')
       end
-  end
-
-  def info
   end
 
   protected

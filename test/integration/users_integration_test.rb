@@ -32,8 +32,8 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   def check_design args
-    assert page.has_css?('h1#logo', :count => 1)
-    assert page.has_css?('ul.navigation', :count => 1)
+    assert page.has_css?('div#logo', :count => 1)
+    assert page.has_css?('ul#topnav', :count => 1)
     args.each do |content|
         assert page.has_content?(content)
     end
@@ -51,7 +51,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_in_as("user1@gmail.com", "123456")
 
     click_on('Hans Testuser')
-    assert page.has_css?('h3#profile_name', :count => 1)
+    assert page.has_css?('h3', :count => 1)
     
     sign_out
   end
@@ -63,40 +63,37 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     click_on('cook')
     click_on('new meal')
-   # assert page.has_css?('form', :count => 1)
+    assert page.has_css?('form', :count => 1)
 
     click_on("submit")
-   # assert_not_same("1","Meal.count")
+    assert_not_same("1","Meal.count")
     
     create_meal
 
-   # assert page.has_content?('Meal successfully saved!')
+    assert page.has_content?('Meal successfully saved!')
 
     click_on('Back to Profile')
     click_on('meals')
-   # assert page.has_content?('Gulasch')
-   # assert page.has_content?('scharf und mit Knödel')
+    assert page.has_content?('Gulasch')
+    assert page.has_content?('scharf und mit Knödel')
     sign_out
 
     #check created Meal
     visit '/'
-   # assert page.has_css?('div#meals_distance_stream', :count => 1)
-   # assert page.has_css?('div.meal', :count => 1)
-
-   # assert page.has_content?('Gulasch')
-   # assert page.has_content?('scharf und mit Knödel')
+    assert page.has_css?('div.mealfind', :count => 1)
+    assert page.has_css?('div#map', :count => 1)
 
     #create Meal Arrangement
     sign_in_as("user2@gmail.com", "123456")
-
-    click_on('show')
+    meal = Meal.last
+    visit '/meals/'+ meal.id.to_s
     click_on('send meal request')
 
-   # assert page.has_content?('Meal arrangement was successfully created')
+    assert page.has_content?('Meal arrangement was successfully created')
     assert page.has_css?('form', :count => 1)
     click_on('delete meal request')
 
-  #  assert page.has_content?('Meal arrangement was successfully deleted')
+    assert page.has_content?('Meal arrangement was successfully deleted')
     click_on('send meal request')
     sign_out
 
@@ -106,7 +103,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     login_user "2"
     click_on('personal Messages')
-  #  assert page.has_content?('Meal arrangement acceptance')
+    assert page.has_content?('Meal arrangement acceptance')
     sign_out
   end
 
@@ -117,11 +114,13 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ["Your Neighborhood", "Meal Requests", "Latest Meals"]
 
     click_on('cook')
+    click_on('new meal')
     create_meal
     sign_out
 
     sign_in_as("user2@gmail.com", "123456")
-    click_on('show')
+    meal = Meal.last
+    visit '/meals/'+ meal.id.to_s
     click_on('send meal request')
     sign_out
 
@@ -131,7 +130,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     login_user "2"
     click_on('personal Messages')
-   # assert page.has_content?('Meal arrangement rejected')
+    assert page.has_content?('Meal arrangement rejected')
     sign_out   
   end
     

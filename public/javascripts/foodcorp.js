@@ -27,8 +27,7 @@ $(document).ready(function() {
     if (current == "/meals/new") $('#topnav_cook').addClass('nav_active');
     else if (current == "/meals" || current == "/") $('#topnav_eat').addClass('nav_active');
     else if (current == "/users/sign_up") $('#topnav_register').addClass('nav_active');
-    else if (current == "/about" || current == "/imprint" || current == "/terms") {}
-    else $('#topnav_profile').addClass('nav_active');
+    else if (current == "/about" || current == "/imprint" || current == "/terms") {};
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);

@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :first_name, :last_name, :gender, :birthday, :fb_id, :avatar, :use_fb_avatar,
-                  :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, :points
+                  :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true

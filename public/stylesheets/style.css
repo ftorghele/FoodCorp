@@ -60,7 +60,7 @@ p.notice, p.alert {
 }
 
 #main_header {
-	height:69px;
+    height:69px;
 }
 
 #main_body {
@@ -359,6 +359,10 @@ img {
 
 .space_left {
     margin: 0 0 0 30px;
+}
+
+.space_right {
+    margin: 0 30px 0 0;
 }
 /* ---- TABS END ----- */
 

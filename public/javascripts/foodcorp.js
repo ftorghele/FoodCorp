@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);
-
+	$('p.alert').fadeOut(5000);
 	
 	// Sign Up Animation
 	$('#signup_form_animate').click(function() {

@@ -31,6 +31,10 @@ body {
 	font-family:'Helvetica Neue', 'Helvetica', 'Arial', 'Lucida Grande', 'sans-serif';
 }
 
+p.notice, p.alert {
+	color:#fff;
+}
+
 #wrapper {
 	width: 960px;
 	margin: 0 auto;

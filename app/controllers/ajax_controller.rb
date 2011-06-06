@@ -25,6 +25,7 @@ class AjaxController < ApplicationController
     @lon = params[:searchLon].to_f
     
     @meals = Meal.near([@lat, @lon], @radius).find(:all, :limit => 10, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
+
   end
 
   def calendar

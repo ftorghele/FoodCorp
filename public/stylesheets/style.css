@@ -67,6 +67,8 @@ p.notice, p.alert {
     background: #fff;
     -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px;
     padding: 5px;
+    overflow: auto;
+    width: 820px;
 }
 
 #footer {
@@ -79,7 +81,7 @@ p.notice, p.alert {
 }
 
 .clr {
-	clear: both;
+    clear: both;
 }
 
 .float_right {
@@ -91,23 +93,23 @@ p.notice, p.alert {
 }
 
 h1 {
-	font-size:45px;
-	display:block;
-	float:left;
-	padding:0 0 0 40px;
-	height:40px;
+    font-size:45px;
+    display:block;
+    float:left;
+    padding:0 0 0 40px;
+    height:40px;
 }
 
 h2, h2 a {
-	font-family:Georgia;
-	font-weight:normal;
-	font-size:45px;
+    font-family:Georgia;
+    font-weight:normal;
+    font-size:45px;
 }
 
 h2 a {
-	color:#ff505a;
-	text-decoration:underline;
-	font-style:italic;
+    color:#ff505a;
+    text-decoration:underline;
+    font-style:italic;
 }
 
 h3 {
@@ -268,9 +270,9 @@ img {
 /* ---- LOGIN BEG ----- */
 
 #login {
-		position:absolute;
-		right:20px;
-		top:30px;
+    position:absolute;
+    right:20px;
+    top:30px;
     width: 250px;
     height: 82px;
     margin: 30px 0 0 0;
@@ -369,8 +371,17 @@ img {
 /* ---- USER_PROFILE BEGIN ----*/
 
 #profile_avatar {
-    border: 1px solid #000;
     width: 197px;
+}
+
+#user_information {
+    float: left;
+    width: 220px;
+    min-height: 100%;
+}
+
+#provided_meals {
+    margin: 0 0 0 220px;
 }
 
 .delete{
@@ -385,14 +396,12 @@ img {
 
 /* ---- PROVIDE MEAL BEGIN ----*/
 .display_meal {
-    width: 400px;
-    color: #000;
-}
-
-#meal_show{
-	padding: 10px;
-	margin-top: 4px;
-	background: #ccc;
+    width: 517px;
+    min-height: 60px;
+    background: #191919 url('/images/meal_bg.png') top left no-repeat;
+    -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+    margin: 5px;
+    padding: 5px 5px 5px 70px;
 }
 
 #provide_meal {

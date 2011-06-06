@@ -1,56 +1,50 @@
-<div id="meal_show">
-<br>
+<div class="display_meal">
+  <br>
 	Description:
-	<%= @meal.description %><br>
-	<% if current_user %>
-		<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
-			<% if @meal.user_id == current_user.id || 
-			    @meal_arrangement.acceptance == true %>
-				<%= @meal.country %><br>
-				<%= @meal.zip_code %><br>
-				<%= @meal.city %><br>
-				<%= @meal.street %>
-				<%= @meal.street_number%><br>
-			<% end %>
-		<% end %>
-	<% end %>
-	<br>
+  <%= @meal.description %><br>
+  <% if current_user %>
+    <% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
+      <% if @meal.user_id == current_user.id ||
+          @meal_arrangement.acceptance == true %>
+        <%= @meal.country %><br>
+        <%= @meal.zip_code %><br>
+        <%= @meal.city %><br>
+        <%= @meal.street %>
+        <%= @meal.street_number%><br>
+      <% end %>
+    <% end %>
+  <% end %>
+  <br>
 	Latitude:  <%= @meal.lat %><br>
 	Longitude: <%= @meal.lon %><br>
-	<br>
-	<% if current_user && current_user.id != @meal.user_id %>
-		<%if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
-			<%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
-				<input type="hidden" value="<%= @meal.id %>" name="meal_id" />
-				<input type="submit" value="send meal request" />
-			<%end%>
-		<%else%>
+  <br>
+  <% if current_user && current_user.id != @meal.user_id %>
+    <%if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
+      <%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
+        <input type="hidden" value="<%= @meal.id %>" name="meal_id" />
+        <input type="submit" value="send meal request" />
+      <%end%>
+    <%else%>
 
-	       <%= button_to "delete meal request", { :controller => "meal_arrangements", :action => "destroy", :id => @meal_arrangement.id },
-	          :confirm => "Are you sure?", :method => :delete %>
+      <%= button_to "delete meal request", { :controller => "meal_arrangements", :action => "destroy", :id => @meal_arrangement.id },
+        :confirm => "Are you sure?", :method => :delete %>
 
-		<%end%>
-			
-		
-		
-		<!-- Userprofile -->
-		Meal provider: <%= link_to user_name(:id => @meal.user_id), user_path(@meal.user_id) %>
-
-	<%else %>
-		<%if current_user %>
-			<%if current_user.id == @meal.user_id %>
-				<div class="meal_show_buttons">
-					<%= link_to "Back to Profile", user_path(current_user.id) %>
-				</div>
-			<%else%>
-				<div class="meal_show_buttons">
-					<%= link_to "Sign in", user_session_path %>
-				</div>
-			<%end%>
-		<%else%>	
-			<div class="meal_show_buttons">
-				<%= link_to "Sign in", user_session_path %>
-			</div>
-		<%end%>
-	<% end %>
+    <%end%>
+  <%else %>
+    <%if current_user %>
+      <%if current_user.id == @meal.user_id %>
+        <div class="meal_show_buttons">
+          <%= link_to "Back to Profile", user_path(current_user.id) %>
+        </div>
+      <%else%>
+        <div class="meal_show_buttons">
+          <%= link_to "Sign in", user_session_path %>
+        </div>
+      <%end%>
+    <%else%>
+      <div class="meal_show_buttons">
+        <%= link_to "Sign in", user_session_path %>
+      </div>
+    <%end%>
+  <% end %>
 </div>

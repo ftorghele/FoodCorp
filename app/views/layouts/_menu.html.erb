@@ -1,5 +1,5 @@
 <div id="tabnav">
-  <ul class="tabs">
+  <ul>
     <li><%= link_to "meals", user_path(@user.id), :class => is_active?("show") %></li>
     <% if current_user %>
       <% if current_user.id == @user.id %>

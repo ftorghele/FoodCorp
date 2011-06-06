@@ -4,7 +4,7 @@
   <ul id="topnav">
     <li><%= link_to("eat", meals_path, :id => "topnav_eat", :class => is_active?("nav_active") )  %></li>
     <li><%= link_to("register", new_user_registration_path, :id => "topnav_register", :class => is_active?("nav_active") ) unless user_signed_in? %></li>
-    <li><%= link_to("cook", user_path(current_user.id), :id => "topnav_cook", :class => is_active?("show"), :class => ("new")) if user_signed_in? %></li>
+    <li><%= link_to("cook", new_meal_path, :id => "topnav_cook", :class => is_active?("show"), :class => ("new")) if user_signed_in? %></li>
   </ul>
 
   <% if user_signed_in? %>

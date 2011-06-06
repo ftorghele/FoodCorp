@@ -8,8 +8,4 @@ class Fellowship < ActiveRecord::Base
   validates :user_id, :presence => true
   validates :follower_id, :presence => true
   validates_uniqueness_of :user_id, :scope => :follower_id
-
-  def self.get_fellowship arg
-    where(:id => arg)
-  end
 end

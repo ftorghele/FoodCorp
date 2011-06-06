@@ -1,11 +1,5 @@
 <div id="user_information">
-  <div id="black" ></div>
   <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
-
-  <h3 id="profile_name"><%= @user.first_name %> <%= @user.last_name %></h3>
-  <div id="user_info">
-    <% @user.info_field %>	
-  </div>
 
   <% unless current_user == @user %>
     <% if is_following(current_user, @user) %>
@@ -24,11 +18,11 @@
   <% end %>
   <% if user_signed_in? %>
     <%unless @user.id == current_user.id %>
-      <%= link_to "Send "+@user.first_name+" a PM", new_message_path(:receiver => @user.id) %>
+      <%= link_to image_tag("send_pm.png", :border=>0), new_message_path(:receiver => @user.id) %>
     <%end%>
   <% end %>
       
-  <h3>is following</h3>
+  <h4>is following</h4>
   <div id="profile_follows">
     <% for fellowship in @user.fellowships %>
     <p>
@@ -39,7 +33,7 @@
     <div class="clr"></div>
   </div>
 
-  <h3>is followed by</h3>
+  <h4>is followed by</h4>
   <div id="profile_followers">
     <% for user in @user.inverse_followers %>
     <p>
@@ -47,6 +41,6 @@
       <%= image_tag get_thumb_avatar_url(user), :size => "50x50", :alt => user.first_name %></a>
     </p>
     <% end %>
-    <div class="clr"></div>
+    <div class="clear"></div>
   </div>
 </div>

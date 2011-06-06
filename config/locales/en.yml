@@ -70,3 +70,7 @@ en:
   date:
     formats:
       calendar: "%a %d.%m"
+
+  time:
+    formats:
+      meal: "%a %d.%m., %H:%M"

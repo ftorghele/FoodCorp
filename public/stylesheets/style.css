@@ -123,9 +123,7 @@ img {
 }
 
 #map{
-    margin: 0 0 10px 30px;
     border: 1px solid #000;
-    float: left;
 }
 
 /* ---- BASIC END ----- */
@@ -251,10 +249,10 @@ img {
     color: #fff;
 }
 
-.meal_title {
-  color:#e63600;
-  font-size: 16px;
-  padding: 6px 0 0 0;
+#calendar_container .meal_title {
+  color:#fff;
+  font-size: 14px;
+  padding: 8px 0 0 0;
 }
 
 .day_meal {

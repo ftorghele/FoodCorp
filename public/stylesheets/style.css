@@ -121,7 +121,9 @@ img {
 }
 
 #map{
+    margin: 0 0 10px 30px;
     border: 1px solid #000;
+    float: left;
 }
 
 /* ---- BASIC END ----- */
@@ -231,7 +233,24 @@ img {
   color: #000;
 }
 
+.meal{
+    height:70px;   
+    width: 80%; 
+    border-bottom: 1px solid #000;
+    padding: 3px;
+    margin-left:8%;
+}
+
+.meal a{
+    color: #fff;    
+}
+
+.meal_info{
+    color: #fff;
+}
+
 .meal_title {
+  color:#e63600;
   font-size: 16px;
   padding: 6px 0 0 0;
 }
@@ -348,6 +367,14 @@ img {
 	display:none;
 }
 
+#meals_distance_stream{
+    float: left;
+    width:370px;
+    height: 350px;
+    background:#383838;
+    border: 1px solid #000;
+}
+
 /* ---- MAIN PAGE END ----- */
 
 /* ---- TABS BEG ----- */
@@ -442,3 +469,7 @@ img {
 }
 
 /* ---- SUBMENU END ----*/
+
+#home_wrapper{
+    margin-top:20px;
+}

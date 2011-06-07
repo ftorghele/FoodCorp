@@ -31,12 +31,12 @@ class MealsController < ApplicationController
   end
   
   def edit
-    @meal = Meal.find(params[:id] && :user_id => current_user.id)
+    @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
   end
   
   def update
-      @meal = Meal.find(params[:id] && :user_id => current_user.id)
-   if @meal.update_attributes(params[:meal])
+    @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
+    if @meal.update_attributes(params[:meal])
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
       redirect_to edit_meal_path(@meal.id),  :alert => I18n.t('meal.create_fail')

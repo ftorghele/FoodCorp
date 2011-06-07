@@ -1,8 +1,5 @@
-<%= form_for @comment do |f| %>
-  <%= f.label :body %>
-  <%= f.text_field :body %><br>
-  <%= f.hidden_field :visible, {:value => true} %>
-
-  <%= f.submit 'submit', :class => "submit" %>
-<% end %>
-
+<%= form_tag({:action => "create_comment"}, :method => "post") do %>
+  <%= hidden_field_tag 'meal_id', meal.id %>
+  <%= text_area_tag 'body', nil, :id => "comment_area" %><br>
+  <%= image_submit_tag("submit_comment.png", :id => "comment_submit") %>
+<%end%>

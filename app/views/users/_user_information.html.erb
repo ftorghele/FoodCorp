@@ -1,5 +1,5 @@
 <div id="user_information">
-  <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
+  <%= link_to image_tag(get_medium_avatar_url(@user), :id => "profile_avatar"), user_path(@user) %>
 
   <% unless current_user == @user %>
     <% if is_following(current_user, @user) %>

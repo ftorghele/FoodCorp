@@ -475,6 +475,33 @@ img {
     text-decoration: none;
 }
 
+#comment_area {
+    background: #333;
+    width: 425px;
+    height: 75px;
+    margin: 0 0 0 60px;
+    color: #fff;
+}
+
+#comment_submit {
+    margin: 0 0 0 370px;
+}
+
+.comment_avatar {
+    float: left;
+}
+
+.comment {
+    margin: 0 0 10px 60px;
+    min-height: 60px;
+}
+
+.comment_avatar img {
+    width: 50px;
+    height: 50px;
+    margin: 5px 0 0 0;
+}
+
 /* ---- PROVIDE MEAL End ----*/
 
 /* ---- SUBMENU BEGIN ----*/

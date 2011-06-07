@@ -1,64 +1,52 @@
+<div id="main_header">
+  <h3>Eat at <%= @user.first_name %> <%= @user.last_name %>'s Place</h3>
+</div>
 <div id="main_body">
-  <div class="display_meal">
-    <%= render "users/user_information" %>
-    <br>
-	Description:
-    <%= @meal.description %><br>
-    <% if current_user %>
-      <% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
-        <% if @meal.user_id == current_user.id ||
-            @meal_arrangement.acceptance == true %>
-          <%= @meal.country %><br>
-          <%= @meal.zip_code %><br>
-          <%= @meal.city %><br>
-          <%= @meal.street %>
-          <%= @meal.street_number%><br>
+  <%= render "users/user_information" %>
+  <div id="provided_meals">
+    <div class="display_meal">
+      <div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %>
+        <span class="float_right space_right">
+          <%= render "layouts/meal_arrangement_button" %>
+        </span>
+      </div>
+      <div class="meal_info"><%= l(Time.at( @meal.time), :format => :meal) %>
+        <br>Description: <%= @meal.description %><br><br>
+        <% if current_user %>
+          <% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
+            <% if @meal.user_id == current_user.id ||
+                @meal_arrangement.acceptance == true %>
+              <%= @meal.country %><br>
+              <%= @meal.zip_code %><br>
+              <%= @meal.city %><br>
+              <%= @meal.street %>
+              <%= @meal.street_number%><br>
+            <% end %>
+          <% end %>
         <% end %>
-      <% end %>
-    <% end %>
-    <br>
+        <br>
 	Latitude:  <%= @meal.lat %><br>
 	Longitude: <%= @meal.lon %><br>
-    <br>
-    <% if current_user && current_user.id != @meal.user_id %>
-      <%if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
-        <%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
-          <input type="hidden" value="<%= @meal.id %>" name="meal_id" />
-          <input type="submit" value="send meal request" />
-        <%end%>
-      <%else%>
+        <br>
 
-        <%= button_to "delete meal request", { :controller => "meal_arrangements", :action => "destroy", :id => @meal_arrangement.id },
-          :confirm => "Are you sure?", :method => :delete %>
-
-      <%end%>
-    <%else %>
-      <%if current_user %>
-        <%if current_user.id == @meal.user_id %>
-          <div class="meal_show_buttons">
-            <%= link_to "Back to Profile", user_path(current_user.id) %>
-          </div>
-        <%else%>
-          <div class="meal_show_buttons">
-            <%= link_to "Sign in", user_session_path %>
-          </div>
-        <%end%>
-      <%else%>
-        <div class="meal_show_buttons">
-          <%= link_to "Sign in", user_session_path %>
+        <div id="comment_box">
+          <% @meal.comment_threads.each do |comment| %>
+            <div class="comment_avatar">
+              <%= link_to image_tag(get_thumb_avatar_url(get_user_name(comment.user_id))), user_path(@user) %>
+            </div>
+            <div class="comment">
+            <%= link_to get_user_name(comment.user_id).first_name, user_path(@user) %>
+            wrote on <%= l(comment.created_at, :format => :long) %>: <br>
+            <%=  comment.body %><br>
+          
+            </div>
+          <% end %>
+          <%= render 'comments/comment_form', :meal => @meal %>
         </div>
-      <%end%>
-    <% end %>
 
-    <div class="comment">
-      <% @meal.comment_threads.each do |comment|%>
-        <%=get_user_name(comment.user_id).first_name%><br>
-        <%=comment.body%><br>
-      <% end %>
-      <%= render 'comment_form', :meal => @meal %>
+
+      </div>
     </div>
   </div>
-
-
   <div class="clear"></div>
 </div>

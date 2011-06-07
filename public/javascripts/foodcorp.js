@@ -170,12 +170,12 @@ $(document).ready(function() {
     //On Click Event
     $("ul.tabs li").click(function() {
 
-            $("ul.tabs li a").removeClass("nav_active"); //Remove any "active" class
-            $(this).children().addClass("nav_active"); //Add "active" class to selected tab
+            $("ul.tabs li a").removeClass("nav_active", 500); //Remove any "active" class
+            $(this).children().toggleClass("nav_active", 500); //Add "active" class to selected tab
             $(".tab_content").hide(); //Hide all tab content
 
             var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-            $(activeTab).fadeIn(); //Fade in the active ID content
+            $(activeTab).fadeIn(500); //Fade in the active ID content
             return false;
     });
 

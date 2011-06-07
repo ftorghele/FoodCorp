@@ -45,6 +45,13 @@ class MealsController < ApplicationController
   
   def destroy
   end
+
+  def create_comment
+    meal = Meal.find(params[:meal_id])
+    comment = Comment.build_from(meal, current_user.id, params[:body] )
+    comment.save
+    redirect_to :back
+  end
   
   private
   def check_time

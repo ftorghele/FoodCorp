@@ -1,30 +1,27 @@
 <div class="display_meal">
 
-  <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
-  <div class="meal_info"><%= l(Time.at( meal.time), :format => :meal) %></div>
-  <input type="hidden" title="lat" value="<%= meal.lat%>" />
-  <input type="hidden" title="lon" value="<%= meal.lon%>" />
+  <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %><span class="float_right space_right"><%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %></span></div>
+  <div class="meal_info"><%= l(Time.at( meal.time), :format => :meal) %>
 
-  <% if current_user %>
-    <% if current_user.id == meal.user_id && meal.meal_arrangements.count > 0 %>
-        <%= render 'comment_form', :meal => meal %>         
-      Accepted Users:<br>
-      <% meal.meal_arrangements.each do |mealArrangement| %>
-        <% if mealArrangement.acceptance %>
-          <%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %><br>
-        <% end %>
+    <% if current_user %>
+    <% if current_user.id == meal.user_id %>
+
+
+      <br>Accepted Users:<br>
+      <% if meal.meal_arrangements.count > 0 %>
+        <ul>
+          <% meal.meal_arrangements.each do |mealArrangement| %>
+            <% if mealArrangement.acceptance %>
+              <li><%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% else %>
+        <ul><li>none</li></ul>
       <% end %>
-    <% else %>
-      <% if comment_admit(meal.id) %>
-        <%= render 'comment_form', :meal => meal %>
-      <%end%>
+      <br>Outstanding Meal Requests<br>
+      <%= render 'meal_arrangement_requests', :meal => meal %>
     <% end %>
-  <% end %>
-
-  <div class="comment">
-    <% meal.comment_threads.each do |comment|%>
-      <%=comment.body%><br>
-      <%=get_user_name(comment.user_id).first_name%><br>
-    <%end%>
+      <% end %>
   </div>
 </div>

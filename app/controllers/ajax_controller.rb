@@ -4,15 +4,6 @@ class AjaxController < ApplicationController
     :html
   end
 
-  def beginning_to_end_of_day(date_int)
-    date = Time.at(date_int.to_time.to_i)
-    from = date
-    to = date + 1.day
-    puts from
-    puts to
-    from..to
-end
-
   def update_map
     @searchLocation = params[:searchLocation]
     @radius = params[:searchRadius].to_i
@@ -32,16 +23,17 @@ end
 
     @lat = params[:searchLat].to_f
     @lon = params[:searchLon].to_f
-    
-    @date_time = params[:time]
-    puts params[:time] 
 
-    if params[:time] == ""  #TODO
-      @meals = Meal.near([@lat, @lon], @radius).find(:all, :limit => 10, :conditions => ["deadline > ? AND time = ?..?", Time.now.to_datetime.to_i ,  Time.at(params[:time])-1.day.to_datetime.to_i, Time.at(params[:time])+1.day.to_datetime.to_i ])
+    unless params[:time].blank?
+
+      date = Date.strptime(params[:time], "%Y-%m-%d").to_datetime
+      from = date.beginning_of_day.to_i
+      to = date.end_of_day.to_i
+      
+      @meals = Meal.near([@lat, @lon], @radius).find(:all, :conditions => ["deadline > ? AND time BETWEEN ? AND ?", Time.now.to_datetime.to_i, from, to])
     else
-      @meals = Meal.near([@lat, @lon], @radius).find(:all, :limit => 10, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
+      @meals = Meal.near([@lat, @lon], @radius).find(:all, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
     end
-
 
     @meals.each do |m|
       m.distance = Geocoder::Calculations.distance_between([@lat, @lon], [m.lat, m.lon]) * 1.609344

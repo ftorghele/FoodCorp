@@ -6,13 +6,14 @@
 
 <h2><% unless user_signed_in? %>The world‘s most awesome cooking community. <%= link_to 'Take a tour!', tour_path %><% end  %></h2>
 
-<div class="mealfind">You are in: <span id="currentLocation"></span></div>
+<div class="mealfind">You are in <span id="currentLocation"></span></div>
 
 <%= form_tag(ajax_updatemap_path, :remote => true, :id => "address", :name => "address") do %>
   <%= text_field_tag :searchLocation, nil, :placeholder => 'enter your location...' %>
   Radius: <%= select_tag :searchRadius, options_for_select([ 5, 10, 15, 20 ], 10), :class => "hoverSelect" %> km
   <%= hidden_field_tag(:searchLat) %>
-  <%= hidden_field_tag(:searchLon) %>
+  <%= hidden_field_tag(:searchLon) %><br>
+  <%= text_field_tag :time , params[:date], :class => "datepicker"  %><br>
   <%= submit_tag 'Change', :id => :searchSubmit %>
 <% end %>
 

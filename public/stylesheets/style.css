@@ -236,7 +236,7 @@ img {
 }
 
 .meal{
-    height:70px;   
+    height:80px;   
     width: 80%; 
     border-bottom: 1px solid #000;
     padding: 3px;
@@ -334,6 +334,7 @@ img {
 
 #currentLocation {
 	font-weight:bold;
+    color: #e63600;
 }
 
 #searchLocation {
@@ -375,6 +376,7 @@ img {
     height: 350px;
     background:#383838;
     border: 1px solid #000;
+    overflow: auto;
 }
 
 /* ---- MAIN PAGE END ----- */

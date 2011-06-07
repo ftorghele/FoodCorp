@@ -1,7 +1,7 @@
 <div class="display_meal">
 
   <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
-  <div class="meal_info"><%= l(Time.at( meal.time / 1000 ), :format => :meal) %></div>
+  <div class="meal_info"><%= l(Time.at( meal.time), :format => :meal) %></div>
   <input type="hidden" title="lat" value="<%= meal.lat%>" />
   <input type="hidden" title="lon" value="<%= meal.lon%>" />
 

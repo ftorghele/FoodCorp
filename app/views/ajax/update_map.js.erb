@@ -9,16 +9,17 @@ var i = 0;
   x[i++] = '<a href="#" onclick="panTo(<%= meal.lat%>, <%= meal.lon%>)">';
   x[i++] = ' <div class="meal" id="meal_<%= meal.id %>">';
   x[i++] = '   <div class="meal_title"><%= meal.title %></div>';
-  x[i++] = '   <div class="meal_info"><%= l(Time.at(meal.time / 1000), :format => :meal) %></div>';
-  x[i++] = '   <%= link_to("show", meal_path(meal.id)) %>';
+  x[i++] = '   <div class="meal_info"><%= l(Time.at(meal.time), :format => :meal)%><br>';
+  x[i++] = '   Distance: <%= number_with_precision(meal.distance) %> km</div>';
+  x[i++] = '   <%= link_to("show", meal_path(meal.id)) %><br>';
   x[i++] = '   <input type="hidden" title="lat" value="<%= meal.lat%>" />';
   x[i++] = '   <input type="hidden" title="lon" value="<%= meal.lon%>" />';
   x[i++] = ' </div>';
   x[i++] = '</a>';
-  x[i++] = '<%= @meal.inspect %>';
 <%  end %>
   
 $('#meals_distance_stream').empty();
 $('#meals_distance_stream').append(x.join(''));
+
 
 drawMap(env, 'true', depth);

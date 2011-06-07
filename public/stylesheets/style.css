@@ -35,8 +35,8 @@ p.notice, p.alert {
 	color:#fff;
 }
 
-#wrapper {
-	width: 960px;
+.wrapper {
+	width: 700px;
 	margin: 0 auto;
 }
 
@@ -429,6 +429,7 @@ img {
     -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
     margin: 5px;
     padding: 5px 5px 5px 70px;
+		color:#fff;
 }
 
 #provide_meal {

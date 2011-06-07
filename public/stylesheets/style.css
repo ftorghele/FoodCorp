@@ -35,7 +35,7 @@ p.notice, p.alert {
 	color:#fff;
 }
 
-.wrapper {
+#wrapper {
 	width: 700px;
 	margin: 0 auto;
 }

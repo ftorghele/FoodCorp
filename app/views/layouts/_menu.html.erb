@@ -6,5 +6,6 @@
         <li><%= link_to "new meal", new_meal_path, :class => is_active?("new") %></li>
       <%end%>
     <%end%>
+    <li><%= link_to "info", user_info_path(@user.id), :class => is_active?("info") %></li>
   </ul>
 </div>

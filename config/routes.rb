@@ -11,7 +11,10 @@ FoodCorp::Application.routes.draw do
     match 'users/create_comment' => :create_comment
   end
 
-  resources :users
+  resources :users do
+    match 'info' => :info
+  end
+
   resources :fellowships
   resources :meals
 

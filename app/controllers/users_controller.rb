@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
 
-  before_filter :get_user, :only=> [:show]
+  before_filter :get_user, :only=> [:show, :info]
 
   def index
     redirect_to root_path
+  end
+
+  def info
   end
 
   def show
@@ -25,7 +28,7 @@ class UsersController < ApplicationController
 
   protected
   def get_user
-    if @user = User.find(:first, :conditions => [ "id = ?", params[:id]])
+    if @user = User.find(:first, :conditions => [ "id = ? || id = ?", params[:id], params[:user_id]])
     else
       redirect_to root_path
     end

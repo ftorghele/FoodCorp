@@ -75,19 +75,8 @@ $(document).ready(function() {
 		
 		$('#meal_lat').val(position.getPoint().lat());
 		$('#meal_lon').val(position.getPoint().lng());
-		
-		i = 0;
-		$(this).children('input').each(function() {
-			if($(this).val() == "") {
-				alert($(this).attr('id') + ' is not valid!');
-				i++;
-			}
-		})
-		
-		if(i>0) return false;
-		
-		else return true;
-		
+
+                return true;
 	});
 
         //fraenk

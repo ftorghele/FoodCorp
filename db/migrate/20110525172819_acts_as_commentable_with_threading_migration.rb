@@ -15,6 +15,8 @@ class ActsAsCommentableWithThreadingMigration < ActiveRecord::Migration
     add_index :comments, :commentable_id
     add_index :comments, :commentable_type
     add_index :comments, :parent_id
+    add_index :comments, [:commentable_id, :commentable_type]
+
   end
 
   def self.down

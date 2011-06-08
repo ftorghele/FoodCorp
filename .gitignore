@@ -16,3 +16,4 @@ public/system/avatars
 *.DS_Store
 bin/*
 coverage/*
+rails_best_practices_output.html

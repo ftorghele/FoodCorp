@@ -2,6 +2,7 @@ class MealsController < ApplicationController
 
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
   before_filter :check_time, :only=> [:create, :update]
+  before_filter :get_meal, :only=> [:edit, :update]
 
   def index
    @coords = request.location;
@@ -34,11 +35,9 @@ class MealsController < ApplicationController
   end
 
   def edit
-    @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
   end
 
   def update
-    @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
     if @meal.update_attributes(params[:meal])
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
@@ -71,5 +70,9 @@ class MealsController < ApplicationController
     if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i || params[:meal][:time] < params[:meal][:deadline])
       redirect_to :back,  :alert => I18n.t('meal.time_fail')
     end
+  end
+
+  def get_meal
+    @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
   end
 end

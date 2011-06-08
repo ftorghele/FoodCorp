@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 		fetchedData = false;
 		calendarData = {};
 		calendarHeight = 0;
@@ -159,6 +159,13 @@ $(document).ready(function() {
 	// Calendar & Time for Meals
 	$('.datepicker').datetime({
 		userLang:'de',
+		americanMode:false
+	});
+
+        // Calendar & Time for Meals
+	$('.datepickeronly').datepicker({
+		userLang:'de',
+                dateFormat: 'yy-mm-dd',
 		americanMode:false
 	});
 	

@@ -6,6 +6,8 @@ class AjaxController < ApplicationController
 
   def update_map
     @searchLocation = params[:searchLocation]
+    cookies[:storred_search_location] = @searchLocation
+    cookies[:storred_search_radius] = params[:searchRadius]
     @radius = params[:searchRadius].to_i
 
     case @radius.to_i

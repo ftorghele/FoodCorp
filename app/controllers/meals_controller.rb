@@ -6,6 +6,9 @@ class MealsController < ApplicationController
   def index
    @coords = request.location;
    @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
+   
+   @storred_search_location = cookies[:storred_search_location]
+   @storred_search_radius = cookies[:storred_search_radius]
   end
 
   def new 

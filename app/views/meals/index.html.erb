@@ -9,12 +9,12 @@
 <div id="mealfind">You are in <span id="currentLocation"></span></div>
 
 <%= form_tag(ajax_updatemap_path, :remote => true, :id => "address", :name => "address") do %>
-  <%= text_field_tag :searchLocation, nil, :placeholder => 'enter your location...' %>
-  Radius: <%= select_tag :searchRadius, options_for_select([ 5, 10, 15, 20 ], 10), :class => "hoverSelect" %> km, 
+  <%= text_field_tag :searchLocation, @storred_search_location, :placeholder => 'enter your location...' %>
+  Radius: <%= select_tag :searchRadius, options_for_select([ 5, 10, 15, 20 ], @storred_search_radius), :class => "hoverSelect" %> km,
   <%= hidden_field_tag(:searchLat) %>
   <%= hidden_field_tag(:searchLon) %>
-  Date: <%= text_field_tag :time , params[:date], :class => "datepicker"  %>
-  <%= submit_tag 'Search!', :id => :searchSubmit %>
+  Date: <%= text_field_tag :time , params[:date], :class => "datepickeronly"  %>
+  <%= image_submit_tag("change.png", :id => :searchSubmit) %>
 <% end %>
 
   <div id="home_wrapper">

@@ -358,6 +358,10 @@ img {
 	border:1px solid #999;
 }
 
+#searchSubmit {
+    margin: 0 0 -10px 20px;
+}
+
 #radius {
 	list-style:none;
 	width:150px;

@@ -33,7 +33,7 @@ jQuery.fn.datetime = function() {
 							dateFormat: 'yy-mm-dd',
 							showButtonPanel: true, 
 							onSelect: writeDate						
-				};			
+				};
 		
 				var lang = {};
 

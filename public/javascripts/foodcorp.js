@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+
 		fetchedData = false;
 		calendarData = {};
 		calendarHeight = 0;
@@ -110,7 +110,6 @@ $(document).ready(function() {
              );
 	});
 	
-	
 	// SLOW!
 	// determine if the handset has client side geo location capabilities
         if (navigator.geolocation) {
@@ -161,6 +160,13 @@ $(document).ready(function() {
 		userLang:'de',
 		americanMode:false
 	});
+
+        // Calendar & Time for Meals
+	$('.datepickeronly').datepicker({
+		userLang:'de',
+                dateFormat: 'yy-mm-dd',
+		americanMode:false
+	});
 	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content
@@ -192,6 +198,26 @@ $(document).ready(function() {
             $('#user_avatar').attr('disabled', false)
         }
     });
+
+		if($('#searchLocation').length > 0) {
+			if($('#searchLocation').val() != "") {
+				geocoder.getLatLng(
+            $('#searchLocation').val(),
+            function(point) {
+              if (!point) {
+                //alert($('#searchLocation').val() + " not found");
+                $('#searchLon').val($.cookie("longitude"));
+                $('#searchLat').val($.cookie("latitude"));
+                $('#address').submit();
+              } else {
+                $('#searchLon').val(point.x);
+                $('#searchLat').val(point.y);
+                $('#address').submit();
+              }
+            }
+         );
+			}
+		}
     
 });
 
@@ -236,7 +262,7 @@ function drawMap(env, rails, railsdepth) {
 		$('div.meal').each(function() {
 			$(this).children('input').each(function() {
 				if($(this).attr('title') == 'lat') lat = $(this).val();
-				else lon = $(this).val();
+				if($(this).attr('title') == 'lon') lon = $(this).val();
 
 				// meal hidden, shown at markerclick
 				//info = '#'+$(this).parent('div').attr('id');
@@ -250,6 +276,11 @@ function drawMap(env, rails, railsdepth) {
 								}
 						});
 		})
+		
+		if($('.display_meal').length > 0) {
+			loc = $('.country').text()+" "+$('.zip').text()+" "+$('.city').text()+" "+$('.street').text()+" "+$('.street_number').text();
+			loc = loc.split(" ");
+		}
 
 		return markers;
 
@@ -286,8 +317,7 @@ function drawMap(env, rails, railsdepth) {
 			}];
 		}
 		
-		if(typeof railsenv != 'undefined')
-		drawMap(env);
+		if(typeof railsenv != 'undefined') drawMap(env);
 		else drawMap(loc);
 	
 	}

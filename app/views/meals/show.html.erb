@@ -18,15 +18,22 @@
           <% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
             <% if @meal.user_id == current_user.id ||
                 @meal_arrangement.acceptance == true %>
-              <%= @meal.country %><br>
-              <%= @meal.zip_code %><br>
-              <%= @meal.city %><br>
-              <%= @meal.street %>
-              <%= @meal.street_number%><br>
+              <div id="loc">
+							<div class="country"><%= @meal.country %></div>
+              <div class="zip"><%= @meal.zip_code %><br></div>
+              <div class="city"><%= @meal.city %><br></div>
+              <div class="street"><%= @meal.street %></div>
+              <div class="street_number"><%= @meal.street_number%><br></div>
             <% end %>
           <% end %>
         <% end %>
         <br>
+				<div id="meals_distance_stream" style="display:none">
+				<div class="meal" id="meal_<%= @meal.id %>">
+					<input type="hidden" title="lat" value="<%= @meal.lat %>" />
+			  	<input type="hidden" title="lon" value="<%= @meal.lon %>" />
+				</div>
+				</div>
 	Latitude:  <%= @meal.lat %><br>
 	Longitude: <%= @meal.lon %><br>
         <br>

@@ -12,6 +12,18 @@ $(document).ready(function() {
 				}, function() {
 					$('#calendar_container').fadeOut(300);
 		});
+		
+		$('img.hoverMap').hover(function() {
+			$('#map').stop().animate({'opacity': 1});
+		}, function() {
+			$('#map').stop().animate({'opacity': 0});
+		});
+		
+		$('img.openMeal').click(function() {
+			$('.display_meal').animate({'height': 0});
+		}, function() {
+			$('.display_meal').animate({'height': ''});
+		});
 			
 		function getCalendar() {
 			fetchedData = true;

@@ -479,6 +479,35 @@ img {
     text-decoration: none;
 }
 
+.meal_info {
+	width:250px;
+}
+
+.meal_right {
+	float:right;
+	margin:10px 10px 0 auto;
+}
+
+.meal_right img {
+	margin:0 auto 10px 180px;
+	z-index:1001;
+	position:relative;
+}
+
+.meal_right .openMeal {
+	margin:0 0 10px 185px;
+}
+
+.meal_right #map {
+	width:200px;
+	height:200px;
+	opacity:0;
+	position:absolute;
+	top:250px;
+	margin:0 0 0 60px;
+	z-index:1000;
+}
+
 #comment_area {
     background: #333;
     width: 425px;

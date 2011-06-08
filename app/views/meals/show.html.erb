@@ -5,59 +5,51 @@
   <%= render "users/user_information" %>
   <div id="provided_meals">
     <div class="display_meal">
-      <div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %>
-        <span class="float_right space_right">
-          <%= render "layouts/meal_arrangement_button" %>
-         
-        </span>
-         <div id="map" style="height:220px; width: 220px; margin: 0 0 10px 30px" class="float_right space_right" ></div>
-      </div>
-      <div class="meal_info"><%= l(Time.at( @meal.time), :format => :meal) %>
-        <br>Description: <%= @meal.description %><br><br>
+			<div class="meal_right">
+				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
+				<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
+				<div id="map"></div>
+			</div>
+			<div class="clear"></div>
+			<div class="meal_info">
+      	<div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
+      	<%= l(Time.at( @meal.time), :format => :meal) %><br>
+        Description: <%= @meal.description %><br><br>
         <% if current_user %>
-          <% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
-            <% if @meal.user_id == current_user.id ||
-                @meal_arrangement.acceptance == true %>
-              <div id="loc">
-							<div class="country"><%= @meal.country %></div>
-              <div class="zip"><%= @meal.zip_code %><br></div>
-              <div class="city"><%= @meal.city %><br></div>
-              <div class="street"><%= @meal.street %></div>
-              <div class="street_number"><%= @meal.street_number%><br></div>
-            <% end %>
-          <% end %>
-        <% end %>
-        <br>
-				<div id="meals_distance_stream" style="display:none">
-				<div class="meal" id="meal_<%= @meal.id %>">
-					<input type="hidden" title="lat" value="<%= @meal.lat %>" />
-			  	<input type="hidden" title="lon" value="<%= @meal.lon %>" />
+        	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
+        		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
+       		<div id="loc">
+					<div class="country"><%= @meal.country %></div>
+          <div class="zip"><%= @meal.zip_code %></div>
+					<div class="city"><%= @meal.city %></div>
+					<div class="street"><%= @meal.street %></div>
+					<div class="street_number"><%= @meal.street_number%></div>
+						<% end %>
+					<% end %>
+				<% end %>
+				
+					<div id="meals_distance_stream" style="display:none">
+						<div class="meal" id="meal_<%= @meal.id %>">
+							<input type="hidden" title="lat" value="<%= @meal.lat %>" />
+							<input type="hidden" title="lon" value="<%= @meal.lon %>" />
+						</div>
+					</div>
+					<%= render "layouts/meal_arrangement_button" %>
+
+
+					<div id="comment_box"><% @meal.comment_threads.each do |comment| %>
+						<div class="comment_avatar"><%= link_to image_tag(get_thumb_avatar_url(get_user_name(comment.user_id))), user_path(@user) %></div>
+						<div class="comment">
+							<%= link_to get_user_name(comment.user_id).first_name, user_path(@user) %>
+							wrote on <%= l(comment.created_at, :format => :long) %>: <br>
+							<%=  comment.body %><br>
+						</div>
+						<% end %>
+						<%= render 'comments/comment_form', :meal => @meal %>
+					</div>
+					
 				</div>
-				</div>
-	Latitude:  <%= @meal.lat %><br>
-	Longitude: <%= @meal.lon %><br>
-        <br>
-
-
-
-        <div id="comment_box">
-          <% @meal.comment_threads.each do |comment| %>
-            <div class="comment_avatar">
-              <%= link_to image_tag(get_thumb_avatar_url(get_user_name(comment.user_id))), user_path(@user) %>
-            </div>
-            <div class="comment">
-            <%= link_to get_user_name(comment.user_id).first_name, user_path(@user) %>
-            wrote on <%= l(comment.created_at, :format => :long) %>: <br>
-            <%=  comment.body %><br>
-          
-            </div>
-          <% end %>
-          <%= render 'comments/comment_form', :meal => @meal %>
-        </div>
-
-
-      </div>
-    </div>
-  </div>
-  <div class="clear"></div>
+			</div>
+		</div>
+	<div class="clear"></div>
 </div>

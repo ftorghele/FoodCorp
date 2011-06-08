@@ -29,7 +29,7 @@ class MealsController < ApplicationController
     if @meal.save
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
-      redirect_to new_meal_path  :alert => I18n.t('meal.create_fail')
+      redirect_to new_meal_path,  :alert => I18n.t('meal.create_fail')
     end
   end
   

@@ -5,22 +5,23 @@ require 'test_integration_helper'
 class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   def create_meal
-    fill_in 'Title', :with => 'Gulasch'
-    fill_in 'Description', :with => 'scharf und mit Knödel'
-    fill_in 'Country', :with => 'Austria'
-    fill_in 'City', :with => 'Salzburg'
-    fill_in 'Zip code', :with => '5020'
-    fill_in 'Street', :with => 'Getreidegasse'
-    fill_in 'Street number', :with => '3'
-    select '3', :from => 'Slots'
-    fill_in 'Time', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
-    fill_in 'Deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
+    fill_in 'meal_title', :with => 'Gulasch'
+    fill_in 'meal_description', :with => 'scharf und mit Knödel'
+    fill_in 'meal_country', :with => 'Austria'
+    fill_in 'meal_city', :with => 'Salzburg'
+    fill_in 'meal_zip_code', :with => '5020'
+    fill_in 'meal_street', :with => 'Getreidegasse'
+    fill_in 'meal_street_number', :with => '3'
+    select '3', :from => 'meal_slots'
+    fill_in 'meal_time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
+    fill_in 'meal_deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
 
     page.find('#meal_lat').set('34.00000000')
     page.find('#meal_lon').set('34.00000000')
 
     assert_difference("Meal.count") do
-      click_on("submit")
+        save_and_open_page
+    click_on("meal_submit")
     end
   end
 
@@ -66,7 +67,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_in_as("user1@gmail.com", "123456")
 
     click_on('cook')
-    click_on('new meal')
     assert page.has_css?('form', :count => 1)
 
     click_on("submit")
@@ -156,12 +156,11 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   should "be able to create comment" do
     sign_in_as("user1@gmail.com", "123456")
     click_link('cook')
-    click_on('new meal')
     create_meal
 
     fill_in 'body', :with => 'Supa woas'
-    click_on('comment_submit')
-    #check_design ['Supa woas', 'user1']
+    click_button('comment_submit')
+    #check_design ['Supa woas', 'Hans Testuser']
     sign_out
 
     sign_in_as("user2@gmail.com", "123456")
@@ -237,7 +236,4 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     click_link('info')
     check_design ["Hallo mein Name ist Hansilein"]
   end
-
-  
-    
 end

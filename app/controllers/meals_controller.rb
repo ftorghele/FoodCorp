@@ -1,7 +1,7 @@
 class MealsController < ApplicationController
   
-  before_filter :check_time, :only => [:create, :update]
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
+  before_filter :check_time, :only=> [:create, :update]
   
   def index
    @coords = request.location;
@@ -23,13 +23,13 @@ class MealsController < ApplicationController
   end
 
   def create
-    meal = Meal.new(params[:meal])
-    meal.user_id = current_user.id
+    @meal = Meal.new(params[:meal])
+    @meal.user_id = current_user.id
     
-    if meal.save
-      redirect_to meal_path(meal.id), :notice => I18n.t('meal.create_success')
+    if @meal.save
+      redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
-      redirect_to new_meal_path,  :alert => I18n.t('meal.create_fail')
+      redirect_to new_meal_path  :alert => I18n.t('meal.create_fail')
     end
   end
   
@@ -55,22 +55,21 @@ class MealsController < ApplicationController
     comment.save
     redirect_to :back
   end
-  
-  private
-  def check_time
-      params[:meal][:time] = params[:meal][:time].to_datetime.to_i
-      params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
-    
-    if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i) 
-      redirect_to :back,  :alert => I18n.t('meal.time_fail')
-    end
-  end
-  
+
   protected
   def check_login
     unless current_user
       flash[:alert] = I18n.t('application.access_denied')
       redirect_to root_path
+    end
+  end
+
+  def check_time
+    params[:meal][:time] = params[:meal][:time].to_datetime.to_i
+    params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
+
+    if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i || params[:meal][:time] < params[:meal][:deadline])
+      redirect_to :back,  :alert => I18n.t('meal.time_fail')
     end
   end
 end

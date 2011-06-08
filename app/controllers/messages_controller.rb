@@ -34,7 +34,7 @@ class MessagesController < ApplicationController
 
   def create
     current_user.send_message(@receiver, params[:topic], params[:body])
-    redirect_to root_path
+    redirect_to user_path(@receiver.id)
   end
 
   protected

@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  
+
   has_many :meals
   has_many :meal_arrangements
   has_many :comments
@@ -11,11 +11,11 @@ class User < ActiveRecord::Base
   has_many :inverse_followers, :through => :inverse_fellowships, :source => :user
 
   has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "50x50>" }
-  
+
   acts_as_messageable
-  
+
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :lockable, :timeoutable and 
+  # :token_authenticatable, :encryptable, :lockable, :timeoutable and
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
         user.country = hometown[2] if user.country.blank?
         user.city = hometown[0] if user.city.blank?
       end
-      
+
       user.confirm!
       user.save
       user

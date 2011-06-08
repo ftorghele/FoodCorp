@@ -20,14 +20,14 @@ class MealArrangementsController < ApplicationController
   def update
     current_meal_id = @meal_arrangement.meal_id
     if @meal_arrangement.update_attribute(:acceptance, true)
-     
+
         current_user.points += 1
         meal = Meal.find(current_meal_id)
         meal.slots -= 1
         meal.save
 
         current_user.update_attribute(:points, current_user.points)
-        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept'), I18n.t('message.info') )
+        current_user.send_message(@meal_arrangement.user, I18n.t('message.accept', :title => meal.title), I18n.t("message.info") )
         redirect_to :back, :notice => I18n.t('meal_arrangements.accept_success')
     else
         redirect_to :back, :notice => I18n.t('meal_arrangements.accept_fail')
@@ -39,7 +39,7 @@ class MealArrangementsController < ApplicationController
       if @meal_arrangement.destroy
         @meal_arrangement.user.points += 1
         @meal_arrangement.user.update_attribute(:points, @meal_arrangement.user.points)
-        current_user.send_message(@meal_arrangement.user, I18n.t('message.reject'), I18n.t('message.sorry') )
+        current_user.send_message(@meal_arrangement.user, I18n.t('message.reject', :title => @meal_arrangement.meal.title), I18n.t('message.sorry') )
         redirect_to :back, :notice => I18n.t('meal_arrangements.delete_success')
       else
         redirect_to :back, :notice => I18n.t('meal_arrangements.delete_fail')

@@ -31,7 +31,7 @@ class AjaxController < ApplicationController
       date = Date.strptime(params[:time], "%Y-%m-%d").to_datetime
       from = date.beginning_of_day.to_i
       to = date.end_of_day.to_i
-      
+
       @meals = Meal.near([@lat, @lon], @radius).find(:all, :conditions => ["deadline > ? AND time BETWEEN ? AND ?", Time.now.to_datetime.to_i, from, to])
     else
       @meals = Meal.near([@lat, @lon], @radius).find(:all, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])

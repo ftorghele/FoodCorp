@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  
+
   before_filter :check_login, :only=> [:inbox, :new, :create]
   before_filter :check_receiver, :only=> [:new, :create]
 

@@ -2,7 +2,7 @@
   <h3>Eat at <%= @user.first_name %> <%= @user.last_name %>'s Place</h3>
 </div>
 <div id="main_body">
-  <%= render "users/user_information" %>
+  <%= render "users/user_information", :user => @user %>
   <div id="provided_meals">
     <div class="display_meal">
 			<div class="meal_right">

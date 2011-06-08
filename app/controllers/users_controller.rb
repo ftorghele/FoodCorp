@@ -11,7 +11,6 @@ class UsersController < ApplicationController
 
   def show
     @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]], :order => 'created_at DESC')
-   # @meal_arrangements = MealArrangement.find(:all, :conditions => ["user_id = ? AND acceptance = 1", params[:id]])    
   end
 
   protected

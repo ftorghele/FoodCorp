@@ -9,21 +9,14 @@
     <p><%= text_field_tag :topic %></p>
     <p><%= label_tag :body %></p>
     <p><%= text_area_tag :body, nil, :rows => 10, :cols => 40 %></p>
-
     <%= hidden_field_tag(:receiver, @receiver.id) %>
-
     <%= submit_tag 'submit', :class => "submit" %>
   <% end %>
-
 </div>
-
-
-
 
 <div>
 <div class="tab_container">
   <div id="New" class="tab_content">
-    
   </div>
 </div>
 </div>

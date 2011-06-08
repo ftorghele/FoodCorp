@@ -7,6 +7,7 @@ class CreateFellowships < ActiveRecord::Migration
       t.timestamps
     end
       add_index :fellowships, :user_id
+      add_index :fellowships, :follower_id
   end
 
 

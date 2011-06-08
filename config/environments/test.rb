@@ -1,6 +1,6 @@
 FoodCorp::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
-  
+
   # The test environment is used exclusively to run your application's
   # test suite.  You never need to work with it otherwise.  Remember that
   # your test database is "scratch space" for the test suite and is wiped
@@ -19,7 +19,7 @@ FoodCorp::Application.configure do
 
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
-  
+
   # Don't care if the mailer can't send
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 

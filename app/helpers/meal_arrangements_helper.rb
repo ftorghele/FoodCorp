@@ -1,4 +1,0 @@
-module MealArrangementsHelper
-  
-  
-end

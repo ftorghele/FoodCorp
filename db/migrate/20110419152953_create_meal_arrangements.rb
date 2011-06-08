@@ -1,5 +1,5 @@
 class CreateMealArrangements < ActiveRecord::Migration
-  
+
   def self.up
     create_table :meal_arrangements do |t|
       t.integer :meal_id

@@ -12,6 +12,8 @@ class CreateMessagesTable < ActiveRecord::Migration
     end
 
     add_index :messages, [:sent_messageable_id, :received_messageable_id], :name => "acts_as_messageable_ids"
+    add_index :messages, :received_messageable_id
+    add_index :messages, :received_messageable_type
   end
 
   def self.down

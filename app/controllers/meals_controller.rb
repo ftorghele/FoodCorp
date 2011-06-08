@@ -1,21 +1,21 @@
 class MealsController < ApplicationController
-  
+
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
   before_filter :check_time, :only=> [:create, :update]
-  
+
   def index
    @coords = request.location;
    @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
-   
+
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]
   end
 
-  def new 
+  def new
     @user = current_user
     @meal = Meal.new
-  end 
-  
+  end
+
   def show
     @meal = Meal.find(params[:id])
     @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first if current_user
@@ -25,18 +25,18 @@ class MealsController < ApplicationController
   def create
     @meal = Meal.new(params[:meal])
     @meal.user_id = current_user.id
-    
+
     if @meal.save
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
       redirect_to new_meal_path,  :alert => I18n.t('meal.create_fail')
     end
   end
-  
+
   def edit
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
   end
-  
+
   def update
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
     if @meal.update_attributes(params[:meal])
@@ -45,7 +45,7 @@ class MealsController < ApplicationController
       redirect_to edit_meal_path(@meal.id),  :alert => I18n.t('meal.create_fail')
     end
   end
-  
+
   def destroy
   end
 

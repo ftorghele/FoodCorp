@@ -17,9 +17,8 @@ var i = 0;
   x[i++] = ' </div>';
   x[i++] = '</a>';
 <%  end %>
-  
+
 $('#meals_distance_stream').empty();
 $('#meals_distance_stream').append(x.join(''));
-
 
 drawMap(env, 'true', depth);

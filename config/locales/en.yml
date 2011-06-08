@@ -51,10 +51,10 @@ en:
 
     
   message:
-    reject: "Meal arrangement rejected"
+    reject: "Meal arrangement (%{title}) rejected"
     sorry: "sorry..."
-    accept: "Meal arrangement acceptance"
-    info: "body of msg"
+    accept: "Meal arrangement (%{title}) accepted"
+    info: "Your meal request was accepted."
     
   fellowships:
     create_success: "following..."

@@ -14,7 +14,7 @@ module ApplicationHelper
       return user.avatar.url(:thumb)
     end
   end
-  
+
   def convert
   end
 

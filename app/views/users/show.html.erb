@@ -4,8 +4,8 @@
 </div>
 
 <div id="main_body">
-  <%= render "user_information" %>
-  <%= render "provided_meals" %>
+  <%= render "user_information", :user => @user %>
+  <%= render "provided_meals", :meals => @meals %>
 
   <div class="clear"></div>
 </div>

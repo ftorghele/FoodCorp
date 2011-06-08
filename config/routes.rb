@@ -17,7 +17,7 @@ FoodCorp::Application.routes.draw do
   controller :meals do
     match 'meals/create_comment' => :create_comment
   end
-    
+
   controller :messages do
     match 'messages/in' => :inbox
     match 'messages/out' => :outbox
@@ -35,9 +35,9 @@ FoodCorp::Application.routes.draw do
      match 'ajax/calendar' => :calendar
      match 'ajax/updatemap' => :update_map
   end
-  
+
   root :to => "meals#index"
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

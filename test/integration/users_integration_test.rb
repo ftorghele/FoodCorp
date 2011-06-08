@@ -20,7 +20,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     page.find('#meal_lon').set('34.00000000')
 
     assert_difference("Meal.count") do
-        save_and_open_page
     click_on("meal_submit")
     end
   end
@@ -49,7 +48,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     visit '/'
     # checking the html structure
     assert page.has_css?('a#fb_sign_in', :count => 1)
-    click_on("Login in with Facebook") 
+    click_on("Login with Facebook") 
     #assert page.has_content?('Make Together')
   end
     
@@ -108,7 +107,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     login_user "2"
     click_on('personal Messages')
-    assert page.has_content?('Meal arrangement acceptance')
+    assert page.has_content?('accepted')
     sign_out
   end
 
@@ -135,7 +134,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     login_user "2"
     click_on('personal Messages')
-    assert page.has_content?('Meal arrangement rejected')
+    assert page.has_content?('rejected')
     sign_out   
   end
 
@@ -213,7 +212,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     login_user "1" 
     click_link('personal Messages')
     check_design ["Seas Franzeus"]
-        save_and_open_page 
   end
 
   should "be able to edit his/her profile" do

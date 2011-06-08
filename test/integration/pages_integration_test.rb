@@ -3,28 +3,38 @@
 require 'test_helper'
 
 class PageIntegrationTest < ActionDispatch::IntegrationTest
+
+  def check_content args
+    args.each do |content|
+        assert page.has_content?(content)
+    end
+  end
+
+  def check_design args
+    args.each do |design|
+        assert page.has_css?(design, :count => 1)
+    end
+  end
+
   should "show home page correct" do
     visit '/'
     #checking the html structure
-    assert page.has_css?('a#fb_sign_in', :count => 1)
-    #assert page.has_css?('iframe#fb_like_button', :count => 1)
-    assert page.has_css?('div#map', :count => 1)
-    assert page.has_css?('div#meals_distance_stream', :count => 1)
+    check_design ['div#meals_distance_stream','div#map', 'a#fb_sign_in' ]
   end
 
   should "show static pages correct" do
     visit '/'
     click_on("About")
-    assert page.has_css?('div#about', :count => 1)
-    assert page.has_content?('About FoodCorp')
+    check_design ['div#main_body','div#main_header']
+    check_content ['About DinnerCollective']
     
     click_on("Imprint")
-    assert page.has_css?('div#imprint', :count => 1)
-    assert page.has_content?('Web programming:')
+    check_design ['div#main_body','div#main_header']
+    check_content ['Imprint']
     
     click_on("Terms of service")
-    assert page.has_css?('div#terms_of_service', :count => 1)
-    assert page.has_content?('Using FoodCorp')
+    check_design ['div#main_body','div#main_header']
+    check_content ["Terms of Service"]
   end
   
 end

@@ -39,6 +39,11 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def visit_last_meal 
+    meal = Meal.last
+    visit '/meals/'+ meal.id.to_s
+  end
+
   should "show facebook sign in page" do
     visit '/'
     # checking the html structure
@@ -58,7 +63,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
   should "be able to create new meal send request for meal and accept request" do
 
-    #Create Meal
     sign_in_as("user1@gmail.com", "123456")
 
     click_on('cook')
@@ -72,32 +76,33 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     assert page.has_content?('Meal successfully saved!')
 
-    click_on('Back to Profile')
+    click_on('Hans Testuser')
     click_on('meals')
     assert page.has_content?('Gulasch')
-    assert page.has_content?('scharf und mit Knödel')
     sign_out
 
     #check created Meal
     visit '/'
-    assert page.has_css?('div.mealfind', :count => 1)
+    assert page.has_css?('div#mealfind', :count => 1)
     assert page.has_css?('div#map', :count => 1)
 
     #create Meal Arrangement
     sign_in_as("user2@gmail.com", "123456")
     meal = Meal.last
     visit '/meals/'+ meal.id.to_s
-    click_on('send meal request')
+    click_on('request_meal')
 
     assert page.has_content?('Meal arrangement was successfully created')
-    assert page.has_css?('form', :count => 1)
-    click_on('delete meal request')
+    assert page.has_css?('form', :count => 2)
+    click_on('delete_meal_request')
 
     assert page.has_content?('Meal arrangement was successfully deleted')
-    click_on('send meal request')
+    click_on('request_meal')
     sign_out
 
     login_user "1"
+    click_link('cook')
+    click_link('meals')
     click_on('Accept')
     sign_out
 
@@ -111,20 +116,20 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
     sign_in_as("user1@gmail.com", "123456")
 
-    check_design ["Your Neighborhood", "Meal Requests", "Latest Meals"]
+    check_design ["You are in", "Radius:" , "Date:"]
 
-    click_on('cook')
+    click_link('cook')
     click_on('new meal')
     create_meal
     sign_out
 
     sign_in_as("user2@gmail.com", "123456")
-    meal = Meal.last
-    visit '/meals/'+ meal.id.to_s
-    click_on('send meal request')
+    visit_last_meal
+    click_on('request_meal')
     sign_out
 
     login_user "1" 
+    click_link('Hans Testuser')
     click_on('Delete')
     sign_out
 
@@ -132,6 +137,60 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     click_on('personal Messages')
     assert page.has_content?('Meal arrangement rejected')
     sign_out   
+  end
+
+  should "be able to edit meal" do
+    sign_in_as("user1@gmail.com", "123456")
+                   
+    click_on('cook')
+    click_on('new meal')
+    create_meal
+    click_link('Edit_meal')
+
+    fill_in 'Title', :with => 'Gulasch'
+    fill_in 'Description', :with => 'doch nicht scharf und ohne Knödel'
+    click_on('submit')
+    check_design ['doch nicht scharf und ohne Knödel', 'Gulasch']
+  end
+
+  should "be able to create comment" do
+    sign_in_as("user1@gmail.com", "123456")
+    click_link('cook')
+    click_on('new meal')
+    create_meal
+
+    fill_in 'body', :with => 'Supa woas'
+    click_on('comment_submit')
+    #check_design ['Supa woas', 'user1']
+    sign_out
+
+    sign_in_as("user2@gmail.com", "123456")
+    visit '/'
+
+    visit_last_meal
+    fill_in 'body', :with => 'MHM'
+    click_on('comment_submit')
+    sign_out
+  end
+
+  should "be able to follow other user" do
+    sign_in_as("user1@gmail.com", "123456")
+
+    click_on('cook')
+    click_on('new meal')
+    create_meal
+    sign_out
+
+    sign_in_as("user2@gmail.com", "123456")
+    visit_last_meal
+    click_link('Follow')
+    check_design ["following..."]
+    click_link('Unfollow')
+    check_design ["Removed fellowship"]
+    save_and_open_page
+
+
+
   end
     
 end

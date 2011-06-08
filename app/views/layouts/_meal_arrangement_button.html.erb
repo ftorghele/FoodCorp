@@ -1,16 +1,16 @@
 <% if current_user %>
   <% if current_user.id == @meal.user_id %>
-    <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(@meal.id) %>
+    <%= link_to image_tag("edit_meal.png", :title => "edit", :id => "edit_meal"), edit_meal_path(@meal.id) %>
   <% else %>
     <% if current_user && current_user.id != @meal.user_id %>
       <%  if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
         <%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
           <%= hidden_field_tag 'meal_id', @meal.id %>
-          <%= image_submit_tag("request_meal.png") %>
+          <%= image_submit_tag("request_meal.png", :id => "request_meal") %>
         <%end%>
       <%else%>
         <%= form_tag(meal_arrangement_path(@meal_arrangement.id), :method => "delete") do %>
-          <%= image_submit_tag("delete_meal_request.png") %>
+          <%= image_submit_tag("delete_meal_request.png", :id => "delete_meal_request") %>
         <%end%>
       <%end%>
     <% end %>

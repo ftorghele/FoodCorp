@@ -8,7 +8,9 @@
       <div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %>
         <span class="float_right space_right">
           <%= render "layouts/meal_arrangement_button" %>
+         
         </span>
+         <div id="map" style="height:220px; width: 220px; margin: 0 0 10px 30px" class="float_right space_right" ></div>
       </div>
       <div class="meal_info"><%= l(Time.at( @meal.time), :format => :meal) %>
         <br>Description: <%= @meal.description %><br><br>
@@ -28,6 +30,8 @@
 	Latitude:  <%= @meal.lat %><br>
 	Longitude: <%= @meal.lon %><br>
         <br>
+
+
 
         <div id="comment_box">
           <% @meal.comment_threads.each do |comment| %>

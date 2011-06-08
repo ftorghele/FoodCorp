@@ -15,3 +15,4 @@ nbproject
 public/system/avatars
 *.DS_Store
 bin/*
+coverage/*

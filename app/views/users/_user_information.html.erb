@@ -18,7 +18,7 @@
   <% end %>
   <% if user_signed_in? %>
     <%unless @user.id == current_user.id %>
-      <%= link_to image_tag("send_pm.png", :border=>0), new_message_path(:receiver => @user.id) %>
+      <%= link_to image_tag("send_pm.png", :border=>0), new_message_path(:receiver => @user.id), :id=>"send_message_button" %>
     <%end%>
   <% end %>
       

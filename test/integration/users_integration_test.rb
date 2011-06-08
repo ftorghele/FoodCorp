@@ -187,10 +187,57 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ["following..."]
     click_link('Unfollow')
     check_design ["Removed fellowship"]
-    save_and_open_page
-
-
 
   end
+
+  should "be able to send message" do
+    sign_in_as("user1@gmail.com", "123456")
+    click_on('cook')
+    click_on('new meal')
+    create_meal
+    usr_id = User.last.id
+    sign_out
+
+    sign_in_as("user2@gmail.com", "123456")
+    visit_last_meal
+    click_link('Follow')
+    visit '/users/'+usr_id.to_s
+   
+    click_link('send_message_button')
+
+    fill_in 'Topic', :with => 'Seas Franzeus'
+    fill_in 'Body', :with => 'wie geht es Dir denn so ??'
+    click_on('submit')
+    check_design ["Hans Testuser's Profil"]
+    sign_out
+
+    login_user "1" 
+    click_link('personal Messages')
+    check_design ["Seas Franzeus"]
+        save_and_open_page 
+  end
+
+  should "be able to edit his/her profile" do
+    sign_in_as("user1@gmail.com", "123456")
+    click_link("edit Profile")
+    fill_in 'First Name:', :with => 'Hansilein'
+    fill_in 'Last Name:', :with => 'Noname'
+    select 'female', :from => 'Gender:'
+    click_on('Update')
+
+    click_link('Profile Information')
+    fill_in 'Some Information about you which is displayed on your profile page:', :with => 'Hallo mein Name ist Hansilein'
+    click_on('Update')
+
+    click_link('Address')
+    fill_in 'Country', :with => 'Salzburg'
+    click_on('Update')
+
+    click_link('Hansilein Noname')
+    click_link('info')
+    check_design ["Hallo mein Name ist Hansilein"]
+  end
+
+  
     
 end

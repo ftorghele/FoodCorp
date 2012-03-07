@@ -70,6 +70,10 @@ class User < ActiveRecord::Base
     new_record?
   end
 
+  def is_meal_from_user?(meal_id)
+    Meal.find(meal_id).user_id == self.id
+  end
+
   def fb_user
     if fb_id
       true

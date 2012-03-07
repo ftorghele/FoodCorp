@@ -7,8 +7,9 @@ var i = 0;
 
 <% @meals.each do |meal|%>
   x[i++] = '<a href="#" onclick="panTo(<%= meal.lat%>, <%= meal.lon%>)">';
-  x[i++] = ' <div class="meal" id="meal_<%= meal.id %>">';
-  x[i++] = '   <div class="meal_title"><%= meal.title %></div>';
+  x[i++] = ' <div class="meal" id="meal_<%= meal.id %>" style="background: <%if current_user%> <%if current_user.is_meal_from_user?(meal.id) %> red<%end%><%end%>" >';
+  x[i++] = '   <div class="meal_title"><%= link_to(meal.title.to_s, meal_path(meal.id)) %></div>';
+  x[i++] = '   <div class="meal_title">at <%= link_to(meal.user.first_name.to_s + "`s place", meal_path(meal.id)) %></div>';
   x[i++] = '   <div class="meal_info"><%= l(Time.at(meal.time), :format => :meal)%><br>';
   x[i++] = '   Distance: <%= number_with_precision(meal.distance) %> km</div>';
   x[i++] = '   <%= link_to("show", meal_path(meal.id)) %><br>';

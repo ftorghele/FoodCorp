@@ -19,15 +19,13 @@
         	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
         		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
        		<div id="loc">
+					<div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
+          <div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>
 					<div class="country"><%= @meal.country %></div>
-          <div class="zip"><%= @meal.zip_code %></div>
-					<div class="city"><%= @meal.city %></div>
-					<div class="street"><%= @meal.street %></div>
-					<div class="street_number"><%= @meal.street_number%></div>
 						<% end %>
 					<% end %>
 				<% end %>
-				
+
 					<div id="meals_distance_stream" style="display:none">
 						<div class="meal" id="meal_<%= @meal.id %>">
 							<input type="hidden" title="lat" value="<%= @meal.lat %>" />
@@ -47,7 +45,7 @@
 						<% end %>
 						<%= render 'comments/comment_form', :meal => @meal %>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>

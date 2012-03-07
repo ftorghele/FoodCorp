@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -26,7 +27,10 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
   end
 
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
+  add_index "comments", ["parent_id"], :name => "index_comments_on_parent_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "fellowships", :force => true do |t|
@@ -36,6 +40,9 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
   end
 
+  add_index "fellowships", ["follower_id"], :name => "index_fellowships_on_follower_id"
+  add_index "fellowships", ["user_id"], :name => "index_fellowships_on_user_id"
+
   create_table "meal_arrangements", :force => true do |t|
     t.integer  "meal_id"
     t.integer  "user_id"
@@ -43,6 +50,9 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.datetime "updated_at"
     t.boolean  "acceptance"
   end
+
+  add_index "meal_arrangements", ["meal_id"], :name => "index_meal_arrangements_on_meal_id"
+  add_index "meal_arrangements", ["user_id"], :name => "index_meal_arrangements_on_user_id"
 
   create_table "meals", :force => true do |t|
     t.string   "title"
@@ -62,6 +72,8 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.integer  "slots"
   end
 
+  add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
+
   create_table "messages", :force => true do |t|
     t.string  "topic"
     t.text    "body"
@@ -73,8 +85,6 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.boolean "recipient_delete",          :default => false
     t.boolean "sender_delete",             :default => false
   end
-
-  add_index "messages", ["sent_messageable_id", "received_messageable_id"], :name => "acts_as_messageable_ids"
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false
@@ -99,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
     t.string   "zip_code"
     t.string   "street"
     t.string   "street_number"
+    t.string   "room_number"
     t.string   "phone_number"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -113,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20110525172819) do
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["fb_id"], :name => "index_users_on_fb_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

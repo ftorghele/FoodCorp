@@ -8,7 +8,9 @@ class AjaxController < ApplicationController
     @searchLocation = params[:searchLocation]
     cookies[:storred_search_location] = @searchLocation
     cookies[:storred_search_radius] = params[:searchRadius]
-    @radius = params[:searchRadius].to_i
+    kilometers_to_miles = 1.609344
+
+    @radius = params[:searchRadius].to_i / kilometers_to_miles  #radius wurde korrigiert um richtige distanzen anzuzeigen...
 
     case @radius.to_i
       when 5
@@ -32,31 +34,36 @@ class AjaxController < ApplicationController
       from = date.beginning_of_day.to_i
       to = date.end_of_day.to_i
 
-      @meals = Meal.near([@lat, @lon], @radius).find(:all, :conditions => ["deadline > ? AND time BETWEEN ? AND ?", Time.now.to_datetime.to_i, from, to])
+      @meals = Meal.near([@lat, @lon], @radius)
+      @meals.find(:all, :conditions => ["deadline > ? AND time BETWEEN ? AND ?", Time.now.to_datetime.to_i, from, to])
     else
-      @meals = Meal.near([@lat, @lon], @radius).find(:all, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
+      @meals = Meal.near([@lat, @lon], @radius)
+      @meals.find(:all, :conditions => ["deadline > ?", Time.now.to_datetime.to_i])
     end
 
     @meals.each do |m|
-      m.distance = Geocoder::Calculations.distance_between([@lat, @lon], [m.lat, m.lon]) * 1.609344
+      # m.distance = Geocoder::Calculations.distance_between([@lat, @lon], [m.lat, m.lon]) * 1.609344
+      m.distance = Geocoder::Calculations.distance_between([@lat, @lon], [m.lat, m.lon]) * kilometers_to_miles #radius korrigiert
     end
   end
 
   def calendar
-    currentTime = Time.now.to_datetime.to_i
-    futureTime = currentTime + (7*60*60*24)
-    @meals = Meal.find(:all, :conditions => ["user_id = ? AND (time > ? AND deadline < ?)", current_user.id, currentTime, futureTime])
-    @meal_arrangements = MealArrangement.find(:all, :conditions => ["user_id = ? AND acceptance = 1", current_user.id])
+    if current_user
+      currentTime = Time.now.to_datetime.to_i
+      futureTime = currentTime + (7*60*60*24)
+      @meals = Meal.find(:all, :conditions => ["user_id = ? AND (time > ? AND deadline < ?)", current_user.id, currentTime, futureTime])
+      @meal_arrangements = MealArrangement.find(:all, :conditions => ["user_id = ? AND acceptance = 1", current_user.id])
 
-    @user_tasks = []
+      @user_tasks = []
 
-    @meals.each do |meal|
-      @user_tasks << ["meal_id"=>meal.id, "own"=>true, "time"=>meal.time, "title"=>meal.title, "cook"=>meal.user.first_name ]
+      @meals.each do |meal|
+        @user_tasks << ["meal_id"=>meal.id, "own"=>true, "time"=>meal.time, "title"=>meal.title, "cook"=>meal.user.first_name ]
+      end
+
+      @meal_arrangements.each do |meal_arrangement|
+        @user_tasks << ["meal_id"=>meal_arrangement.meal_id, "own"=>false, "time"=>meal_arrangement.meal.time, "title"=>meal_arrangement.meal.title, "cook"=>meal_arrangement.meal.user.first_name ]
+      end
+      @user_tasks.sort! { |a,b| a[0]["time"] <=> b[0]["time"] }
     end
-
-    @meal_arrangements.each do |meal_arrangement|
-      @user_tasks << ["meal_id"=>meal_arrangement.meal_id, "own"=>false, "time"=>meal_arrangement.meal.time, "title"=>meal_arrangement.meal.title, "cook"=>meal_arrangement.meal.user.first_name ]
-    end
-    @user_tasks.sort! { |a,b| a[0]["time"] <=> b[0]["time"] }
   end
 end

@@ -11,7 +11,7 @@ Sham.title  { Faker::Name.name }
 
 Meal.blueprint do
   title { Sham.title }
-  
+
   # oder bei Namensgleichheit zwischen Sham und Attribut einfach:
   # title
 end

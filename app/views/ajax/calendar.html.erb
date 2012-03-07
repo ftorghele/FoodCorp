@@ -8,12 +8,12 @@
   </div>
 
   <% @user_tasks.each do |task| %>
-    <% if Time.now.day+j ==  Time.at(task[0]["time"]).day %>
+    <% if (Time.now + j.day).day ==  Time.at(task[0]["time"]).day %>
       <% if task[0]["own"] %>
         <%= link_to meal_path(task[0]["meal_id"]) do %>
           <div class="day_meal">
             <div class="day_date"><%= l(Date.today+j, :format => :calendar) %></div>
-            <div class="meal_title"><%= task[0]["title"].delete("'") %></div>at <%= task[0]["cook"].delete("'") %>s place
+            <div class="meal_title"><%= task[0]["title"].delete("'") %></div>at my place
           </div>
         <% end %>
       <% else  %>

@@ -4,6 +4,7 @@ tmp/**/*
 config/database.yml
 config/initializers/devise.rb
 config/initializers/secret_token.rb
+config/environments/production.rb
 log/*.log
 *.swp
 tmp/*

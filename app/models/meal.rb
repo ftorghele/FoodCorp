@@ -1,5 +1,6 @@
 class Meal < ActiveRecord::Base
-
+  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "50x50>" }
+  
   acts_as_commentable
 
   attr_accessible :title, :description, :time, :deadline, :lon, :lat,

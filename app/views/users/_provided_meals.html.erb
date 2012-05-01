@@ -3,6 +3,10 @@
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
         <span class="float_right space_right">
+		  <% if meal.avatar %>
+			<%= image_tag meal.avatar.url(:thumb) %><br />
+          <% end %>
+          
           <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
         </span>
       </div>

@@ -35,6 +35,18 @@ class MealsController < ApplicationController
   end
 
   def edit
+    if params[:meal]
+	  if params[:meal][:avatar]
+	    @meal = Meal.find(params[:id])
+	    if @meal.avatar
+		  @meal.avatar = nil
+	    end
+	    @meal.avatar = params[:meal][:avatar]
+	    @meal.save
+	  
+	    redirect_to :action => "show"
+	  end
+    end
   end
 
   def update
@@ -54,7 +66,7 @@ class MealsController < ApplicationController
     comment.save
     redirect_to :back
   end
-
+  
   protected
   def check_login
     unless current_user
@@ -75,15 +87,4 @@ class MealsController < ApplicationController
   def get_meal
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
   end
-  
-  def upload
-    if File.extname(params[:meallook]) == ".jpg" || File.extname(params[:meallook]) == ".png"
-      @meal.avatar = params[:meallook]
-      @meal.save
-    else
-      flash[:alert] = "Meal-Look in JPEG oder PNG!"
-    end
-	redirect_to :action => "new"
-  end
-  
 end

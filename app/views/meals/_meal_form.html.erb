@@ -6,6 +6,11 @@
   <%= f.text_field :title %><br />
   <%= f.label :description %>
   <%= f.text_field :description %><br />
+  <%= f.label 'Meal-Look' %><br />
+  <% if @meal.avatar %>
+	<%= image_tag @meal.avatar.url(:thumb) %>
+  <% end %>
+  <%= f.file_field :avatar %>
   
   <%unless @meal.title %>
   <%= f.label :country %>

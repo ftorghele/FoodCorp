@@ -6,7 +6,7 @@
   <%= f.text_field :title %><br />
   <%= f.label :description %>
   <%= f.text_field :description %><br />
-
+  
   <%unless @meal.title %>
   <%= f.label :country %>
   <%= f.text_field :country, :value => current_user.country %><br />

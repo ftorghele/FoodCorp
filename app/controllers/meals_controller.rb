@@ -75,4 +75,15 @@ class MealsController < ApplicationController
   def get_meal
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
   end
+  
+  def upload
+    if File.extname(params[:meallook]) == ".jpg" || File.extname(params[:meallook]) == ".png"
+      @meal.avatar = params[:meallook]
+      @meal.save
+    else
+      flash[:alert] = "Meal-Look in JPEG oder PNG!"
+    end
+	redirect_to :action => "new"
+  end
+  
 end

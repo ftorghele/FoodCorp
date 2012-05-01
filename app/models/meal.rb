@@ -1,5 +1,11 @@
 class Meal < ActiveRecord::Base
+  
   has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "50x50>" }
+  
+  validates_attachment_content_type :avatar, :content_type => [ 'image/jpeg', 'image/png'],
+						            :message => 'file must be of filetype .jpeg or .png'
+  
+  validates_attachment_size :avatar, :more_than => 500.kilobytes      
   
   acts_as_commentable
 

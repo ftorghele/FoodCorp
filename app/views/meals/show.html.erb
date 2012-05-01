@@ -14,7 +14,21 @@
 			<div class="meal_info">
       	<div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
       	<%= l(Time.at( @meal.time), :format => :meal) %><br>
-        Description: <%= @meal.description %><br><br>
+        Description: <%= @meal.description %><br>
+        
+        <% if @meal.avatar %>
+			Meal-Look: <%= image_tag @meal.avatar.url(:medium) %>
+        <% else %>
+			Meal-Look hochladen: 
+			<%= form_tag @meal, {:action => :upload}, :multipart => true do %>
+				<%= label_tag :meallook, 'Upload Meal-Look' %>
+				<%= file_field_tag :meallook, 'meallook' %>
+				<%= submit_tag 'Upload Meal-Look' :confirm => 'Willst du dieses Bild hochladen?' %>
+			<% end %>
+		<% end %>
+		
+        <br>
+        <br>
         <% if current_user %>
         	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
         		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>

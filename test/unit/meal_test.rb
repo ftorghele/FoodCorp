@@ -15,6 +15,7 @@ class MealTest < ActiveSupport::TestCase
                     :user_id => 1, 
                     :description => "Faker::Lorem",
                     :deadline => Time.now,
+                    :avatar => "",
                     :time => Time.now,
                     :lat => 47.7992391,
                     :lon => 13.0440699,

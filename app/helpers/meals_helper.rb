@@ -14,4 +14,10 @@ module MealsHelper
     name = firstname + " " + lastname
     return name
   end
+  
+  def getCategorieImageName(args)
+    array = Array.new("Vegetarian.png", "Organic", "Kosher", "Halal", "Lactose Free", "Gluten Free", "Diabetics")
+    array[args]
+  end
+  
 end

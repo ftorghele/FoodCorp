@@ -2,6 +2,11 @@
   <% meals.each do |meal|%>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
+		
+		<% if meal.vegetarien %>
+		  <%= image_tag getCategorieImageName(0) %>
+		<% end %>
+		
         <span class="float_right space_right">
 		  <% if meal.avatar %>
 			<%= image_tag meal.avatar.url(:thumb) %><br />

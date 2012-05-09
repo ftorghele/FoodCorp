@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509133800) do
+ActiveRecord::Schema.define(:version => 20120509184500) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(:version => 20120509133800) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
+    t.string   "email",                               :default => "",    :null => false
+    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                       :default => 0
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20120509133800) do
     t.boolean  "use_fb_avatar"
     t.integer  "points",                              :default => 1
     t.text     "info_field"
+    t.boolean  "mail_notification",                   :default => false
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

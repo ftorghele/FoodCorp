@@ -55,7 +55,7 @@
 	  <%= f.label :deadline %>
 	  <%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
   <%end%>
-
+  
   <%= f.hidden_field(:lat) %>
   <%= f.hidden_field(:lon) %>
 

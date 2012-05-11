@@ -29,7 +29,9 @@
   </div>
   <div id="wrapper">
   <%= render 'layouts/header' %>
-  <%= render "users/user_information", :user => current_user %>
+  <% if current_user %>
+	<%= render "users/user_information", :user => current_user %>
+  <% end %>
   <div id="notifications">
     <p class="notice" align="center"><%= notice %></p>
     <p class="alert" align="center"><%= alert %></p>

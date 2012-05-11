@@ -24,8 +24,12 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
+  <div style='position:absolute; top:10px; right:10px'>
+  <%= render 'layouts/user_info' %>
+  </div>
   <div id="wrapper">
   <%= render 'layouts/header' %>
+  <%= render "users/user_information", :user => current_user %>
   <div id="notifications">
     <p class="notice" align="center"><%= notice %></p>
     <p class="alert" align="center"><%= alert %></p>

@@ -16,7 +16,6 @@ FoodCorp::Application.routes.draw do
     
   controller :meals do
     match 'meals/create_comment' => :create_comment
-    match 'meals/:id/edit' => :edit
   end
 
   controller :messages do

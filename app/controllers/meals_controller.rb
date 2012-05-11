@@ -26,7 +26,7 @@ class MealsController < ApplicationController
   def create
     @meal = Meal.new(params[:meal])
     @meal.user_id = current_user.id
-
+    
     if @meal.save
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
@@ -35,18 +35,6 @@ class MealsController < ApplicationController
   end
 
   def edit
-    if params[:meal]
-	  if params[:meal][:avatar]
-	    @meal = Meal.find(params[:id])
-	    if @meal.avatar
-		  @meal.avatar = nil
-	    end
-	    @meal.avatar = params[:meal][:avatar]
-	    @meal.save
-	  
-	    redirect_to :action => "show"
-	  end
-    end
   end
 
   def update

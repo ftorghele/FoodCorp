@@ -1,14 +1,9 @@
 class Meal < ActiveRecord::Base
   
-  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "50x50>" }
-  
-  validates_attachment_content_type :avatar, :content_type => [ 'image/jpeg', 'image/png'],
-						            :message => 'file must be of filetype .jpeg or .png'   
-  
   acts_as_commentable
 
   attr_accessible :title, :description, :time, :deadline, :lon, :lat,
-                  :country, :city, :zip_code, :street, :slots, :street_number, :avatar
+                  :country, :city, :zip_code, :street, :slots, :street_number
 
   validates :title, :presence => true
   validates :description, :presence => true
@@ -17,7 +12,7 @@ class Meal < ActiveRecord::Base
   validates :lon, :presence => true
   validates :lat, :presence => true
   validates :slots, :presence => true
-
+  
   belongs_to :user
   has_many :meal_arrangements
   has_many :comments

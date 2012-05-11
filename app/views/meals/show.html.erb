@@ -15,16 +15,6 @@
       	<div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
       	<%= l(Time.at( @meal.time), :format => :meal) %><br>
         Description: <%= @meal.description %><br>
-       
-        <% if @meal.avatar %>
-			Meal-Look: <%= image_tag @meal.avatar.url(:medium) %>
-		<% end %>
-		
-		<% form_for :meal, @meal, :url => edit_meal_path(@meal.id), :html => { :multipart => true } do |f| %>
-			<%= f.file_field :avatar %>
-			<%= f.submit 'Upload Meal-lock' %>
-		<% end %>
-        <br>
         <br>
         <% if current_user %>
         	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>

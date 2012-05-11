@@ -7,8 +7,27 @@
         <%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
           <%= hidden_field_tag 'meal_id', @meal.id %>
           <%= image_submit_tag("request_meal.png", :id => "request_meal") %>
+          <%# m.label :mail_notification, 'Receive E-Mail' %>
+		  <%# radio_button 'receive_meal', :mail_notification, '1', :checked => true %>
+		  <%# m.label :mail_notification, "Don't Receive E-Mail" %>
+		  <%# radio_button 'receive_meal', :mail_notification, '0', :checked => false %>
         <%end%>
       <%else%>
+        
+        <%= form_tag(meal_arrangement_path(@meal_arrangement.id), :method => "put") do |m| %>
+          <% if m.mail_notification.to_s == '1' %>
+			  <%# m.label :mail_notification, 'Receive E-Mail' %>
+			  <%# radio_button 'receive_meal', :mail_notification, '1', :checked => true %>
+			  <%# m.label :mail_notification, 'Don't Receive E-Mail' %>
+			  <%# radio_button 'receive_meal', :mail_notification, '0', :checked => false %>
+          <% else %>
+			  <%# m.label :mail_notification, 'Receive E-Mail' %>
+			  <%# radio_button 'receive_meal', :mail_notification, '1', :checked => false %>
+			  <%# m.label :mail_notification, "Don't Receive E-Mail" %>
+			  <%# radio_button 'receive_meal', :mail_notification, '0', :checked => true %>
+          <% end %>
+        <% end %>
+        
         <%= form_tag(meal_arrangement_path(@meal_arrangement.id), :method => "delete") do %>
           <%= image_submit_tag("delete_meal_request.png", :id => "delete_meal_request") %>
         <%end%>

@@ -16,7 +16,7 @@ module MealsHelper
   end
   
   def getCategorieImageName(args)
-    array = Array.new("Vegetarian.png", "Organic", "Kosher", "Halal", "Lactose Free", "Gluten Free", "Diabetics")
+    array = Array.new("icon_veggi.png", "icon_organic.png", "icon_kosher.png", "icon_asian.png", "icon_lactose-free.png", "icon_gluten-free.png", "icon_halal.png")
     array[args]
   end
   

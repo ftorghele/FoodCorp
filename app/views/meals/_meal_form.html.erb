@@ -50,10 +50,26 @@
 	  <%= f.label :deadline %>
 	  <%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
   <%end%>
-  
+
+  <%= f.label :Vegetarian %>
+  <%= f.check_box :vegetarian %><img src="/images/icon_veggie.png" /><br />
+  <%= f.label :Organic %>
+  <%= f.check_box :organic %><img src="/images/icon_organic.png" /><br />
+  <%= f.label :Kosher %>
+  <%= f.check_box :kosher %><img src="/images/icon_kosher.png" /><br />
+  <%= f.label :Asian %>
+  <%= f.check_box :asian %><img src="/images/icon_asian.png" /><br />
+  <%= f.label :Gluten_free %>
+  <%= f.check_box :gluten_free %><img src="/images/icon_gluten-free.png" /><br />
+  <%= f.label :Lactose_free %>
+  <%= f.check_box :lactose_free %><img src="/images/icon_lactose-free.png" /><br />
+  <%= f.label :Halal %>
+  <%= f.check_box :diabetics %><img src="/images/icon_halal.png" /><br />
+
   <%= f.hidden_field(:lat) %>
   <%= f.hidden_field(:lon) %>
 
-  <%= f.submit 'submit', :class => "submit" %>
+  <%= f.submit 'submit', :class => "siubmit" %>
 <% end %>
+
 </div>

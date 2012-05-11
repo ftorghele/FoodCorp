@@ -3,7 +3,9 @@ class Meal < ActiveRecord::Base
   acts_as_commentable
 
   attr_accessible :title, :description, :time, :deadline, :lon, :lat,
-                  :country, :city, :zip_code, :street, :slots, :street_number
+                  :country, :city, :zip_code, :street, :slots, :street_number,
+		  :vegetarian, :organic, :kosher, :asian, :gluten_free, 
+		  :lactose_free, :diabetics
 
   validates :title, :presence => true
   validates :description, :presence => true

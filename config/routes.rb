@@ -13,7 +13,7 @@ FoodCorp::Application.routes.draw do
 
   resources :fellowships
   resources :meals
-    
+
   controller :meals do
     match 'meals/create_comment' => :create_comment
   end

@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120510152400) do
+ActiveRecord::Schema.define(:version => 20120511150100) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "categories_meals", :force => true do |t|
+    t.integer  "meals_id"
+    t.integer  "categories_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -70,13 +83,15 @@ ActiveRecord::Schema.define(:version => 20120510152400) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "slots"
-    t.boolean  "vegetarien",    :default => false
+    t.boolean  "vegetarian",    :default => false
     t.boolean  "organic",       :default => false
     t.boolean  "kosher",        :default => false
-    t.boolean  "halal",         :default => false
+    t.boolean  "asian",         :default => false
     t.boolean  "lactose_free",  :default => false
     t.boolean  "gluten_free",   :default => false
     t.boolean  "diabetics",     :default => false
+    t.boolean  "hot",           :default => false
+    t.boolean  "veryhot",       :default => false
   end
 
   add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
@@ -128,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20120510152400) do
     t.integer  "points",                              :default => 1
     t.text     "info_field"
     t.boolean  "mail_notification",                   :default => false
-    t.string   "email_adresse",                       :default => ""
+    t.text     "email_adresse"
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

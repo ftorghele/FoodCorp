@@ -35,6 +35,12 @@
      <% if @meal.diabetics %>
        <img src="/images/icon_halal.png" />
      <% end %>
+     <% if @meal.hot %>
+       <img src="/images/icon_hot.png" />
+     <% end %>
+     <% if @meal.veryhot %>
+       <img src="/images/icon_veryhot.png" />
+     <% end %>
   </div>
 
       	<%= l(Time.at( @meal.time), :format => :meal) %><br>

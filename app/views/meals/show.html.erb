@@ -14,32 +14,32 @@
 			<div class="meal_info">
       	<div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
    <div class="meal_icon">
-     <% if @meal.vegetarian %>
-       <img src="/images/icon_veggie.png" />
+     <% if @meal.vegetarien %>
+       <%= image_tag 'icon_veggie.png' %>
      <% end %>
      <% if @meal.organic %>
-       <img src="/images/icon_organic.png" />
+       <%= image_tag 'icon_organic.png' %>
      <% end %>
      <% if @meal.kosher %>
-       <img src="/images/icon_kosher.png" />
+       <%= image_tag 'icon_kosher.png' %>
      <% end %>
      <% if @meal.asian %>
-       <img src="/images/icon_asian.png" />
+       <%= image_tag 'icon_asian.png' %>
      <% end %>
      <% if @meal.gluten_free %>
-       <img src="/images/icon_gluten-free.png" />
+       <%= image_tag 'icon_gluten.png' %>
      <% end %>
      <% if @meal.lactose_free %>
-       <img src="/images/icon_lactose-free.png" />
+       <%= image_tag 'icon_lactose.png' %>
      <% end %>
      <% if @meal.diabetics %>
-       <img src="/images/icon_halal.png" />
+       <%= image_tag 'icon_halal.png' %>
      <% end %>
      <% if @meal.hot %>
-       <img src="/images/icon_hot.png" />
+       <%= image_tag 'icon_hot.png' %>
      <% end %>
      <% if @meal.veryhot %>
-       <img src="/images/icon_veryhot.png" />
+       <%= image_tag 'icon_veryhot.png' %>
      <% end %>
   </div>
 

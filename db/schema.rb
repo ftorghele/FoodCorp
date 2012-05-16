@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511122100) do
+ActiveRecord::Schema.define(:version => 20120517150900) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20120511122100) do
     t.boolean  "diabetics",     :default => false
     t.boolean  "hot",           :default => false
     t.boolean  "veryhot",       :default => false
+    t.boolean  "asian",         :default => false
   end
 
   add_index "meals", ["user_id"], :name => "index_meals_on_user_id"

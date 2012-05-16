@@ -11,20 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511150100) do
-
-  create_table "categories", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "categories_meals", :force => true do |t|
-    t.integer  "meals_id"
-    t.integer  "categories_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20120511122100) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -83,10 +70,10 @@ ActiveRecord::Schema.define(:version => 20120511150100) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "slots"
-    t.boolean  "vegetarian",    :default => false
+    t.boolean  "vegetarien",    :default => false
     t.boolean  "organic",       :default => false
     t.boolean  "kosher",        :default => false
-    t.boolean  "asian",         :default => false
+    t.boolean  "halal",         :default => false
     t.boolean  "lactose_free",  :default => false
     t.boolean  "gluten_free",   :default => false
     t.boolean  "diabetics",     :default => false

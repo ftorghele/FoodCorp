@@ -25,7 +25,13 @@ class MealArrangementsController < ApplicationController
       if @meal_arrangement.update_attribute(:acceptance, true)
 		
 		# yes you can
-		MealMailer.notification_email(@user_to_invite, "Cook invite you").deliver
+		MealMailer.deliver do
+		  to @user_to_invite.email
+		  from current_user.email
+		  subject 'message from cook: ' + current_user.firstName + " " + current_user.last_name
+		  body 'Cook is inviteing you'
+        end
+		#MealMailer.notification_email(current_user, @user_to_invite, "Cook invite you").deliver
 		
         current_user.points += 1
         meal = Meal.find(current_meal_id)
@@ -52,7 +58,13 @@ class MealArrangementsController < ApplicationController
       if @meal_arrangement.destroy
       
         # yes you can not!
-		MealMailer.notification_email(@user_to_invite, "Cook disinvite you").deliver
+        MealMailer.deliver do
+		  to @user_to_invite.email
+		  from current_user.email
+		  subject 'message from cook: ' + current_user.firstName + " " + current_user.last_name
+		  body 'Cook disinvite you'
+        end
+		#MealMailer.notification_email(current_user, @user_to_invite, "Cook disinvite you").deliver
 		
         @meal_arrangement.user.points += 1
         @meal_arrangement.user.update_attribute(:points, @meal_arrangement.user.points)

@@ -32,6 +32,8 @@ en:
     outbox: "Outbox"
     new: "New PM"
     
+  user:
+    invitaion_mail_success: "Invitation mail sent successfully"
     
   meal:
     time_fail: "Time not valid!"

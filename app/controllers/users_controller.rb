@@ -13,6 +13,13 @@ class UsersController < ApplicationController
     @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]], :order => 'created_at DESC')
   end
   
+  def send_inivation_mail
+    user_to_invite = User.find(parmas[:users][:user_id])
+    
+    MealMailer.notification_email(current_user, user_to_invite, "Cook #{current_user.first_name.concat(' ')<<current_user.last_name} want to invite you").deliver
+    redirect_to :back, :notice => I18n.t('user.invitaion_mail_success')
+  end
+  
   def update 
     user = User.find(params[:user_id])
     if params[:receive_mail]

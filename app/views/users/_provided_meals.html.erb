@@ -42,7 +42,16 @@
                   <% end %>
                 <% end %>
               </ul>
-            <% else %>
+              
+              <p>Selete Person to send invitation to:</p>
+              
+			  <%= form_tag current_user, :action => 'send_inivation_mail' do |u| %>
+			    <% users = User.find(:all, :conditions => ["id != ?", current_user.id]) %>
+			    <%= select("users", "user_id", users.collect {|p| [ p.first_name.concat(" ")<<p.last_name, p.id ] }, {:prompt => 'Select Person'}) %>
+			    <%= submit_tag "Send Invitation Mail" %>
+			  <% end %>
+			  
+			<% else %>
               <ul><li>none</li></ul>
             <% end %>
             <br>Outstanding Meal Requests<br>

@@ -25,13 +25,7 @@ class MealArrangementsController < ApplicationController
       if @meal_arrangement.update_attribute(:acceptance, true)
 		
 		# yes you can
-		MealMailer.deliver do
-		  to @user_to_invite.email
-		  from current_user.email
-		  subject 'message from cook: ' + current_user.firstName + " " + current_user.last_name
-		  body 'Cook is inviteing you'
-        end
-		#MealMailer.notification_email(current_user, @user_to_invite, "Cook invite you").deliver
+		MealMailer.notification_email(current_user, @user_to_invite, "Cook invite you").deliver
 		
         current_user.points += 1
         meal = Meal.find(current_meal_id)
@@ -44,28 +38,16 @@ class MealArrangementsController < ApplicationController
       else
           redirect_to :back, :notice => I18n.t('meal_arrangements.accept_fail')
       end
-    elsif current_user.id == @meal_arrangement.user_id #Eater
-      if @meal_arrangement.update_attribute( :mail_notification => params[:receive_meal].to_i )
-        redirect_to :back, :notice => I18n.t('meal_arrangements.change_success')
-      else
-        redirect_to :back, :notice => I18n.t('meal_arrangements.change_fail')
-      end
     end
   end
-
+  
   def destroy
     if current_user.id == @meal_arrangement.meal.user_id #Cook
       if @meal_arrangement.destroy
       
         # yes you can not!
-        MealMailer.deliver do
-		  to @user_to_invite.email
-		  from current_user.email
-		  subject 'message from cook: ' + current_user.firstName + " " + current_user.last_name
-		  body 'Cook disinvite you'
-        end
-		#MealMailer.notification_email(current_user, @user_to_invite, "Cook disinvite you").deliver
-		
+        MealMailer.notification_email(current_user, @user_to_invite, "Cook disinvite you").deliver
+
         @meal_arrangement.user.points += 1
         @meal_arrangement.user.update_attribute(:points, @meal_arrangement.user.points)
         current_user.send_message(@meal_arrangement.user, I18n.t('message.reject', :title => @meal_arrangement.meal.title), I18n.t('message.sorry') )

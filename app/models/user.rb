@@ -22,10 +22,10 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :first_name, :last_name, :gender, :birthday, :fb_id, :avatar, :use_fb_avatar,
-                  :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field
+                  :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, :mail_notification
 
-  validates :first_name, :presence => true
-  validates :last_name, :presence => true
+  validates :first_name, :presence => true, :uniqueness => true 
+  validates :last_name, :presence => true, :uniqueness => true
   validates :gender, :presence => true
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)

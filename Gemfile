@@ -26,6 +26,7 @@ group :test do
   gem 'mocha', :require => false
 	gem "launchy"
   gem 'sham'
+  gem "factory_girl_rails", "~> 3.0"
 end
 
 group :production do

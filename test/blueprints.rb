@@ -7,11 +7,11 @@ require 'faker'
 Faker::Config.locale = :en
 
 # Jedes Meal soll einen eigenen Title bekommen
-Sham.title  { Faker::Name.name }
+#Sham.title  { Faker::Name.name }
 
-Meal.blueprint do
-  title { Sham.title }
+#Meal.blueprint do
+#  title { Sham.title }
 
   # oder bei Namensgleichheit zwischen Sham und Attribut einfach:
   # title
-end
+#end

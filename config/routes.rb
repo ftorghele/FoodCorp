@@ -3,7 +3,8 @@ FoodCorp::Application.routes.draw do
   resources :comments
 
   resources :meal_arrangements
-
+    match 'update_meal_arrangement' => 'MealArrangements#update_meal_arrangement', :as => 'update_meal_arrangement'
+    
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }
 

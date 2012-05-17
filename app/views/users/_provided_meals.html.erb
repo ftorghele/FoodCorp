@@ -4,25 +4,25 @@
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
 	
      <% if meal.vegetarien %>
-       <%= image_tag getCategorieImageName(0) %>
+       <%= image_tag getCategorieImageName(0), :alt => "veggie", :title => "veggie" %>
      <% end %>
      <% if meal.organic %>
-       <%= image_tag getCategorieImageName(1) %>
+       <%= image_tag getCategorieImageName(1), :alt => "organic", :title => "organic" %>
      <% end %>
      <% if meal.kosher %>
-       <%= image_tag getCategorieImageName(2) %>
+       <%= image_tag getCategorieImageName(2), :alt => "kosher", :title => "hosher" %>
      <% end %>
      <% if meal.asian %>
-       <%= image_tag getCategorieImageName(3) %>
-     <% end %>
-     <% if meal.gluten_free %>
-       <%= image_tag getCategorieImageName(4) %>
+       <%= image_tag getCategorieImageName(3), :alt => "asian", :title => "asian" %>
      <% end %>
      <% if meal.lactose_free %>
-       <%= image_tag getCategorieImageName(5) %>
+       <%= image_tag getCategorieImageName(4), :alt => "lactose free", :title => "lactose free" %>
      <% end %>
-     <% if meal.diabetics %>
-       <%= image_tag getCategorieImageName(6) %>
+     <% if meal.gluten_free %>
+       <%= image_tag getCategorieImageName(5), :alt => "gluten", :title => "gluten" %>
+     <% end %>
+     <% if meal.halal %>
+       <%= image_tag getCategorieImageName(6), :alt => "halal", :title => "halal" %>
      <% end %>
 	
         <span class="float_right space_right">

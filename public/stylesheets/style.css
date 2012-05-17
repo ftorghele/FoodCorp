@@ -416,6 +416,13 @@ img {
     margin: 5px 0 0 5px;
 }
 
+#upper_user_information{
+    float: right;
+    width: 100px;
+    min-height: 100%;
+    margin: 5px 0 0 5px;
+}
+
 #provided_meals {
     float: right;
     width: 602px;

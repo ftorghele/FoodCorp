@@ -23,7 +23,13 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     click_on("meal_submit")
     end
   end
-
+  
+  def create_user
+    @user = FactoryGirl.create(:user)
+    #@user = User.create(:name => "Mr.Test", :gender => "male", :password => "297ac11fde334e005803e23fe9d3ae227e680fa3db25a93eface675272952e3e17d94219afa84924b9fdb828f91ca6aa7d68ff87cb2c6a21a65c68b7aa851792
+#", :email => "tester@gmail.com" )
+  end
+  
   def login_user user_number 
     click_on('Login')
     fill_in 'user_email', :with => 'user'+user_number+'@gmail.com'
@@ -44,7 +50,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     visit '/meals/'+ meal.id.to_s
   end
 
-  should "show facebook sign in page" do
+  test "show facebook sign in page" do
     visit '/'
     # checking the html structure
     assert page.has_css?('a#fb_sign_in', :count => 1)
@@ -52,7 +58,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     #assert page.has_content?('Make Together')
   end
     
-  should "user should be able to visit his/her profile" do
+  test "user should be able to visit his/her profile" do
     sign_in_as("user1@gmail.com", "123456")
 
     click_on('Hans Testuser')
@@ -61,7 +67,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_out
   end
 
-  should "be able to create new meal send request for meal and accept request" do
+  test "be able to create new meal send request for meal and accept request" do
 
     sign_in_as("user1@gmail.com", "123456")
 
@@ -111,7 +117,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_out
   end
 
-  should "be able to delete meal request" do
+  test "be able to delete meal request" do
 
     sign_in_as("user1@gmail.com", "123456")
 
@@ -138,7 +144,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_out   
   end
 
-  should "be able to edit meal" do
+  test "be able to edit meal" do
     sign_in_as("user1@gmail.com", "123456")
                    
     click_on('cook')
@@ -152,7 +158,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ['doch nicht scharf und ohne Knödel', 'Gulasch']
   end
 
-  should "be able to create comment" do
+  test "be able to create comment" do
     sign_in_as("user1@gmail.com", "123456")
     click_link('cook')
     create_meal
@@ -171,7 +177,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_out
   end
 
-  should "be able to follow other user" do
+  test "be able to follow other user" do
     sign_in_as("user1@gmail.com", "123456")
 
     click_on('cook')
@@ -188,7 +194,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
   end
 
-  should "be able to send message" do
+  test "be able to send message" do
     sign_in_as("user1@gmail.com", "123456")
     click_on('cook')
     click_on('new meal')
@@ -214,7 +220,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ["Seas Franzeus"]
   end
 
-  should "be able to edit his/her profile" do
+  test "be able to edit his/her profile" do
     sign_in_as("user1@gmail.com", "123456")
     click_link("edit Profile")
     fill_in 'First Name:', :with => 'Hansilein'
@@ -234,4 +240,39 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     click_link('info')
     check_design ["Hallo mein Name ist Hansilein"]
   end
+  
+  # Franz Josef Brünner Integration-Test:
+  
+  test "user should be rejected when another user has got same first name" do
+    create_user if User.all.empty?
+    
+    visit root_path
+    click_link('register')
+    fill_in 'First Name:', :with => @user.first_name
+    fill_in 'Last Name:', :with => 'Test'
+    select 'male', :from => 'Gender:'
+    fill_in 'Email', :with => "testuser@test.com"
+    fill_in 'Password', :with => 'geheim'
+    fill_in 'Password Confirmation', :with => 'geheim'
+    click_on('Sign up')
+    
+    page.has_content?('Sign up')
+  end
+  
+  test "user should be rejected when another user has got same last name" do
+    create_user if User.all.empty?
+    
+    visit root_path
+    click_link('register')
+    fill_in 'First Name:', :with => 'Mr.Test'
+    fill_in 'Last Name:', :with => @user.last_name
+    select 'male', :from => 'Gender:'
+    fill_in 'Email', :with => "testuser@test.com"
+    fill_in 'Password', :with => 'geheim'
+    fill_in 'Password Confirmation', :with => 'geheim'
+    click_on('Sign up')
+    
+    page.has_content?('Sign up')
+  end
+  
 end

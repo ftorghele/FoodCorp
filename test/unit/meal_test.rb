@@ -2,15 +2,7 @@ require 'test_helper'
 
 class MealTest < ActiveSupport::TestCase
   
-  should validate_presence_of(:title)
-  should validate_presence_of(:description)
-  should validate_presence_of(:time)
-  should validate_presence_of(:deadline)
-  should validate_presence_of(:lat)
-  should validate_presence_of(:lon)
-  should validate_presence_of(:slots)
-  
-  should "provide information of itself" do
+  test "provide information of itself" do
     meal = Meal.new(:title => "title", 
                     :user_id => 1, 
                     :description => "Faker::Lorem",

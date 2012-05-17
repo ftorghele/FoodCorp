@@ -15,31 +15,31 @@
       	<div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
    <div class="meal_icon">
      <% if @meal.vegetarien %>
-       <%= image_tag 'icon_veggie.png' %>
+       <%= image_tag 'icon_veggie.png', :alt => "veggie", :title => "veggie" %>
      <% end %>
      <% if @meal.organic %>
-       <%= image_tag 'icon_organic.png' %>
+       <%= image_tag 'icon_organic.png', :alt => "organic", :title => "organic" %>
      <% end %>
      <% if @meal.kosher %>
-       <%= image_tag 'icon_kosher.png' %>
+       <%= image_tag 'icon_kosher.png', :alt => "kosher", :title => "hosher" %>
      <% end %>
      <% if @meal.asian %>
-       <%= image_tag 'icon_asian.png' %>
+       <%= image_tag 'icon_asian.png', :alt => "asian", :title => "asian" %>
      <% end %>
      <% if @meal.gluten_free %>
-       <%= image_tag 'icon_gluten.png' %>
+       <%= image_tag 'icon_gluten.png', :alt => "gluten", :title => "gluten" %>
      <% end %>
      <% if @meal.lactose_free %>
-       <%= image_tag 'icon_lactose.png' %>
+       <%= image_tag 'icon_lactose-free.png', :alt => "lactose free", :title => "lactose free" %>
      <% end %>
      <% if @meal.diabetics %>
-       <%= image_tag 'icon_halal.png' %>
+       <%= image_tag 'icon_halal.png', :alt => "halal", :title => "halal" %>
      <% end %>
      <% if @meal.hot %>
-       <%= image_tag 'icon_hot.png' %>
+       <%= image_tag 'icon_hot.png', :alt => "hot", :title => "hot" %>
      <% end %>
      <% if @meal.veryhot %>
-       <%= image_tag 'icon_veryhot.png' %>
+       <%= image_tag 'icon_veryhot.png', :alt => "very hot", :title => "very hot" %>
      <% end %>
   </div>
 

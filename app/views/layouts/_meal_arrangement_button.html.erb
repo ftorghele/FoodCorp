@@ -7,25 +7,22 @@
         <%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
           <%= hidden_field_tag 'meal_id', @meal.id %>
           <%= image_submit_tag("request_meal.png", :id => "request_meal") %>
-          <%# m.label :mail_notification, 'Receive E-Mail' %>
-		  <%# radio_button 'receive_meal', :mail_notification, '1', :checked => true %>
-		  <%# m.label :mail_notification, "Don't Receive E-Mail" %>
-		  <%# radio_button 'receive_meal', :mail_notification, '0', :checked => false %>
         <%end%>
+        <% if current_user %>
+          <%= label_tag "Receive E-Mail Notification" %>
+          <%= radio_button_tag 'receive_meal', '1', true %>
+		  <%= label_tag "Don't Receive E-Mail Notification" %>
+		  <%= radio_button_tag 'receive_meal', '0', false %>
+        <% end %>
       <%else%>
-        
-        <%= form_tag(meal_arrangement_path(@meal_arrangement.id), :method => "put") do |m| %>
-          <% if m.mail_notification.to_s == '1' %>
-			  <%# m.label :mail_notification, 'Receive E-Mail' %>
-			  <%# radio_button 'receive_meal', :mail_notification, '1', :checked => true %>
-			  <%# m.label :mail_notification, 'Don't Receive E-Mail' %>
-			  <%# radio_button 'receive_meal', :mail_notification, '0', :checked => false %>
-          <% else %>
-			  <%# m.label :mail_notification, 'Receive E-Mail' %>
-			  <%# radio_button 'receive_meal', :mail_notification, '1', :checked => false %>
-			  <%# m.label :mail_notification, "Don't Receive E-Mail" %>
-			  <%# radio_button 'receive_meal', :mail_notification, '0', :checked => true %>
-          <% end %>
+      
+        <% if current_user %>
+			<%= form_for current_user, :method => :update do |u| %>
+			  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
+			  <%= label_tag "Receive E-Mail Notification?" %>
+			  <%= check_box_tag 'receive_mail', current_user.mail_notification, current_user.mail_notification  %>
+			  <%= image_submit_tag "update_mail_notification.png" %>
+			<% end %>
         <% end %>
         
         <%= form_tag(meal_arrangement_path(@meal_arrangement.id), :method => "delete") do %>

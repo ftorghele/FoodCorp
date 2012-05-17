@@ -30,7 +30,7 @@
   <div id="wrapper">
   <%= render 'layouts/header' %>
   <% if current_user %>
-	<%# render "users/user_information", :user => current_user %>
+	<%= render "users/user_information", :user => current_user %>
   <% end %>
   <div id="notifications">
     <p class="notice" align="center"><%= notice %></p>

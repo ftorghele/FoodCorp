@@ -1,5 +1,5 @@
-<div id="upper_user_information">
-  <%= link_to image_tag(get_thumb_avatar_url(user), :id => "profile_avatar"), user_path(user) %>
+<div id="user_information">
+  <%= link_to image_tag(get_medium_avatar_url(user), :id => "profile_avatar"), user_path(user) %>
 
   <% unless current_user == user %>
     <% if is_following(current_user, user) %>

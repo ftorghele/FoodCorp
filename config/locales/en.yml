@@ -35,6 +35,8 @@ en:
   user:
     invitaion_mail_success: "Invitation mail sent successfully"
     invitaion_mail_fail: "Invitation mail failed"
+    get_mail_success: "Now you get e-mails from other users too"
+    get_mail_fail: "no e-mails are sent to you"
     
   meal:
     time_fail: "Time not valid!"

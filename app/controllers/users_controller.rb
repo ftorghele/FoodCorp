@@ -13,25 +13,33 @@ class UsersController < ApplicationController
     @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]], :order => 'created_at DESC')
   end
   
-  def send_inivation_mail
-    user_to_invite = User.find(parmas[:users][:user_id])
-    
-    MealMailer.notification_email(current_user, user_to_invite, "Cook #{current_user.first_name.concat(' ')<<current_user.last_name} want to invite you").deliver
-    redirect_to :back, :notice => I18n.t('user.invitaion_mail_success')
-  end
-  
   def update 
-    user = User.find(params[:user_id])
-    if params[:receive_mail]
-      user.update_attributes(:mail_notification => true ) 
-    else
-      user.update_attributes(:mail_notification => false ) 
-    end
+    if params[:user_id] # wants to get mails?
+      user = User.find(params[:user_id])
+      if params[:receive_mail]
+        user.update_attributes(:mail_notification => true ) 
+      else
+        user.update_attributes(:mail_notification => false ) 
+      end
     
-    if user.save
-      redirect_to :back, :notice => I18n.t('meal_arrangements.change_success')
+      if user.save
+        redirect_to :back, :notice => I18n.t('meal_arrangements.change_success')
+      else
+	    redirect_to :back, :notice => I18n.t('meal_arrangements.change_fail')
+      end
+    end
+    if params['users']['user_id'] # send invitation mail
+      user_to_invite = User.find(params['users']['user_id'])
+        
+      if user_to_invite.mail_notification
+        MealMailer.notification_email(current_user, user_to_invite, "Cook #{current_user.first_name.concat(' ')<<current_user.last_name} want to invite you").deliver
+      end
+        
+      user_to_invite.update_attributes( :got_invitation => true )
+        
+      redirect_to user_path(current_user.id), :notice => I18n.t('user.invitaion_mail_success')
     else
-	  redirect_to :back, :notice => I18n.t('meal_arrangements.change_fail')
+      redirect_to user_path(current_user.id), :notice => I18n.t('user.invitaion_mail_fail')
     end
   end
   

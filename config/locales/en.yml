@@ -34,6 +34,7 @@ en:
     
   user:
     invitaion_mail_success: "Invitation mail sent successfully"
+    invitaion_mail_fail: "Invitation mail failed"
     
   meal:
     time_fail: "Time not valid!"

@@ -10,6 +10,7 @@ FoodCorp::Application.routes.draw do
 
   resources :users do
     match 'info' => :info
+    match 'users/1' => :show
   end
 
   resources :fellowships

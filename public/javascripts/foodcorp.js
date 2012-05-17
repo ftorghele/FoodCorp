@@ -324,5 +324,9 @@ function drawMap(env, rails, railsdepth) {
 	}
 	
 	// ajax autocomplete in root
-	
-	
+	/*
+	$("#auto").autocomplete("tag.php", {
+                    width: 145,
+                    selectFirst: false
+    });
+*/

@@ -385,6 +385,10 @@ img {
     overflow: auto;
 }
 
+#currentUserLocation{
+	display: none;
+}
+
 /* ---- MAIN PAGE END ----- */
 
 /* ---- TABS BEG ----- */

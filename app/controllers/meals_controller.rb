@@ -19,7 +19,7 @@ class MealsController < ApplicationController
        @current_user_location = CurrentUserLocation.new
      end
    else
-     @current_user_location = CurrentUserLocation.new
+     @current_user_location = nil
    end
   end
 
@@ -67,13 +67,22 @@ class MealsController < ApplicationController
   end
   
   def create_current_user_location
-    #current_user_location_params = { :street => }
-    #current_user_location = CurrentUserLocation.create(params[:current_user_location])
-    #@user.current_user_location
+    @current_user_location = CurrentUserLocation.create(params[:current_user_location])
+    @current_user_location.user_id = current_user.id
+    
+    if @current_user_location.save
+      redirect_to :back, :notice => I18n.t('current_user_location.create_success')
+    else
+      redirect_to :back, :notice => I18n.t('current_user_location.create_fail')
+    end
   end
   
   def update_current_user_location
-  
+    if User.find(params[:user_id]).current_user_location.update_attributes(params[:current_user_location])
+      redirect_to :back, :notice => I18n.t('current_user_location.update_success')
+    else
+      redirect_to :back, :notice => I18n.t('current_user_location.update_fail')
+    end
   end
   
   protected

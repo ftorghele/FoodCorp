@@ -6,29 +6,32 @@
 
 <!-- <h2><% unless user_signed_in? %>The world‘s most awesome cooking community. <%= link_to 'Take a tour!', tour_path %><% end  %></h2> -->
 
+<table>
+<td>You are in...</td>
+<td><%= image_tag("change.png", :id => 'animatecurrentUserLocationButton') %></td>
+</table>
+
 <div id="currentUserLocation">
-  <p>Save your current position for further visits</p>
+  <p>Save your home position for further visits</p>
   <% if current_user %>
     
-    <% if current_user.current_user_location_id %>
-      <%= form_for(@current_user_location, :controller => 'Meals', :action => 'create_current_user_location') do |l| %>
-        <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
-        <%# label_tag 'Street' %>
-        
-      <% end %>
+    <% if current_user.current_user_location %>
+      <%= render 'current_user_location_form', :meal_action => update_current_user_location_path %>
     <% else %>
-      <%= form_tag(create_current_user_location_path) do %>
-        <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
-        
-      <% end %>
+      <%= render 'current_user_location_form', :meal_action => create_current_user_location_path %>
     <% end %>
+    
   <% end %>
 </div>
 
-<div id="mealfind">You are in <span id="currentLocation"></span></div>
+<% if current_user.current_user_location %>
+  <div id="mealfind">Home location: <span id="currentLocation"></span></div>
+<% else %>
+  <div id="mealfind">Current location: <span id="currentLocation"></span></div>
+<% end %>
 
 <%= form_tag(ajax_updatemap_path, :remote => true, :id => "address", :name => "address") do %>
-  <%= text_field_tag :searchLocation, @storred_search_location, :placeholder => 'enter your location...' %>
+  <%= text_field_tag :searchLocation, @storred_search_location, :placeholder => 'enter another location...' %>
   Radius: <%= select_tag :searchRadius, options_for_select([ 5, 10, 15, 20 ], @storred_search_radius), :class => "hoverSelect" %> km,
   <%= hidden_field_tag(:searchLat) %>
   <%= hidden_field_tag(:searchLon) %>

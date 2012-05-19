@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :meals
   has_many :meal_arrangements
   has_many :comments
-  has_one :current_user_location, :dependent => :destroy
+  has_one :current_user_location
   
   # Followers
   has_many :fellowships

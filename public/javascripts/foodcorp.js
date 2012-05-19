@@ -3,6 +3,7 @@ $(document).ready(function() {
 		fetchedData = false;
 		calendarData = {};
 		calendarHeight = 0;
+		userhasGotHomeLocations = false;
 		
 		getCalendar();
 		
@@ -56,11 +57,54 @@ $(document).ready(function() {
 	depth = 15;
 	marker = [];
 	markers = [];
-	loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
-	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
+	loc = [];
 	
-	// Home Page currentLocation div
-	$('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
+	if( $('#current_user_location_street').val() ){ // true if user already entered home location
+		userhasGotHomeLocations = true;
+		
+		tmpgeocoder = new GClientGeocoder();
+		var address = "";//"821 Mohawk Street, Columbus OH";
+		address += $('#current_user_location_street_number').val();
+		address += ' ' + $('#current_user_location_street').val();
+		address += ', ' + $('#current_user_location_city').val();
+		
+		country = '';
+		region = '';
+		
+		tmpgeocoder.getLocations(address, function(response){
+			place = response.Placemark[0];
+			
+			country = place.AddressDetails.Country.CountryName
+			region = place.AddressDetails.Country.AdministrativeArea.AdministrativeAreaName
+			
+			markers.push({'latitude': place.Point.coordinates[1],
+						  'longitude': place.Point.coordinates[0],
+						  'draggable': false,
+						  icon: {
+							    image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
+								shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow',
+								shadowSize: '22, 20'
+						  }
+			});
+			
+			$('#currentLocation').html(region + ", "+ city);
+		});
+      
+		//country = "Österreich"; // hier noch per current_user_location_zip_code country finden 
+		//region = 'Steiermark';
+		city = $('#current_user_location_city').val();
+		street = $('#current_user_location_street').val();
+		
+		loc = [country, region, city];
+		
+		
+	}
+	else{
+	    $('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
+		loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
+	}
+	
+	a = ['meal[country]', 'meal[city]', 'meal[zip_code]', 'meal[street]', 'meal[street_number]'];
 	
 	// get default User inputs
 	$('form.new_meal > :input, form.edit_meal > :input').each(function() {
@@ -114,7 +158,8 @@ $(document).ready(function() {
 	// SLOW!
 	// determine if the handset has client side geo location capabilities
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(geo_success, geo_error);
+			if(!userhasGotHomeLocations)
+				navigator.geolocation.getCurrentPosition(geo_success, geo_error);
 
             drawMap(loc);
         } else {
@@ -154,7 +199,10 @@ $(document).ready(function() {
 	geocoder = new GClientGeocoder();
 	
 	// Retrieve location information, pass it to addToMap()
-	geocoder.getLocations(loc.join(), addToMap);
+	if(userhasGotHomeLocations)
+		geocoder.getLocations(loc.join(), addHomeLocationToMap);
+	else
+		geocoder.getLocations(loc.join(), addToMap);
 	
 	// Calendar & Time for Meals
 	$('.datepicker').datetime({
@@ -220,6 +268,21 @@ $(document).ready(function() {
 			}
 		}
     
+	// animate Current User Location Form
+	
+	$('#animatecurrentUserLocationButton').hover(
+		function(){
+			$('#currentUserLocation').animate({ height: '100px' });
+			$('#currentUserLocation').fadeIn(500);
+		}
+	);
+	
+	$('#currentUserLocation').hover(function(){},function(){
+		$('#currentUserLocation').css('display','none');
+		$('#currentUserLocation').animate({ height: '0px' });
+		
+	});
+	
 });
 
 function panTo(lat, lon) {
@@ -323,10 +386,25 @@ function drawMap(env, rails, railsdepth) {
 	
 	}
 	
-	// ajax autocomplete in root
-	/*
-	$("#auto").autocomplete("tag.php", {
-                    width: 145,
-                    selectFirst: false
-    });
-*/
+	function addHomeLocationToMap(response){
+		  place = response.Placemark[0];
+
+		  point = new GLatLng(place.Point.coordinates[1],
+							  place.Point.coordinates[0]);
+			
+		  $('#map').googleMaps({
+				geocode: loc.join(', '),
+				markers: markers,
+				depth: depth,
+				controls: {
+					mapType: [{
+						remove: 'G_SATELLITE_MAP'
+					}],
+						type: {},
+						zoom: {
+							control: 'GSmallZoomControl'
+						}
+					}
+				});
+	}
+	

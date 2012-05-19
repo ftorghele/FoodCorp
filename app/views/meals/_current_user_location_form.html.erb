@@ -1,0 +1,8 @@
+<%= form_for(@current_user_location, :url => meal_action) do |l| %>
+	<%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
+	<%= l.text_field :street, :placeholder => 'Street' %>
+	<%= l.text_field :street_number, :placeholder => 'No.' %>
+	<%= l.text_field :zip_code, :placeholder => 'Zip Code' %>
+	<%= l.text_field :city, :placeholder => 'City' %>
+	<%= l.submit 'Save' %>
+<% end %>

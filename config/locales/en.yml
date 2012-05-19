@@ -54,6 +54,11 @@ en:
     acceptance_given_fail: "Meal arrangement already accepted - Can't be deleted!"
     point_fail: "You don't have enough credits to make a request!"
 
+  current_user_location:
+    create_success: "Your current locations were saved successfully!"
+    create_fail: "failed to save your current locations, fill out all fields please!"
+    update_success: "Your current locations were updated successfully!"
+    update_fail: "failed to updated your current locations, fill out all fields please!"
     
   message:
     reject: "Meal arrangement (%{title}) rejected"

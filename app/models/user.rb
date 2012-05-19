@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   has_many :meals
   has_many :meal_arrangements
   has_many :comments
-
+  has_one :current_user_location, :dependent => :destroy
+  
   # Followers
   has_many :fellowships
   has_many :followers, :through => :fellowships
@@ -22,7 +23,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :first_name, :last_name, :gender, :birthday, :fb_id, :avatar, :use_fb_avatar,
-                  :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, :mail_notification, :got_invitation
+                  :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, :mail_notification, :got_invitation, :current_user_location_id
 
   validates :first_name, :presence => true, :uniqueness => true 
   validates :last_name, :presence => true, :uniqueness => true

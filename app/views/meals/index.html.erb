@@ -6,6 +6,25 @@
 
 <!-- <h2><% unless user_signed_in? %>The world‘s most awesome cooking community. <%= link_to 'Take a tour!', tour_path %><% end  %></h2> -->
 
+<div id="currentUserLocation">
+  <p>Save your current position for further visits</p>
+  <% if current_user %>
+    
+    <% if current_user.current_user_location_id %>
+      <%= form_for(@current_user_location, :controller => 'Meals', :action => 'create_current_user_location') do |l| %>
+        <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
+        <%# label_tag 'Street' %>
+        
+      <% end %>
+    <% else %>
+      <%= form_tag(create_current_user_location_path) do %>
+        <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
+        
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
 <div id="mealfind">You are in <span id="currentLocation"></span></div>
 
 <%= form_tag(ajax_updatemap_path, :remote => true, :id => "address", :name => "address") do %>

@@ -3,13 +3,24 @@ class MealsController < ApplicationController
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
   before_filter :check_time, :only=> [:create, :update]
   before_filter :get_meal, :only=> [:edit, :update]
-
+  before_filter :get_user, :only => [:create_current_user_location, :update_current_user_location]
+  
   def index
    @coords = request.location;
    @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
 
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]
+   
+   if current_user
+     if current_user.current_user_location
+       @current_user_location = User.find(current_user.id).current_user_location
+     else
+       @current_user_location = CurrentUserLocation.new
+     end
+   else
+     @current_user_location = CurrentUserLocation.new
+   end
   end
 
   def new
@@ -56,7 +67,9 @@ class MealsController < ApplicationController
   end
   
   def create_current_user_location
-  
+    #current_user_location_params = { :street => }
+    #current_user_location = CurrentUserLocation.create(params[:current_user_location])
+    #@user.current_user_location
   end
   
   def update_current_user_location
@@ -82,5 +95,9 @@ class MealsController < ApplicationController
 
   def get_meal
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first
+  end
+  
+  def get_user
+    @user = User.find(params[:user_id])
   end
 end

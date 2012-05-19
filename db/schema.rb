@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517151700) do
+ActiveRecord::Schema.define(:version => 20120519115000) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(:version => 20120517151700) do
   add_index "comments", ["commentable_type"], :name => "index_comments_on_commentable_type"
   add_index "comments", ["parent_id"], :name => "index_comments_on_parent_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "current_user_locations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "street"
+    t.integer  "street_number"
+    t.integer  "zip_code"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fellowships", :force => true do |t|
     t.integer  "user_id"
@@ -97,11 +107,11 @@ ActiveRecord::Schema.define(:version => 20120517151700) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "",    :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "",    :null => false
+    t.string   "email",                                   :default => "",    :null => false
+    t.string   "encrypted_password",       :limit => 128, :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                           :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -128,11 +138,12 @@ ActiveRecord::Schema.define(:version => 20120517151700) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.boolean  "use_fb_avatar"
-    t.integer  "points",                              :default => 1
+    t.integer  "points",                                  :default => 1
     t.text     "info_field"
-    t.boolean  "mail_notification",                   :default => false
+    t.boolean  "mail_notification",                       :default => false
     t.text     "email_adresse"
-    t.boolean  "got_invitation",                      :default => false
+    t.boolean  "got_invitation",                          :default => false
+    t.integer  "current_user_location_id",                :default => 0
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

@@ -29,7 +29,7 @@ class MealArrangementsController < ApplicationController
 		
         current_user.points += 1
         meal = Meal.find(current_meal_id)
-        meal.slots -= 1
+        meal.slots -= 1 if meal.slots > 0
         meal.save
 
         current_user.update_attribute(:points, current_user.points)

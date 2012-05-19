@@ -55,6 +55,14 @@ class MealsController < ApplicationController
     redirect_to :back
   end
   
+  def create_current_user_location
+  
+  end
+  
+  def update_current_user_location
+  
+  end
+  
   protected
   def check_login
     unless current_user

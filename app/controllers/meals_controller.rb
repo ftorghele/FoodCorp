@@ -38,6 +38,7 @@ class MealsController < ApplicationController
     @meal = Meal.new(params[:meal])
     @meal.user_id = current_user.id
     @meal.user.meal_counter += 1
+    @meal.user.save
     
     if @meal.save
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')

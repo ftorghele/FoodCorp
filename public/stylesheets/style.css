@@ -359,7 +359,7 @@ img {
 }
 
 #searchSubmit {
-    margin: 0 0 -10px 20px;
+    margin: 0 0 20px 20px;
 }
 
 #radius {
@@ -386,7 +386,8 @@ img {
 }
 
 #currentUserLocation{
-	display: none;
+	margin-left:20px;
+	display:none;
 }
 
 #current_user_location_submit_button{

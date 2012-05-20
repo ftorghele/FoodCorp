@@ -277,11 +277,13 @@ $(document).ready(function() {
 	);
 	
 	$('#currentUserLocation').hover(function(){},function(){
-		$('#currentUserLocation').css('display','none');
 		$('#currentUserLocation').animate({ height: '0px' });
-		
+		$('#currentUserLocation').css('display','none');
 	});
 	
+	$(document).hover(function(){
+		//$('#currentUserLocation').css('display','none');
+	});
 });
 
 function panTo(lat, lon) {

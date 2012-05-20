@@ -1,0 +1,57 @@
+<div id="upper_user_information" style="margin-left:77%;width:200px">
+  <table>
+  <tr>
+  <td style="text-align:right">
+  <% cache do %>
+    <%= link_to image_tag(get_medium_avatar_url(user), :id => "upper_profile_avatar"), user_path(user) %>
+  <% end %>
+  
+  </td>
+  <td style="width:100px;color:white; font-size:12px">
+  <% unless current_user == user %>
+    <% if is_following(current_user, user) %>
+      <p>
+        <%= link_to image_tag("unfollow.png", :border=>0),
+          get_following(:user => user), :method => :delete, :id => "remove_followed" %>
+      </p>
+    <% else %>
+      <%if current_user %>
+        <p>
+          <%= link_to image_tag("follow.png", :border=>0),
+            fellowships_path(:follower_id => user), :method => :post %>
+        </p>
+      <%end%>
+    <% end %>
+  <% end %>
+  <% if user_signed_in? %>
+    <%unless user.id == current_user.id %>
+      <%= link_to image_tag("send_pm.png", :border=>0), new_message_path(:receiver => user.id), :id=>"send_message_button" %>
+    <%end%>
+  <% end %>
+
+  <h4>is following</h4>
+  <div id="profile_follows">
+    <% for fellowship in user.fellowships %>
+    <p>
+      <a href="<%= user_path(fellowship.follower.id.to_s) %>" title="<%= fellowship.follower.first_name %>" class="float_left" >
+      <%= image_tag get_thumb_avatar_url(fellowship.follower), :size => "50x50", :alt => fellowship.follower.first_name %></a>
+    </p>
+    <% end %>
+    <div class="clr"></div>
+  </div>
+
+  <h4>is followed by</h4>
+  <div id="profile_followers">
+    <% for user in user.inverse_followers %>
+    <p>
+      <a href="<%= user_path(user.id.to_s) %>" title="<%= user.first_name %>" class="float_left" >
+      <%= image_tag get_thumb_avatar_url(user), :size => "50x50", :alt => user.first_name %></a>
+    </p>
+    <% end %>
+    <div class="clear"></div>
+  <h4><%= user.meal_counter %> Meals</h4>
+  </div>
+  </td>
+  </tr>
+  </table>
+</div>

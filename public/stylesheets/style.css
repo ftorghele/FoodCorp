@@ -88,6 +88,10 @@ p.notice, p.alert {
     float: right;
 }
 
+#user_info_picture{
+	float:none;
+}
+
 .float_left {
     float: left;
 }
@@ -294,15 +298,11 @@ img {
     position:absolute;
     right:20px;
     top:30px;
-    width: 250px;
-    height: 82px;
-    margin: 30px 0 0 0;
 }
 
 #login img {
-    margin: 0 0 30px 10px;
-    width:50px;
-    height:50px;
+    width:20%;
+    height:20%;
 }
 
 #login p, #login p a {
@@ -425,11 +425,14 @@ img {
     margin: 5px 0 0 5px;
 }
 
-#upper_user_information{
-    float: right;
-    width: 100px;
-    min-height: 100%;
-    margin: 5px 0 0 5px;
+// name, messages, edit profile...
+#user_info{ 
+	
+}
+
+#upper_profile_avatar{
+	width: 20%;
+	height: 20%;
 }
 
 #provided_meals {

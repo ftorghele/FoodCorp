@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519115000) do
+ActiveRecord::Schema.define(:version => 20120520102100) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20120519115000) do
     t.string   "city"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "activate",      :default => true
   end
 
   create_table "fellowships", :force => true do |t|

@@ -6,10 +6,12 @@
 
 <!-- <h2><% unless user_signed_in? %>The world‘s most awesome cooking community. <%= link_to 'Take a tour!', tour_path %><% end  %></h2> -->
 
-<table>
-<td>You are in...</td>
-<td><%= image_tag("change.png", :id => 'animatecurrentUserLocationButton') %></td>
-</table>
+<% if current_user %>
+	<table>
+	<td>You are in...</td>
+	<td><%= image_tag("change.png", :id => 'animatecurrentUserLocationButton') %></td>
+	</table>
+<% end %>
 
 <div id="currentUserLocation">
   <p>Save your home position for further visits</p>
@@ -24,10 +26,12 @@
   <% end %>
 </div>
 
-<% if current_user.current_user_location %>
-  <div id="mealfind">Home location: <span id="currentLocation"></span></div>
-<% else %>
-  <div id="mealfind">Current location: <span id="currentLocation"></span></div>
+<% if current_user %>
+	<% if current_user.current_user_location %>
+	  <div id="mealfind">Home location: <span id="currentLocation"></span></div>
+	<% else %>
+	  <div id="mealfind">Current location: <span id="currentLocation"></span></div>
+	<% end %>
 <% end %>
 
 <%= form_tag(ajax_updatemap_path, :remote => true, :id => "address", :name => "address") do %>

@@ -389,6 +389,11 @@ img {
 	display: none;
 }
 
+#current_user_location_submit_button{
+	float: right;
+	margin-right: 50px;
+}
+
 /* ---- MAIN PAGE END ----- */
 
 /* ---- TABS BEG ----- */

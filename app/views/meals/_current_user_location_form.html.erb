@@ -3,6 +3,8 @@
 	<%= l.text_field :street, :placeholder => 'Street' %>
 	<%= l.text_field :street_number, :placeholder => 'No.' %>
 	<%= l.text_field :zip_code, :placeholder => 'Zip Code' %>
-	<%= l.text_field :city, :placeholder => 'City' %>
-	<%= l.submit 'Save' %>
+	<%= l.text_field :city, :placeholder => 'City' %><br />
+	<%= l.label 'when active auto-location is switched off' %>
+	<%= l.check_box :activate %>
+	<%= l.submit 'Save', :id => 'current_user_location_submit_button' %>
 <% end %>

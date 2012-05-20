@@ -3,7 +3,7 @@ $(document).ready(function() {
 		fetchedData = false;
 		calendarData = {};
 		calendarHeight = 0;
-		userhasGotHomeLocations = false;
+		usersHomeLocation = '';
 		
 		getCalendar();
 		
@@ -59,14 +59,14 @@ $(document).ready(function() {
 	markers = [];
 	loc = [];
 	
-	if( $('#current_user_location_street').val() ){ // true if user already entered home location
-		userhasGotHomeLocations = true;
+	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ // true if user already entered home location
 		
 		tmpgeocoder = new GClientGeocoder();
-		var address = "";//"821 Mohawk Street, Columbus OH";
+		var address = "";//"example: 821 Mohawk Street, Columbus OH";
 		address += $('#current_user_location_street_number').val();
 		address += ' ' + $('#current_user_location_street').val();
 		address += ', ' + $('#current_user_location_city').val();
+		usersHomeLocation = address;
 		
 		country = '';
 		region = '';
@@ -81,9 +81,7 @@ $(document).ready(function() {
 						  'longitude': place.Point.coordinates[0],
 						  'draggable': false,
 						  icon: {
-							    image: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png', 
-								shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow',
-								shadowSize: '22, 20'
+							    image: 'http://www.multimediatechnology.at/~fhs33078/Sem4/QPT2b_DinnerCollective/home.png', 
 						  }
 			});
 			
@@ -158,7 +156,7 @@ $(document).ready(function() {
 	// SLOW!
 	// determine if the handset has client side geo location capabilities
         if (navigator.geolocation) {
-			if(!userhasGotHomeLocations)
+			if(!$('#current_user_location_activate').attr('checked'))
 				navigator.geolocation.getCurrentPosition(geo_success, geo_error);
 
             drawMap(loc);
@@ -199,7 +197,8 @@ $(document).ready(function() {
 	geocoder = new GClientGeocoder();
 	
 	// Retrieve location information, pass it to addToMap()
-	if(userhasGotHomeLocations)
+	// when user has got home location and wished to show that at the beginning
+	if($('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked'))
 		geocoder.getLocations(loc.join(), addHomeLocationToMap);
 	else
 		geocoder.getLocations(loc.join(), addToMap);
@@ -393,7 +392,7 @@ function drawMap(env, rails, railsdepth) {
 							  place.Point.coordinates[0]);
 			
 		  $('#map').googleMaps({
-				geocode: loc.join(', '),
+				geocode: usersHomeLocation,
 				markers: markers,
 				depth: depth,
 				controls: {

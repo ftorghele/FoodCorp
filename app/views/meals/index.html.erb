@@ -27,11 +27,18 @@
 </div>
 
 <% if current_user %>
-	<% if current_user.current_user_location %>
-	  <div id="mealfind">Home location: <span id="currentLocation"></span></div>
+    <% if current_user.current_user_location %>
+		<% if current_user.current_user_location.activate %>
+		  <div id="mealfind">Home location: <span id="currentLocation"></span></div>
+		<% else %>
+		  <div id="mealfind">Current location: <span id="currentLocation"></span></div>
+		<% end %>
+		
 	<% else %>
-	  <div id="mealfind">Current location: <span id="currentLocation"></span></div>
+		<div id="mealfind">Current location: <span id="currentLocation"></span></div>
 	<% end %>
+<% else %>
+	<div id="mealfind">Current location: <span id="currentLocation"></span></div>
 <% end %>
 
 <%= form_tag(ajax_updatemap_path, :remote => true, :id => "address", :name => "address") do %>

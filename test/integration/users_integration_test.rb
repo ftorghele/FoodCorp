@@ -6,15 +6,30 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   def create_meal
     fill_in 'meal_title', :with => 'Gulasch'
-    fill_in 'meal_description', :with => 'scharf und mit Knödel'
-    fill_in 'meal_country', :with => 'Austria'
-    fill_in 'meal_city', :with => 'Salzburg'
-    fill_in 'meal_zip_code', :with => '5020'
+    fill_in 'meal_time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
     fill_in 'meal_street', :with => 'Getreidegasse'
     fill_in 'meal_street_number', :with => '3'
+    fill_in 'meal_zip_code', :with => '5020'
+    fill_in 'meal_city', :with => 'Salzburg'
+    fill_in 'meal_country', :with => 'Austria'
+   
     select '3', :from => 'meal_slots'
-    fill_in 'meal_time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
     fill_in 'meal_deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
+	
+	check('eat_in')
+	check('take_away')
+	
+	fill_in 'meal_description', :with => 'scharf und mit Knödel'
+    
+    check('vegetarien')
+    check('organic')
+    check('kosher')
+    check('asian')
+    check('gluten_free')
+    check('lactose_free')
+    check('halal')
+    check('hot')
+    check('veryhot')
 
     page.find('#meal_lat').set('34.00000000')
     page.find('#meal_lon').set('34.00000000')
@@ -260,8 +275,9 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   test "user should be rejected when another user has got same last name" do
-    create_user if User.all.empty?
-    
+    @user = FactoryGirl.create(:user) if User.all.empty?
+    save_and_open_page
+
     visit root_path
     click_link('register')
     fill_in 'First Name:', :with => 'Mr.Test'

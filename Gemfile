@@ -27,6 +27,7 @@ group :test do
 	gem "launchy"
   gem 'sham'
   gem "factory_girl_rails", "~> 3.0"
+  gem "database_cleaner"
 end
 
 group :production do

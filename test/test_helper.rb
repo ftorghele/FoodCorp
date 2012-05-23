@@ -5,6 +5,8 @@ require 'rails/test_help'
 require 'mocha'
 require 'capybara/rails'
 
+DatabaseCleaner.strategy = :truncation
+
 class ActionDispatch::IntegrationTest
  include Capybara::DSL
 

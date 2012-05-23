@@ -5,7 +5,7 @@ class Meal < ActiveRecord::Base
   attr_accessible :title, :description, :time, :deadline, :lon, :lat,
                   :country, :city, :zip_code, :street, :slots, :street_number,
 		          :vegetarien, :organic, :kosher, :asian, :gluten_free, 
-		          :lactose_free, :diabetics, :hot, :veryhot, :halal
+		          :lactose_free, :diabetics, :hot, :veryhot, :halal, :eat_in, :take_away
 
   validates :title, :presence => true
   validates :description, :presence => true

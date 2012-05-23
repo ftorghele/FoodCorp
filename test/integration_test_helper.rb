@@ -1,12 +1,13 @@
 require "test_helper"
 require "capybara/rails"
+include FactoryGirl::Syntax::Methods
 
 module ActionController
   class IntegrationTest
     include Capybara
 
     def sign_in_as(email, password)
-      user = User.create( :password => password,
+      user = create(:user, :password => password,
                           :password_confirmation => password,
                           :email => email,
                           :first_name => "Hans",

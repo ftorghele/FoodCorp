@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520134500) do
+ActiveRecord::Schema.define(:version => 20120522114500) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -91,6 +91,8 @@ ActiveRecord::Schema.define(:version => 20120520134500) do
     t.boolean  "hot",           :default => false
     t.boolean  "veryhot",       :default => false
     t.boolean  "asian",         :default => false
+    t.boolean  "eat_in",        :default => false
+    t.boolean  "take_away",     :default => false
   end
 
   add_index "meals", ["user_id"], :name => "index_meals_on_user_id"
@@ -141,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20120520134500) do
     t.boolean  "use_fb_avatar"
     t.integer  "points",                                  :default => 1
     t.text     "info_field"
-    t.boolean  "mail_notification",                       :default => false
+    t.boolean  "mail_notification",                       :default => true
     t.text     "email_adresse"
     t.boolean  "got_invitation",                          :default => false
     t.integer  "current_user_location_id",                :default => 0

@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20120522114500) do
     t.boolean  "use_fb_avatar"
     t.integer  "points",                                  :default => 1
     t.text     "info_field"
-    t.boolean  "mail_notification",                       :default => true
+    t.boolean  "mail_notification",                       :default => false
     t.text     "email_adresse"
     t.boolean  "got_invitation",                          :default => false
     t.integer  "current_user_location_id",                :default => 0

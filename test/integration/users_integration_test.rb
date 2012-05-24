@@ -16,20 +16,20 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     select '3', :from => 'meal_slots'
     fill_in 'meal_deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
 	
-	check('eat_in')
-	check('take_away')
+	check('meal_eat_in')
+	check('meal_take_away')
 	
 	fill_in 'meal_description', :with => 'scharf und mit Knödel'
     
-    check('vegetarien')
-    check('organic')
-    check('kosher')
-    check('asian')
-    check('gluten_free')
-    check('lactose_free')
-    check('halal')
-    check('hot')
-    check('veryhot')
+    check('meal_vegetarien')
+    check('meal_organic')
+    check('meal_kosher')
+    check('meal_asian')
+    check('meal_gluten_free')
+    check('meal_lactose_free')
+    check('meal_diabetics')
+    check('meal_hot')
+    check('meal_veryhot')
 
     page.find('#meal_lat').set('34.00000000')
     page.find('#meal_lon').set('34.00000000')
@@ -66,7 +66,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "show facebook sign in page" do
-    visit '/'
+    visit "/oauth/authorize/"
     # checking the html structure
     assert page.has_css?('a#fb_sign_in', :count => 1)
     click_on("Login with Facebook") 
@@ -167,9 +167,9 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     create_meal
     click_link('Edit_meal')
 
-    fill_in 'Title', :with => 'Gulasch'
-    fill_in 'Description', :with => 'doch nicht scharf und ohne Knödel'
-    click_on('submit')
+    fill_in 'meal_title', :with => 'Gulasch'
+    fill_in 'meal_description', :with => 'doch nicht scharf und ohne Knödel'
+    click_on('meal_submit')
     check_design ['doch nicht scharf und ohne Knödel', 'Gulasch']
   end
 
@@ -217,7 +217,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     usr_id = User.last.id
     sign_out
 
-    sign_in_as("user2@gmail.com", "123456")
+    sign_in_as("_user2@gmail.com", "654321")
     visit_last_meal
     click_link('Follow')
     visit '/users/'+usr_id.to_s
@@ -259,19 +259,23 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   # Franz Josef Brünner Integration-Test:
   
   test "user should be rejected when another user has got same first name" do
-    create_user if User.all.empty?
     
-    visit root_path
-    click_link('register')
-    fill_in 'First Name:', :with => @user.first_name
-    fill_in 'Last Name:', :with => 'Test'
-    select 'male', :from => 'Gender:'
-    fill_in 'Email', :with => "testuser@test.com"
-    fill_in 'Password', :with => 'geheim'
-    fill_in 'Password Confirmation', :with => 'geheim'
-    click_on('Sign up')
-    
-    page.has_content?('Sign up')
+    @user = FactoryGirl.create(:user) if User.all.empty?
+    save_and_open_page
+	
+	Capybara.using_session("id") do
+      visit root_path
+      click_link('register')
+      fill_in 'user_first_name', :with => @user.first_name
+      fill_in 'user_last_name', :with => @user.last_name
+      select 'male', :from => 'user_gender'
+      fill_in 'user_email', :with => "testuser@test.com"
+      fill_in 'user_password', :with => 'geheim'
+      fill_in 'user_password_confirmation', :with => 'geheim'
+      click_on('user_submit')
+	  
+      page.has_content?('Invalid email or password')
+    end
   end
   
   test "user should be rejected when another user has got same last name" do
@@ -282,15 +286,15 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 	Capybara.using_session("id") do
       visit root_path
       click_link('register')
-      fill_in 'First Name:', :with => 'Mr.Test'
-      fill_in 'Last Name:', :with => @user.last_name
-      select 'male', :from => 'Gender:'
-      fill_in 'Email', :with => "testuser@test.com"
-      fill_in 'Password', :with => 'geheim'
-      fill_in 'Password Confirmation', :with => 'geheim'
-      click_on('Sign up')
-    
-      page.has_content?('Sign up')
+      fill_in 'user_first_name', :with => 'Mr.Test2'
+      fill_in 'user_last_name', :with => @user.last_name
+      select 'male', :from => 'user_gender'
+      fill_in 'user_email', :with => "testuser@test.com"
+      fill_in 'user_password', :with => 'geheim'
+      fill_in 'user_password_confirmation', :with => 'geheim'
+      click_on('user_submit')
+	  
+      page.has_content?('Invalid email or password')
     end
   end
   

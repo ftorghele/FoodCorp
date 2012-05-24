@@ -269,21 +269,17 @@ $(document).ready(function() {
     
 	// animate Current User Location Form
 	
-	$('#animatecurrentUserLocationButton').hover(
+	$('#animatecurrentUserLocationButton').toggle(
 		function(){
 			$('#currentUserLocation').animate({ height: '100px' });
 			$('#currentUserLocation').fadeIn(500);
+		},
+		function(){
+			$('#currentUserLocation').animate({ height: '0px' });
+			$('#currentUserLocation').css('display','none');
 		}
 	);
 	
-	$('#currentUserLocation').hover(function(){},function(){
-		$('#currentUserLocation').animate({ height: '0px' });
-		$('#currentUserLocation').css('display','none');
-	});
-	
-	$(document).hover(function(){
-		//$('#currentUserLocation').css('display','none');
-	});
 });
 
 function panTo(lat, lon) {

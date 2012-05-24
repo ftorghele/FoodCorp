@@ -275,20 +275,23 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   test "user should be rejected when another user has got same last name" do
+    
     @user = FactoryGirl.create(:user) if User.all.empty?
     save_and_open_page
-
-    visit root_path
-    click_link('register')
-    fill_in 'First Name:', :with => 'Mr.Test'
-    fill_in 'Last Name:', :with => @user.last_name
-    select 'male', :from => 'Gender:'
-    fill_in 'Email', :with => "testuser@test.com"
-    fill_in 'Password', :with => 'geheim'
-    fill_in 'Password Confirmation', :with => 'geheim'
-    click_on('Sign up')
+	
+	Capybara.using_session("id") do
+      visit root_path
+      click_link('register')
+      fill_in 'First Name:', :with => 'Mr.Test'
+      fill_in 'Last Name:', :with => @user.last_name
+      select 'male', :from => 'Gender:'
+      fill_in 'Email', :with => "testuser@test.com"
+      fill_in 'Password', :with => 'geheim'
+      fill_in 'Password Confirmation', :with => 'geheim'
+      click_on('Sign up')
     
-    page.has_content?('Sign up')
+      page.has_content?('Sign up')
+    end
   end
   
 end

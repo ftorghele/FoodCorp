@@ -5,7 +5,8 @@ class Meal < ActiveRecord::Base
   attr_accessible :title, :description, :time, :deadline, :lon, :lat,
                   :country, :city, :zip_code, :street, :slots, :street_number,
 		          :vegetarien, :organic, :kosher, :asian, :gluten_free, 
-		          :lactose_free, :diabetics, :hot, :veryhot, :halal, :eat_in, :take_away
+		          :lactose_free, :diabetics, :hot, :veryhot, :halal, :eat_in, 
+		          :take_away, :got_point
 
   validates :title, :presence => true
   validates :description, :presence => true
@@ -21,5 +22,9 @@ class Meal < ActiveRecord::Base
 
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   reverse_geocoded_by :lat, :lon
-
+	
+  
+  def check_deadline
+    created_at.strftime('%d.%m').eql? Time.now.strftime('%d.%m')
+  end
 end

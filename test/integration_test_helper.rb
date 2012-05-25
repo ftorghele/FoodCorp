@@ -1,6 +1,6 @@
 require "test_helper"
 require "capybara/rails"
-include FactoryGirl::Syntax::Methods
+
 
 module ActionController
   class IntegrationTest

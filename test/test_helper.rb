@@ -4,6 +4,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'mocha'
 require 'capybara/rails'
+include FactoryGirl::Syntax::Methods
 
 DatabaseCleaner.strategy = :truncation
 

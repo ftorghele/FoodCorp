@@ -3,6 +3,8 @@ FactoryGirl.define do
     first_name "Mr.Test"
     last_name  "Test"
     gender "male"
-    admin false
+    password "geheim"
+    email "mr.test@test.com"
+    #admin false
   end
 end

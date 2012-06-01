@@ -19,10 +19,10 @@
  </div>
   <% unless params[:date] %>
                 <%= f.label :When? %>
-                <%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+				<%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
         <% else %>
                 <%= f.label :When? %>
-                <%= f. (:time, :order => [:day, :month, :year]) %><br />
+				<%= f.text_field :time, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
 	<% end %>
   <%= f.label :Guests %>
   <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
@@ -45,7 +45,7 @@
 	  <%= f.text_field :country%><br />
 	 </div>
           <%= f.label :When? %>
-          <%= f.date_select (:time, :order => [:day, :month, :year]) %><br />
+		  <%= f.text_field :time, :class => "datepicker", :value => Time.zone.at(@meal.time).to_formatted_s(:db) %><br />
 
 
      	  <%= f.label :Guests %>

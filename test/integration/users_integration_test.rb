@@ -5,32 +5,24 @@ require 'test_integration_helper'
 class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   def create_meal
-    fill_in 'meal_title', :with => 'Gulasch'
-    fill_in 'meal_time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
-    fill_in 'meal_street', :with => 'Getreidegasse'
-    fill_in 'meal_street_number', :with => '3'
-    fill_in 'meal_zip_code', :with => '5020'
-    fill_in 'meal_city', :with => 'Salzburg'
-    fill_in 'meal_country', :with => 'Austria'
+    fill_in 'title', :with => 'Gulasch'
+    fill_in 'time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
+    fill_in 'street', :with => 'Getreidegasse'
+    fill_in 'street_number', :with => '3'
+    fill_in 'zip_code', :with => '5020'
+    fill_in 'city', :with => 'Salzburg'
+    fill_in 'country', :with => 'Austria'
    
     select '3', :from => 'meal_slots'
-    fill_in 'meal_deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
+    fill_in 'deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
 	
-	check('meal_eat_in')
-	check('meal_take_away')
+	check('eat_in')
+	check('take_away')
 	
 	fill_in 'meal_description', :with => 'scharf und mit Knödel'
     
     check('meal_vegetarien')
-    check('meal_organic')
-    check('meal_kosher')
-    check('meal_asian')
-    check('meal_gluten_free')
-    check('meal_lactose_free')
-    check('meal_diabetics')
-    check('meal_hot')
-    check('meal_veryhot')
-
+   
     page.find('#meal_lat').set('34.00000000')
     page.find('#meal_lon').set('34.00000000')
 
@@ -41,8 +33,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   def create_user
     @user = FactoryGirl.create(:user)
-    #@user = User.create(:name => "Mr.Test", :gender => "male", :password => "297ac11fde334e005803e23fe9d3ae227e680fa3db25a93eface675272952e3e17d94219afa84924b9fdb828f91ca6aa7d68ff87cb2c6a21a65c68b7aa851792
-#", :email => "tester@gmail.com" )
   end
   
   def login_user user_number 
@@ -82,7 +72,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     sign_out
   end
 
-  test "be able to create new meal send request for meal and accept request" do
+  test "be able to create new meal" do
 
     sign_in_as("user1@gmail.com", "123456")
 
@@ -95,7 +85,11 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     create_meal
 
     assert page.has_content?('Meal successfully saved!')
-
+  end
+  
+  test "be able to send request for meal" do
+  	
+  	sign_in_as("user1@gmail.com", "123456")
     click_on('Hans Testuser')
     click_on('meals')
     assert page.has_content?('Gulasch')
@@ -119,7 +113,10 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_content?('Meal arrangement was successfully deleted')
     click_on('request_meal')
     sign_out
-
+  end
+  
+  test "should be able to accept a reuqest" do
+    
     login_user "1"
     click_link('cook')
     click_link('meals')
@@ -257,7 +254,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   # Franz Josef Brünner Integration-Test:
-  
+ 
   test "user should be rejected when another user has got same first name" do
     
     @user = FactoryGirl.create(:user) if User.all.empty?
@@ -297,5 +294,5 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
       page.has_content?('Invalid email or password')
     end
   end
-  
+
 end

@@ -6,16 +6,21 @@
   <%= f.text_field :title %><br />
   <br />  
   <%unless @meal.title %>
-  <%= f.label :Where? %>
-  <%= f.text_field :street_number, :value => current_user.street_number %><br />
-  
- <div class="Adress"> <%= f.text_field :street, :value => current_user.street %><br />
+	<% if current_user.current_user_location %>	
+	  <%= f.label :Where? %>
+	  <%= f.text_field :street_number, :value => current_user.street_number %><br />
+	  
+	 <div class="Adress"> 
+	  <%= f.text_field :street, :value => current_user.street %><br />
 
-  <%= f.text_field :zip_code, :value => current_user.zip_code %><br />
+	  <%= f.text_field :zip_code, :value => current_user.zip_code %><br />
 
-  <%= f.text_field :city, :value => current_user.city %><br />
-  
-  <%= f.text_field :country, :value => current_user.country %><br />
+	  <%= f.text_field :city, :value => current_user.city %><br />
+	  
+	  <%= f.text_field :country, :value => current_user.country %><br />
+	<% else %>
+	
+	<% end %>
  </div>
   <% unless params[:date] %>
                 <%= f.label :When? %>

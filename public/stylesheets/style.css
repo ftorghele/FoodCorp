@@ -170,6 +170,11 @@ img {
 	color: #fff;
 }
 
+#tab_new_meal{
+	//width: 50px;
+	//margin-top:-1px;
+	font-size: 35px;
+}
 /* ---- TOPNAV END ----- */
 
 /* ---- TABNAV BEG ----- */

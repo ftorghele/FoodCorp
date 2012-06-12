@@ -20,4 +20,7 @@ module MealsHelper
     array[arg]
   end
   
+  def is_current_user_location_object? obj
+    CurrentUserLocation.class.is_a? obj.class
+  end
 end

@@ -4,24 +4,33 @@
 <%= form_for @meal do |f| %>
   <%= f.label :What_do_you_cook? %>
   <%= f.text_field :title %><br />
-  <br />  
+ 
   <%unless @meal.title %>
-	<% if current_user.current_user_location %>	
-	  <%= f.label :Where? %>
-	  <%= f.text_field :street_number, :value => current_user.street_number %><br />
-	  
-	 <div class="Adress"> 
-	  <%= f.text_field :street, :value => current_user.street %><br />
+    <% if current_user.current_user_location %>
+    
+		<%= hidden_field_tag "current_user_locations", "y" %>
+		<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
 
-	  <%= f.text_field :zip_code, :value => current_user.zip_code %><br />
+		<div class="Adress">
+			<%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
+			<%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
+			<%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
+			<%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
+		</div>
 
-	  <%= f.text_field :city, :value => current_user.city %><br />
-	  
-	  <%= f.text_field :country, :value => current_user.country %><br />
 	<% else %>
-	
+		<%= hidden_field_tag "current_user_locations", "n" %>
+		<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+
+		<div class="Adress">
+			<%= f.text_field :street, :placeholder => "Street" %><br />
+			<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+			<%= f.text_field :city, :placeholder => "City" %><br />
+			<%= f.text_field :country, :placeholder => "Country" %><br />
+		</div>
+
 	<% end %>
- </div>
+	
   <% unless params[:date] %>
                 <%= f.label :When? %>
 				<%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />

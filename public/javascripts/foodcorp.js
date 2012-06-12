@@ -67,7 +67,15 @@ $(document).ready(function() {
 	markers = [];
 	loc = [];
 	
-	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ // true if user already entered home location
+	// true if user already entered home location
+	if($("#current_user_locations").val() == "y"){
+		// hier letzer stand location aus daten funktioniert noch nicht
+		loc = [$('#meal_country').val(),
+			   $('#meal_city').val(),
+			   $('#meal_street').val()];
+	}
+	
+	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ 
 		
 		tmpgeocoder = new GClientGeocoder();
 		var address = "";//"example: 821 Mohawk Street, Columbus OH";
@@ -105,7 +113,8 @@ $(document).ready(function() {
 		
 		
 	}
-	else{
+	
+	if( $("#current_user_locations").val() == "y" || !$('#current_user_location_activate').attr('checked') ){
 	    $('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
 		loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
 	}
@@ -128,7 +137,7 @@ $(document).ready(function() {
           loc[pos] = $(this).val();
 		  		geocoder.getLocations(loc.join(', '), addToMap);
       }
-  });
+	});
 
 	// Validate inputs for new meal
 	$('form.new_meal, form.edit_meal').submit(function() {
@@ -140,7 +149,7 @@ $(document).ready(function() {
 
                 return true;
 	});
-
+	
         //fraenk
         // get / set new position
 	$('#searchSubmit').click(function() {
@@ -166,8 +175,8 @@ $(document).ready(function() {
         if (navigator.geolocation) {
 			if(!$('#current_user_location_activate').attr('checked'))
 				navigator.geolocation.getCurrentPosition(geo_success, geo_error);
-
-            drawMap(loc);
+			
+			drawMap(loc);
         } else {
             drawMap(loc);
         }
@@ -290,6 +299,31 @@ $(document).ready(function() {
 	
 });
 
+function getAddress(latlng) {
+	
+    var lg = new GLatLng(latlng.lat(), latlng.lng());
+    _tmpgeocoder = new GClientGeocoder();
+    
+    _tmpgeocoder.getLocations(lg, function(response){
+			place = response.Placemark[0];
+			console.log(place.AddressDetails);
+			
+			$("#meal_country").val(place.AddressDetails.Country.CountryName);
+			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined && place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality != undefined ){
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName);
+				$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+				
+				tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+				
+				end = tmp_str.indexOf(" ");
+				$("#meal_street_number").val(tmp_str.substr(0, end));
+				$("#meal_street").val(tmp_str.substr(end, tmp_str.length-1));			
+			}
+	});
+      
+}
+
 function panTo(lat, lon) {
 	point = GLatLng.fromUrlValue(lat+', '+lon);
 	//newLoc = $.googleMaps.gMap.fromLatLngToContainerPixel(new GLatLng(lat, lon));
@@ -323,8 +357,22 @@ function drawMap(env, rails, railsdepth) {
 							control: 'GSmallZoomControl'
 						}
 					}
-				});
-			}
+		});
+		
+		position = $.googleMaps.marker[0];
+		
+		if($("#current_user_locations").val() == "y" && position && marker){
+			//console.log(position);
+			var _map = new GMap2(document.getElementById("map"));
+			_map.addControl(new GSmallZoomControl());
+			_map.addControl(new GMapTypeControl());
+			var center = new GLatLng(marker[0].latitude, marker[0].longitude);
+			_map.setCenter(center, 13);
+			var _marker = new GMarker(center, {draggable: true});
+			_map.addOverlay(_marker);
+			GEvent.addListener(_marker, "dragend", getAddress);
+		}
+}
 
         // Grabs Locations for Meals, output them as Markers on the map
 	function get_markers() {
@@ -342,7 +390,8 @@ function drawMap(env, rails, railsdepth) {
 							icon: {
 							      shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow',
 							      shadowSize: '22, 20'
-								}
+								},
+						   'dragend' : 'getAddress'	
 						});
 		})
 		
@@ -411,5 +460,6 @@ function drawMap(env, rails, railsdepth) {
 						}
 					}
 				});
+			
 	}
 	

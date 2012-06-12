@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120525140400) do
+ActiveRecord::Schema.define(:version => 20120612175000) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120525140400) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "activate",      :default => true
+    t.text     "country"
   end
 
   create_table "fellowships", :force => true do |t|
@@ -144,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20120525140400) do
     t.boolean  "use_fb_avatar"
     t.integer  "points",                                  :default => 1
     t.text     "info_field"
-    t.boolean  "mail_notification",                       :default => true
+    t.boolean  "mail_notification",                       :default => false
     t.text     "email_adresse"
     t.boolean  "got_invitation",                          :default => false
     t.integer  "current_user_location_id",                :default => 0

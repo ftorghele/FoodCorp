@@ -8,10 +8,18 @@ $(document).ready(function() {
 		getCalendar();
 		
 		$('#calendar').hoverIntent(function(){
-					getCalendar();
-					$('#calendar_container').fadeIn(500);
-				}, function() {
-					$('#calendar_container').fadeOut(300);
+			getCalendar();
+			$('#calendar_container').animate({
+				opacity: 1,
+				height: 'toggle'
+				
+			}, 3000, function() {
+				
+			});
+			
+			}, function() {
+			
+			$('#calendar_container').fadeOut(300);
 		});
 		
 		$('img.hoverMap').hover(function() {
@@ -29,7 +37,7 @@ $(document).ready(function() {
 		function getCalendar() {
 			fetchedData = true;
 			$.ajax({url:'/ajax/calendar', success:function(data) {
-														$('#calendar_container').html(data);
+				$('#calendar_container').html(data);
 			}});
 			return calendarData;
 		}

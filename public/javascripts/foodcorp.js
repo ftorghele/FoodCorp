@@ -67,14 +67,7 @@ $(document).ready(function() {
 	markers = [];
 	loc = [];
 	
-	// true if user already entered home location
-	if($("#current_user_locations").val() == "y"){
-		// hier letzer stand location aus daten funktioniert noch nicht
-		loc = [$('#meal_country').val(),
-			   $('#meal_city').val(),
-			   $('#meal_street').val()];
-	}
-	
+	// true if user already entered home location (in homepage)
 	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ 
 		
 		tmpgeocoder = new GClientGeocoder();
@@ -299,7 +292,7 @@ $(document).ready(function() {
 	
 });
 
-function getAddress(latlng) {
+function updateMealForm(latlng) {
 	
     var lg = new GLatLng(latlng.lat(), latlng.lng());
     _tmpgeocoder = new GClientGeocoder();
@@ -310,15 +303,51 @@ function getAddress(latlng) {
 			
 			$("#meal_country").val(place.AddressDetails.Country.CountryName);
 			
-			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined && place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality != undefined ){
-				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.SubAdministrativeAreaName);
-				$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
-				
-				tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
-				
-				end = tmp_str.indexOf(" ");
-				$("#meal_street_number").val(tmp_str.substr(0, end));
-				$("#meal_street").val(tmp_str.substr(end, tmp_str.length-1));			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined )
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.LocalityName);
+			else
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.Locality.LocalityName);
+
+			tmp_str = "";
+			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined ){
+				if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality != undefined ){
+					$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+					tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+					
+					end = tmp_str.indexOf(" ");
+					$("#meal_street_number").val(tmp_str.substr(0, end));
+					$("#meal_street").val(tmp_str.substr(end, tmp_str.length-1));
+				}
+				else{
+					$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.PostalCode.PostalCodeNumber);
+					tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+					
+					end = tmp_str.indexOf(" ");
+					$("#meal_street").val(tmp_str.substr(0, end));
+					$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+				}
+			}
+			else{
+					if( place.AddressDetails.Country.AdministrativeArea.Locality.PostalCode != undefined ){
+						$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber);
+						
+						tmp_str = place.AddressDetails.Country.AdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+					
+						end = tmp_str.indexOf(" ");
+						$("#meal_street").val(tmp_str.substr(0, end));
+						$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+					}
+					else{
+						$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+						
+						tmp_str = place.AddressDetails.Country.AdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+					
+						end = tmp_str.indexOf(" ");
+						$("#meal_street").val(tmp_str.substr(0, end));
+						$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+					}
+					
 			}
 	});
       
@@ -361,16 +390,31 @@ function drawMap(env, rails, railsdepth) {
 		
 		position = $.googleMaps.marker[0];
 		
+		// true when user has got current_user_location in new meal and edit meal category
 		if($("#current_user_locations").val() == "y" && position && marker){
 			//console.log(position);
-			var _map = new GMap2(document.getElementById("map"));
-			_map.addControl(new GSmallZoomControl());
-			_map.addControl(new GMapTypeControl());
-			var center = new GLatLng(marker[0].latitude, marker[0].longitude);
-			_map.setCenter(center, 13);
-			var _marker = new GMarker(center, {draggable: true});
-			_map.addOverlay(_marker);
-			GEvent.addListener(_marker, "dragend", getAddress);
+		    var adresse = "";
+		    adresse =  $('#meal_street').val(),
+			adresse += ", " + $('#meal_street_number').val(),
+			adresse += ", " + $('#meal_zip_code').val();
+			adresse += ", " + $("#meal_city").val();
+			adresse += ", " + $("#meal_country").val();
+			
+			_tmpgeocoder = new GClientGeocoder();
+    
+			_tmpgeocoder.getLocations(adresse, function(response){
+				place = response.Placemark[0];
+				//console.log(place);
+				
+				var _map = new GMap2(document.getElementById("map"));
+				_map.addControl(new GSmallZoomControl());
+				_map.addControl(new GMapTypeControl());
+				var center = new GLatLng(place.Point.coordinates[1], place.Point.coordinates[0]);
+				_map.setCenter(center, 17);
+				var _marker = new GMarker(center, {draggable: true});
+				_map.addOverlay(_marker);
+				GEvent.addListener(_marker, "dragend", updateMealForm);
+			});
 		}
 }
 

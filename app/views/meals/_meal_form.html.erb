@@ -6,66 +6,101 @@
   <%= f.text_field :title %><br />
  
   <%unless @meal.title %>
-    <% if current_user.current_user_location %>
-    
-		<%= hidden_field_tag "current_user_locations", "y" %>
-		<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
+		<% if current_user.current_user_location %>
+			<% if current_user.current_user_location.activate %>
+				<%= hidden_field_tag "current_user_locations", "y" %>
+				<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
 
-		<div class="Adress">
-			<%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
-			<%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
-			<%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
-			<%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
-		</div>
+				<div class="Adress">
+					<%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
+					<%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
+					<%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
+					<%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
+				</div>
+			<% else %>
+				<%= hidden_field_tag "current_user_locations", "n" %>
+				<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
 
-	<% else %>
-		<%= hidden_field_tag "current_user_locations", "n" %>
-		<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+				<div class="Adress">
+					<%= f.text_field :street, :placeholder => "Street" %><br />
+					<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+					<%= f.text_field :city, :placeholder => "City" %><br />
+					<%= f.text_field :country, :placeholder => "Country" %><br />
+				</div>
+			<% end %>
+		<% else %>
+			<%= hidden_field_tag "current_user_locations", "n" %>
+			<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
 
-		<div class="Adress">
-			<%= f.text_field :street, :placeholder => "Street" %><br />
-			<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
-			<%= f.text_field :city, :placeholder => "City" %><br />
-			<%= f.text_field :country, :placeholder => "Country" %><br />
-		</div>
-
-	<% end %>
-	
-  <% unless params[:date] %>
-                <%= f.label :When? %>
-				<%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
-        <% else %>
-                <%= f.label :When? %>
-				<%= f.text_field :time, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
-	<% end %>
-  <%= f.label :Guests %>
-  <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
-	<% unless params[:date] %>
-		<%= f.label :Guests_need_to_apply_until %>
-		<%= f.text_field :deadline, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
-	<% else %>
-		<%= f.label :deadline %>
-		<%= f.text_field :deadline, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
-			
-	<%end%>
+			<div class="Adress">
+				<%= f.text_field :street, :placeholder => "Street" %><br />
+				<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+				<%= f.text_field :city, :placeholder => "City" %><br />
+				<%= f.text_field :country, :placeholder => "Country" %><br />
+			</div>
+		<% end %>
+		
+		<% unless params[:date] %>
+			<%= f.label :When? %>
+			<%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
+		<% else %>
+			<%= f.label :When? %>
+			<%= f.text_field :time, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
+		<% end %>
+		
+			<%= f.label :Guests %>
+			<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
+		<% unless params[:date] %>
+			<%= f.label :Guests_need_to_apply_until %>
+			<%= f.text_field :deadline, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
+		<% else %>
+			<%= f.label :deadline %>
+			<%= f.text_field :deadline, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
+				
+		<%end%>
   <%else%>
-	  <%= f.label :Where %>
-	  <%= f.text_field :street %><br />
-	 
-	 <div class="Adress">
-	  <%= f.text_field :street_number%><br />
-	  <%= f.text_field :zip_code  %><br />
-	  <%= f.text_field :city %><br /> 
-	  <%= f.text_field :country%><br />
-	 </div>
-          <%= f.label :When? %>
-		  <%= f.text_field :time, :class => "datepicker", :value => Time.zone.at(@meal.time).to_formatted_s(:db) %><br />
+		<% if current_user.current_user_location %>
+			<% if current_user.current_user_location.activate %>
+				<%= hidden_field_tag "current_user_locations", "y" %>
+				<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
+
+				<div class="Adress">
+					<%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
+					<%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
+					<%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
+					<%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
+				</div>
+			<% else %>
+				<%= hidden_field_tag "current_user_locations", "n" %>
+				<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+
+				<div class="Adress">
+					<%= f.text_field :street, :placeholder => "Street" %><br />
+					<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+					<%= f.text_field :city, :placeholder => "City" %><br />
+					<%= f.text_field :country, :placeholder => "Country" %><br />
+				</div>
+			<% end %>
+		<% else %>
+			<%= hidden_field_tag "current_user_locations", "n" %>
+			<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+
+			<div class="Adress">
+				<%= f.text_field :street, :placeholder => "Street" %><br />
+				<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+				<%= f.text_field :city, :placeholder => "City" %><br />
+				<%= f.text_field :country, :placeholder => "Country" %><br />
+			</div>
+		<% end %>
+		
+		<%= f.label :When? %>
+		<%= f.text_field :time, :class => "datepicker", :value => Time.zone.at(@meal.time).to_formatted_s(:db) %><br />
 
 
-     	  <%= f.label :Guests %>
-	  <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
-	  <%= f.label :Guests_need_to_apply_until %>
-	  <%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
+		<%= f.label :Guests %>
+		<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
+		<%= f.label :Guests_need_to_apply_until %>
+		<%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
 <% end %>
   <br />
 

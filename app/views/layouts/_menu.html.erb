@@ -1,6 +1,6 @@
 <div id="tabnav">
   <ul>
-    <li><%= link_to "meals", user_path(user.id), :class => is_active?("show") %></li>
+    <li><%= link_to "meals", user_path(user.id), :class => is_active?("show"), :id => "meals/" << current_user.id.to_s %></li>
     <% if current_user %>
       <% if current_user.id == user.id %>
         <li><%= link_to "+", new_meal_path, :class => is_active?("new"), :id => "tab_new_meal" %></li>

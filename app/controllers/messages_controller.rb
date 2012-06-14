@@ -34,6 +34,7 @@ class MessagesController < ApplicationController
 
   def create
     current_user.send_message(@receiver, params[:topic], params[:body])
+    MealMailer.notification_email(current_user, @receiver, params[:body]).deliver
     redirect_to user_path(@receiver.id)
   end
 

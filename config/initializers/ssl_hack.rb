@@ -46,10 +46,10 @@ class Adapter
     raise Error::ConnectionFailed, $!
   end
 
-  http_response.each_header do |key, value|
-    response_headers(env)[key] = value
-  end
-  env.update :status => http_response.code.to_i, :body => http_response.body
+  #http_response.each_header do |key, value|
+  #  response_headers(env)[key] = value
+  #end
+  #env.update :status => http_response.code.to_i, :body => http_response.body
 
   @app.call env
 end

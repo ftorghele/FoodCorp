@@ -75,7 +75,7 @@ class MealArrangementsController < ApplicationController
   private
 
   def check_points
-    if current_user.points > 0
+    if current_user.points <= 0
       redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.point_fail')
     end
   end

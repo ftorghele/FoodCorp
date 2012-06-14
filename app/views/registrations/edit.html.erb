@@ -56,13 +56,16 @@
               <%= f.check_box :use_fb_avatar %></p>
           <% end %>
           <p><%= f.label :avatar %><br />
-            <%= f.file_field :avatar %></p>
-            
+          <%= f.file_field :avatar %></p>
+          <br />
+           
           <% if current_user %>
 			<%= form_for current_user, :method => :update do |u| %>
 			  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
-			  <%= label_tag "Receive E-Mail Notification?" %>
-			  <%= check_box_tag 'receive_mail', current_user.mail_notification, current_user.mail_notification  %>
+			  <%= u.label "Receive Mail Notifications:" %>
+			  <%= u.radio_button :mail_notification, true %> <br />
+			  <%= u.label "Don't Receive Mail Notifications:" %>
+			  <%= u.radio_button :mail_notification, false %>
 			  <p><%= image_submit_tag "update_mail_notification.png" %></p>
 			<% end %>
           <% end %>

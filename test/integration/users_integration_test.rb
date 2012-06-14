@@ -16,11 +16,11 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     select '3', :from => 'meal_slots'
     fill_in 'meal_deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
 	
-	check('meal_eat_in')
-	check('meal_take_away')
-	
-	fill_in 'meal_description', :with => 'scharf und mit Knödel'
-    
+		check('meal_eat_in')
+		check('meal_take_away')
+		
+		fill_in 'meal_description', :with => 'scharf und mit Knödel'
+			
     check('meal_vegetarien')
    
     page.find('#meal_lat').set('34.00000000')
@@ -38,15 +38,17 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
   
   def login_user user_number
-    user = User.where(:id => user_number)
-    user = sign_in_as(User.first.first_name << "X", User.first.last_name << "X", "x." << User.first.email, "123456") if user.empty?
-	
-	visit root_path
-	puts page.body
-    click_on('Login')
-    fill_in 'user_email', :with => user.email
-    fill_in 'user_password', :with => user.password
-    click_on('Sign in')
+    user = User.where(:id => user_number).first
+    unless user
+      user = sign_in_as(User.first.first_name << "X", User.first.last_name << "X", "x." << User.first.email, "123456") 
+		else
+			visit root_path
+			click_on('Login')
+			fill_in 'user_email', :with => user.email
+			fill_in 'user_password', :with => user.password
+			click_on('Sign in')
+    end
+    user
   end
 
   def check_design args
@@ -144,26 +146,30 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
   test "be able to delete meal request" do
 
-    sign_in_as("Mr.Test5", "test5", "user5@gmail.com", "123456")
+    meal_creator = sign_in_as("Mr.Test5", "test5", "user5@gmail.com", "123456")
 
     check_design ["You are in", "Radius:" , "Date:"]
-
     click_link('cook')
-  
     create_meal
     sign_out
 
-    sign_in_as("Mr.Test6", "test6", "user6@gmail.com", "123456")
+    meal_eater = sign_in_as("Mr.Test6", "test6", "user6@gmail.com", "123456")
     visit_last_meal
     click_on('request_meal')
     sign_out
 
-    login_user 1
-    click_link('Hans Testuser')
+    visit root_path
+	  click_link 'Login'
+	  fill_in 'user_email', :with => meal_creator.email
+    fill_in 'user_password', :with => meal_creator.password
+    click_on('user_submit')
+      
+    click_link(meal_creator.first_name << " " << meal_creator.last_name)
+    puts page.body
     click_on('Delete')
     sign_out
 
-    login_user 2
+    login_user meal_eater
     click_on('personal Messages')
     assert page.has_content?('rejected')
     sign_out   
@@ -276,8 +282,6 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ["Hallo mein Name ist Hansilein"]
   end
   
-  # Franz Josef Brünner Integration-Test:
- 
   test "user should be rejected when another user has got same first name" do
     
     @user = FactoryGirl.create(:user) if User.all.empty?

@@ -1,3 +1,6 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
 en:
   activerecord:
     attributes:
@@ -29,18 +32,7 @@ en:
     outbox: "Outbox"
     new: "New PM"
     
-  user:
-    invitaion_mail_success: "Invitation mail sent successfully"
-    invitaion_mail_fail: "Invitation mail failed"
-    get_mail_success: "Now you get e-mails from other users too"
-    get_mail_fail: "no e-mails are sent to you"
-     
-  current_user_location:
-    create_success: "Your current locations were saved successfully!"
-    create_fail: "failed to save your current locations, fill out all fields please!"
-    update_success: "Your current locations were updated successfully!"
-    update_fail: "failed to updated your current locations, fill out all fields please!"
-     
+    
   meal:
     time_fail: "Time not valid!"
     deadline_fail: "Deadline not valid!"
@@ -57,7 +49,12 @@ en:
     acceptance_given_fail: "Meal arrangement already accepted - Can't be deleted!"
     point_fail: "You don't have enough credits to make a request!"
 
-    
+  current_user_location:
+     create_success: "Your current locations were saved successfully!"
+     create_fail: "failed to save your current locations, fill out all fields please!"
+     update_success: "Your current locations were updated successfully!"
+     update_fail: "failed to updated your current locations, fill out all fields please!"
+
   message:
     reject: "Meal arrangement (%{title}) rejected"
     sorry: "sorry..."
@@ -67,7 +64,7 @@ en:
   fellowships:
     create_success: "following..."
     create_fail: "Unable to follow"
-    destroy_success: "Removed fellowship"
+    destroy_success:  "Removed fellowship"
     destroy_fail: "Unable to remove fellowship"
     
   meal_comment:

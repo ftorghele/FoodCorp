@@ -26,13 +26,13 @@ $(document).ready(function() {
 			$('.display_meal').animate({'height': ''});
 		});
 			
-		function getCalendar() {
+/*		function getCalendar() {
 			fetchedData = true;
 			$.ajax({url:'/ajax/calendar', success:function(data) {
 														$('#calendar_container').html(data);
 			}});
 			return calendarData;
-		}
+		}*/
 
 
     // TOPNAV HANDLING
@@ -44,7 +44,7 @@ $(document).ready(function() {
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);
-	$('p.alert').fadeOut(5000);
+	$('p.alert').fadeOut(10000);
 	
 	// Sign Up Animation
 	$('#signup_form_animate').click(function() {

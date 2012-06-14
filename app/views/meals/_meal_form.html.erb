@@ -7,51 +7,61 @@
   <br />  
   <%unless @meal.title %>
   <%= f.label :Where? %>
-  <%= f.text_field :street_number, :value => current_user.street_number %><br />
+  <%= f.text_field :street, :value => current_user.street, :placeholder => 'Street' %><br />
   
- <div class="Adress"> <%= f.text_field :street, :value => current_user.street %><br />
+ <div class="Adress"> <%= f.text_field :street_number, :value => current_user.street_number, :placeholder => 'No.' %><br />
 
-  <%= f.text_field :zip_code, :value => current_user.zip_code %><br />
+  <%= f.text_field :zip_code, :value => current_user.zip_code, :placeholder => 'zipcode' %><br />
 
-  <%= f.text_field :city, :value => current_user.city %><br />
+  <%= f.text_field :city, :value => current_user.city, :placeholder => 'city' %><br />
   
-  <%= f.text_field :country, :value => current_user.country %><br />
+  <%= f.text_field :country, :value => current_user.country, :placeholder => 'country' %><br />
  </div>
-  <% unless params[:date] %>
+
+ 
+	
+	<% unless params[:date] %>
                 <%= f.label :When? %>
-				<%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %>
+				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+				
         <% else %>
                 <%= f.label :When? %>
-				<%= f.text_field :time, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
 	<% end %>
   <%= f.label :Guests %>
   <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
 	<% unless params[:date] %>
 		<%= f.label :Guests_need_to_apply_until %>
-		<%= f.text_field :deadline, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
+		<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+		<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
 	<% else %>
 		<%= f.label :deadline %>
-		<%= f.text_field :deadline, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
+		<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+		<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
 			
 	<%end%>
   <%else%>
 	  <%= f.label :Where %>
-	  <%= f.text_field :street %><br />
+	  <%= f.text_field :street, :placeholder => 'Street' %><br />
 	 
 	 <div class="Adress">
-	  <%= f.text_field :street_number%><br />
-	  <%= f.text_field :zip_code  %><br />
-	  <%= f.text_field :city %><br /> 
-	  <%= f.text_field :country%><br />
+	  <%= f.text_field :street_number, :placeholder => 'No.' %><br />
+	  <%= f.text_field :zip_code, :placeholder => 'zipcode'  %><br />
+	  <%= f.text_field :city, :placeholder => 'city' %><br /> 
+	  <%= f.text_field :country, :placeholder => 'country' %><br />
 	 </div>
           <%= f.label :When? %>
-		  <%= f.text_field :time, :class => "datepicker", :value => Time.zone.at(@meal.time).to_formatted_s(:db) %><br />
+		  <%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+		  <%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
 
 
      	  <%= f.label :Guests %>
 	  <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
 	  <%= f.label :Guests_need_to_apply_until %>
-	  <%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
+	  <%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+	  <%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
 <% end %>
   <br />
 

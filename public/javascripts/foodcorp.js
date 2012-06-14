@@ -8,10 +8,18 @@ $(document).ready(function() {
 		getCalendar();
 		
 		$('#calendar').hoverIntent(function(){
-					getCalendar();
-					$('#calendar_container').fadeIn(500);
-				}, function() {
-					$('#calendar_container').fadeOut(300);
+			getCalendar();
+			$('#calendar_container').animate({
+				opacity: 1,
+				height: 'toggle'
+				
+			}, 3000, function() {
+				
+			});
+			
+			}, function() {
+			
+			$('#calendar_container').fadeOut(300);
 		});
 		
 		$('img.hoverMap').hover(function() {
@@ -29,7 +37,7 @@ $(document).ready(function() {
 /*		function getCalendar() {
 			fetchedData = true;
 			$.ajax({url:'/ajax/calendar', success:function(data) {
-														$('#calendar_container').html(data);
+				$('#calendar_container').html(data);
 			}});
 			return calendarData;
 		}*/
@@ -59,7 +67,8 @@ $(document).ready(function() {
 	markers = [];
 	loc = [];
 	
-	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ // true if user already entered home location
+	// true if user already entered home location (in homepage)
+	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ 
 		
 		tmpgeocoder = new GClientGeocoder();
 		var address = "";//"example: 821 Mohawk Street, Columbus OH";
@@ -97,7 +106,8 @@ $(document).ready(function() {
 		
 		
 	}
-	else{
+	
+	if( $("#current_user_locations").val() == "y" || !$('#current_user_location_activate').attr('checked') ){
 	    $('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
 		loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
 	}
@@ -120,7 +130,7 @@ $(document).ready(function() {
           loc[pos] = $(this).val();
 		  		geocoder.getLocations(loc.join(', '), addToMap);
       }
-  });
+	});
 
 	// Validate inputs for new meal
 	$('form.new_meal, form.edit_meal').submit(function() {
@@ -132,7 +142,7 @@ $(document).ready(function() {
 
                 return true;
 	});
-
+	
         //fraenk
         // get / set new position
 	$('#searchSubmit').click(function() {
@@ -158,8 +168,8 @@ $(document).ready(function() {
         if (navigator.geolocation) {
 			if(!$('#current_user_location_activate').attr('checked'))
 				navigator.geolocation.getCurrentPosition(geo_success, geo_error);
-
-            drawMap(loc);
+			
+			drawMap(loc);
         } else {
             drawMap(loc);
         }
@@ -282,6 +292,67 @@ $(document).ready(function() {
 	
 });
 
+function updateMealForm(latlng) {
+	
+    var lg = new GLatLng(latlng.lat(), latlng.lng());
+    _tmpgeocoder = new GClientGeocoder();
+    
+    _tmpgeocoder.getLocations(lg, function(response){
+			place = response.Placemark[0];
+			console.log(place.AddressDetails);
+			
+			$("#meal_country").val(place.AddressDetails.Country.CountryName);
+			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined )
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.LocalityName);
+			else
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.Locality.LocalityName);
+
+			tmp_str = "";
+			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined ){
+				if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality != undefined ){
+					$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+					tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+					
+					end = tmp_str.indexOf(" ");
+					$("#meal_street_number").val(tmp_str.substr(0, end));
+					$("#meal_street").val(tmp_str.substr(end, tmp_str.length-1));
+				}
+				else{
+					$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.PostalCode.PostalCodeNumber);
+					tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+					
+					end = tmp_str.indexOf(" ");
+					$("#meal_street").val(tmp_str.substr(0, end));
+					$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+				}
+			}
+			else{
+					if( place.AddressDetails.Country.AdministrativeArea.Locality.PostalCode != undefined ){
+						$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber);
+						
+						tmp_str = place.AddressDetails.Country.AdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+					
+						end = tmp_str.indexOf(" ");
+						$("#meal_street").val(tmp_str.substr(0, end));
+						$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+					}
+					else{
+						$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+						
+						tmp_str = place.AddressDetails.Country.AdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+					
+						end = tmp_str.indexOf(" ");
+						$("#meal_street").val(tmp_str.substr(0, end));
+						$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+					}
+					
+			}
+	});
+      
+}
+
 function panTo(lat, lon) {
 	point = GLatLng.fromUrlValue(lat+', '+lon);
 	//newLoc = $.googleMaps.gMap.fromLatLngToContainerPixel(new GLatLng(lat, lon));
@@ -315,8 +386,37 @@ function drawMap(env, rails, railsdepth) {
 							control: 'GSmallZoomControl'
 						}
 					}
-				});
-			}
+		});
+		
+		position = $.googleMaps.marker[0];
+		
+		// true when user has got current_user_location in new meal and edit meal category
+		if($("#current_user_locations").val() == "y" && position && marker){
+			//console.log(position);
+		    var adresse = "";
+		    adresse =  $('#meal_street').val(),
+			adresse += ", " + $('#meal_street_number').val(),
+			adresse += ", " + $('#meal_zip_code').val();
+			adresse += ", " + $("#meal_city").val();
+			adresse += ", " + $("#meal_country").val();
+			
+			_tmpgeocoder = new GClientGeocoder();
+    
+			_tmpgeocoder.getLocations(adresse, function(response){
+				place = response.Placemark[0];
+				//console.log(place);
+				
+				var _map = new GMap2(document.getElementById("map"));
+				_map.addControl(new GSmallZoomControl());
+				_map.addControl(new GMapTypeControl());
+				var center = new GLatLng(place.Point.coordinates[1], place.Point.coordinates[0]);
+				_map.setCenter(center, 17);
+				var _marker = new GMarker(center, {draggable: true});
+				_map.addOverlay(_marker);
+				GEvent.addListener(_marker, "dragend", updateMealForm);
+			});
+		}
+}
 
         // Grabs Locations for Meals, output them as Markers on the map
 	function get_markers() {
@@ -334,7 +434,8 @@ function drawMap(env, rails, railsdepth) {
 							icon: {
 							      shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow',
 							      shadowSize: '22, 20'
-								}
+								},
+						   'dragend' : 'getAddress'	
 						});
 		})
 		
@@ -403,5 +504,6 @@ function drawMap(env, rails, railsdepth) {
 						}
 					}
 				});
+			
 	}
 	

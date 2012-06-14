@@ -24,7 +24,7 @@ group :test do
   gem 'shoulda'
   gem 'capybara'
   gem 'mocha', :require => false
-	gem "launchy"
+  gem "launchy"
   gem 'sham'
   gem "factory_girl_rails", "~> 3.0"
   gem "database_cleaner"

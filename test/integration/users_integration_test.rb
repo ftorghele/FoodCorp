@@ -5,41 +5,50 @@ require 'test_integration_helper'
 class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   def create_meal
-    fill_in 'title', :with => 'Gulasch'
-    fill_in 'time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
-    fill_in 'street', :with => 'Getreidegasse'
-    fill_in 'street_number', :with => '3'
-    fill_in 'zip_code', :with => '5020'
-    fill_in 'city', :with => 'Salzburg'
-    fill_in 'country', :with => 'Austria'
+    fill_in 'meal_title', :with => 'Gulasch'
+    fill_in 'meal_time', :with => Time.zone.at(Time.now.to_datetime.to_i+1000).to_formatted_s(:db)
+    fill_in 'meal_street', :with => 'Getreidegasse'
+    fill_in 'meal_street_number', :with => '3'
+    fill_in 'meal_zip_code', :with => '5020'
+    fill_in 'meal_city', :with => 'Salzburg'
+    fill_in 'meal_country', :with => 'Austria'
    
     select '3', :from => 'meal_slots'
-    fill_in 'deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
+    fill_in 'meal_deadline', :with => Time.zone.at(Time.now.to_datetime.to_i+100).to_formatted_s(:db)
 	
-	check('eat_in')
-	check('take_away')
-	
-	fill_in 'meal_description', :with => 'scharf und mit Knödel'
-    
+		check('meal_eat_in')
+		check('meal_take_away')
+		
+		fill_in 'meal_description', :with => 'scharf und mit Knödel'
+			
     check('meal_vegetarien')
    
     page.find('#meal_lat').set('34.00000000')
     page.find('#meal_lon').set('34.00000000')
 
     assert_difference("Meal.count") do
-    click_on("meal_submit")
+      click_on("meal_submit")
     end
   end
   
   def create_user
-    @user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:user) if User.all.empty?
+    @user.confirm!
+    @user.save!
   end
   
-  def login_user user_number 
-    click_on('Login')
-    fill_in 'user_email', :with => 'user'+user_number+'@gmail.com'
-    fill_in 'user_password', :with => '123456'
-    click_on('Sign in')
+  def login_user user_number
+    user = User.where(:id => user_number).first
+    unless user
+      user = sign_in_as(User.first.first_name << "X", User.first.last_name << "X", "x." << User.first.email, "123456") 
+		else
+			visit root_path
+			click_on('Login')
+			fill_in 'user_email', :with => user.email
+			fill_in 'user_password', :with => user.password
+			click_on('Sign in')
+    end
+    user
   end
 
   def check_design args
@@ -54,19 +63,24 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     meal = Meal.last
     visit '/meals/'+ meal.id.to_s
   end
-
-  test "show facebook sign in page" do
-    visit "/oauth/authorize/"
-    # checking the html structure
-    assert page.has_css?('a#fb_sign_in', :count => 1)
-    click_on("Login with Facebook") 
-    #assert page.has_content?('Make Together')
+	
+  def createCurrentUserLocation user
+	loc = CurrentUserLocation.new( :street_number => 0, :street => 'Pakerstreet', :zip_code => 1234, :city => "London", :country => "England" )
+    loc.user_id = user.id
+    loc.save
   end
+  
+  test "show facebook sign in page" do
+    visit root_path
+    click_on("fb_sign_in")
     
+    assert_equal true, page.has_content?('Facebook registrieren')
+  end
+  
   test "user should be able to visit his/her profile" do
-    sign_in_as("user1@gmail.com", "123456")
-
-    click_on('Hans Testuser')
+    sign_in_as("Mr.Test1", "test1", "user15@gmail.com", "123456")
+	
+    click_on('Mr.Test1 test1')
     assert page.has_css?('h3', :count => 1)
     
     sign_out
@@ -74,7 +88,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
   test "be able to create new meal" do
 
-    sign_in_as("user1@gmail.com", "123456")
+    sign_in_as("Mr.Test2", "test2", "user16@gmail.com", "123456")
 
     click_on('cook')
     assert page.has_css?('form', :count => 1)
@@ -89,9 +103,10 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   test "be able to send request for meal" do
   	
-  	sign_in_as("user1@gmail.com", "123456")
-    click_on('Hans Testuser')
-    click_on('meals')
+  	sign_in_as("Mr.Test3", "test3", "user3@gmail.com", "123456")
+  	
+    click_on('Mr.Test3 test3')
+    
     assert page.has_content?('Gulasch')
     sign_out
 
@@ -101,7 +116,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     assert page.has_css?('div#map', :count => 1)
 
     #create Meal Arrangement
-    sign_in_as("user2@gmail.com", "123456")
+    sign_in_as("Mr.Test4", "test4", "user4@gmail.com", "123456")
     meal = Meal.last
     visit '/meals/'+ meal.id.to_s
     click_on('request_meal')
@@ -117,13 +132,13 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   test "should be able to accept a reuqest" do
     
-    login_user "1"
+    login_user 1
     click_link('cook')
     click_link('meals')
     click_on('Accept')
     sign_out
 
-    login_user "2"
+    login_user 2
     click_on('personal Messages')
     assert page.has_content?('accepted')
     sign_out
@@ -131,56 +146,70 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 
   test "be able to delete meal request" do
 
-    sign_in_as("user1@gmail.com", "123456")
+    meal_creator = sign_in_as("Mr.Test5", "test5", "user5@gmail.com", "123456")
 
     check_design ["You are in", "Radius:" , "Date:"]
-
     click_link('cook')
-    click_on('new meal')
     create_meal
     sign_out
 
-    sign_in_as("user2@gmail.com", "123456")
+    meal_eater = sign_in_as("Mr.Test6", "test6", "user6@gmail.com", "123456")
     visit_last_meal
     click_on('request_meal')
     sign_out
 
-    login_user "1" 
-    click_link('Hans Testuser')
+    visit root_path
+	  click_link 'Login'
+	  fill_in 'user_email', :with => meal_creator.email
+    fill_in 'user_password', :with => meal_creator.password
+    click_on('user_submit')
+      
+    click_link(meal_creator.first_name << " " << meal_creator.last_name)
+    puts page.body
     click_on('Delete')
     sign_out
 
-    login_user "2"
+    login_user meal_eater
     click_on('personal Messages')
     assert page.has_content?('rejected')
     sign_out   
   end
 
   test "be able to edit meal" do
-    sign_in_as("user1@gmail.com", "123456")
-                   
-    click_on('cook')
-    click_on('new meal')
-    create_meal
-    click_link('Edit_meal')
+    @user = FactoryGirl.create(:user) if User.all.empty?
+    @user.confirm!
+    @user.save!
+      
+	Capybara.using_session("id") do
+	  visit root_path
+	  click_link 'Login'
+	  fill_in 'user_email', :with => @user.email
+      fill_in 'user_password', :with => @user.password
+      click_on('user_submit')
+          
+	  click_on('cook')
+      
+	  create_meal
+	  click_link('Edit_meal')
 
-    fill_in 'meal_title', :with => 'Gulasch'
-    fill_in 'meal_description', :with => 'doch nicht scharf und ohne Knödel'
-    click_on('meal_submit')
-    check_design ['doch nicht scharf und ohne Knödel', 'Gulasch']
+	  fill_in 'meal_title', :with => 'Gulasch'
+	  fill_in 'meal_description', :with => 'doch nicht scharf und ohne Knödel'
+	  click_on('meal_submit')
+	  check_design ['doch nicht scharf und ohne Knödel', 'Gulasch']
+    end
   end
 
   test "be able to create comment" do
-    sign_in_as("user1@gmail.com", "123456")
+    sign_in_as("Mr.Test7", "test7", "user7@gmail.com", "123456")
     click_link('cook')
     create_meal
-
+	
     fill_in 'body', :with => 'Supa woas'
     click_button('comment_submit')
     #check_design ['Supa woas', 'Hans Testuser']
     sign_out
 
-    sign_in_as("user2@gmail.com", "123456")
+    sign_in_as("Mr.Test8", "test8", "user8@gmail.com", "123456")
     visit '/'
 
     visit_last_meal
@@ -190,14 +219,14 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "be able to follow other user" do
-    sign_in_as("user1@gmail.com", "123456")
+    sign_in_as("Mr.Test9", "test9", "user9@gmail.com", "123456")
 
     click_on('cook')
-    click_on('new meal')
+    
     create_meal
     sign_out
 
-    sign_in_as("user2@gmail.com", "123456")
+    sign_in_as("Mr.Test10", "test10", "user10@gmail.com", "123456")
     visit_last_meal
     click_link('Follow')
     check_design ["following..."]
@@ -207,14 +236,14 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
 
   test "be able to send message" do
-    sign_in_as("user1@gmail.com", "123456")
+    sign_in_as("Mr.Test11", "test11", "user11@gmail.com", "123456")
     click_on('cook')
-    click_on('new meal')
+    
     create_meal
     usr_id = User.last.id
     sign_out
 
-    sign_in_as("_user2@gmail.com", "654321")
+    sign_in_as("Mr.Test12", "test12", "_user12@gmail.com", "654321")
     visit_last_meal
     click_link('Follow')
     visit '/users/'+usr_id.to_s
@@ -227,13 +256,13 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ["Hans Testuser's Profil"]
     sign_out
 
-    login_user "1" 
+    login_user 1
     click_link('personal Messages')
     check_design ["Seas Franzeus"]
   end
 
   test "be able to edit his/her profile" do
-    sign_in_as("user1@gmail.com", "123456")
+    sign_in_as("Mr.Test13", "test13", "user13@gmail.com", "123456")
     click_link("edit Profile")
     fill_in 'First Name:', :with => 'Hansilein'
     fill_in 'Last Name:', :with => 'Noname'
@@ -253,20 +282,17 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     check_design ["Hallo mein Name ist Hansilein"]
   end
   
-  # Franz Josef Brünner Integration-Test:
- 
   test "user should be rejected when another user has got same first name" do
     
     @user = FactoryGirl.create(:user) if User.all.empty?
-    save_and_open_page
-	
+    
 	Capybara.using_session("id") do
       visit root_path
       click_link('register')
-      fill_in 'user_first_name', :with => @user.first_name
+      fill_in 'user_first_name', :with => @user.first_name + "1"
       fill_in 'user_last_name', :with => @user.last_name
       select 'male', :from => 'user_gender'
-      fill_in 'user_email', :with => "testuser@test.com"
+      fill_in 'user_email', :with => "testuser13@test.com"
       fill_in 'user_password', :with => 'geheim'
       fill_in 'user_password_confirmation', :with => 'geheim'
       click_on('user_submit')
@@ -278,20 +304,43 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   test "user should be rejected when another user has got same last name" do
     
     @user = FactoryGirl.create(:user) if User.all.empty?
-    save_and_open_page
-	
+    
 	Capybara.using_session("id") do
       visit root_path
       click_link('register')
       fill_in 'user_first_name', :with => 'Mr.Test2'
-      fill_in 'user_last_name', :with => @user.last_name
+      fill_in 'user_last_name', :with => @user.last_name + "2"
       select 'male', :from => 'user_gender'
-      fill_in 'user_email', :with => "testuser@test.com"
+      fill_in 'user_email', :with => "testuser14@test.com"
       fill_in 'user_password', :with => 'geheim'
       fill_in 'user_password_confirmation', :with => 'geheim'
       click_on('user_submit')
 	  
       page.has_content?('Invalid email or password')
+    end
+  end
+  
+  test "current home location of user must be shown in new meal category" do
+    
+    sign_in_as("Mr.Test15", "test14", "user14@gmail.com", "123456")
+
+    createCurrentUserLocation @user
+    
+	Capybara.using_session("id") do
+	  visit root_path
+	  click_link 'Login'
+	  fill_in 'user_email', :with => @user.email
+      fill_in 'user_password', :with => @user.password
+      click_on('user_submit')
+      
+      click_on('cook')
+      
+      assert_equal @user.current_user_location.street, find_field('meal_street').value
+      assert_equal @user.current_user_location.street_number, find_field('meal_street_number').value.to_i
+      assert_equal @user.current_user_location.zip_code, find_field('meal_zip_code').value.to_i
+      assert_equal @user.current_user_location.city, find_field('meal_city').value
+      assert_equal @user.current_user_location.country, find_field('meal_country').value
+      
     end
   end
 

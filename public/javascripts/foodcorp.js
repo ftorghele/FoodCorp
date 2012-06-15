@@ -43,7 +43,7 @@ $(document).ready(function() {
 				}, 1000, function() {});
 			},
 			function(){
-				
+				$('#profile_follows').html("");
 				$('#profile_follows').animate({
 					opacity: 0,
 					height: '0px'
@@ -71,7 +71,7 @@ $(document).ready(function() {
 				}, 1000, function() {});
 			},
 			function(){
-				
+				$('#profile_followers').html("");
 				$('#profile_followers').animate({
 					opacity: 0,
 					height: '0px'

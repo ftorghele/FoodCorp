@@ -67,7 +67,11 @@ class AjaxController < ApplicationController
     end
   end
   
-  def test_page
-	@test = "just a test"
+  def following
+	@user = current_user
+  end
+  
+  def followed
+    @user = current_user
   end
 end

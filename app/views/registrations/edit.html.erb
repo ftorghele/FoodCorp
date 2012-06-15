@@ -59,17 +59,6 @@
           <%= f.file_field :avatar %></p>
           <br />
            
-          <% if current_user %>
-			<%= form_for current_user, :method => :update do |u| %>
-			  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
-			  <%= u.label "Receive Mail Notifications:" %>
-			  <%= u.radio_button :mail_notification, true %> <br />
-			  <%= u.label "Don't Receive Mail Notifications:" %>
-			  <%= u.radio_button :mail_notification, false %>
-			  <p><%= image_submit_tag "update_mail_notification.png" %></p>
-			<% end %>
-          <% end %>
-          
         </div>
         <div class="clr"></div>
         <br>
@@ -93,5 +82,15 @@
     </div>
 
     <p><%= f.submit "Update" %></p>
+  <% end %><br /><br />
+  <% if current_user %>
+	<%= form_for current_user, :method => :update do |u| %>
+	  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
+	  <%= u.label "Receive Mail Notifications:" %>
+	  <%= u.radio_button :mail_notification, true %> <br />
+	  <%= u.label "Don't Receive Mail Notifications:" %>
+	  <%= u.radio_button :mail_notification, false %>
+	  <p><%= image_submit_tag "update_mail_notification.png" %></p>
+	<% end %>
   <% end %>
 </div>

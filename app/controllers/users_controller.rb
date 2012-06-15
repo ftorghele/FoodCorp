@@ -39,6 +39,8 @@ class UsersController < ApplicationController
       else
         redirect_to user_path(current_user.id), :notice => I18n.t('user.invitaion_mail_fail')
       end
+    else # just update user
+	  User.find(:id => current_user.id).update_attributes(params[:user])
     end
   end
   

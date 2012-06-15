@@ -22,23 +22,63 @@ $(document).ready(function() {
 			$('#calendar_container').fadeOut(300);
 		});
 		
-		$('#test_page').hoverIntent(function(){
-			
-			getTestPage();
-			
-			$('#test_page').animate({
-				opacity: 1,
-				height: 'toggle'
-				
-			}, 3000, function() {
-				
-			});
-			
-			}, function() {
-			
-			$('#test_page').fadeOut(300);
+		// ajax in upper_user_information.html.erb
+		// is following
+		$('#following_sensor').hover(function(){
+				$(this).css('cursor','pointer');
+			},
+			function(){
+				$(this).css('cursor','auto');
 		});
 		
+		$('#following_sensor').toggle(function(){
+			
+				$(this).css('cursor', 'progress');
+				getFollowing();
+				$('#profile_follows').fadeIn(300);
+				$('#profile_follows').animate({
+					opacity: 1,
+					height: '+=50px'
+				
+				}, 1000, function() {});
+			},
+			function(){
+				
+				$('#profile_follows').animate({
+					opacity: 0,
+					height: '0px'
+				}, 500, function() {});
+		});
+		
+		// ajax in upper_user_information.html.erb
+		// is followed by
+		$('#followed_sensor').hover(function(){
+				$(this).css('cursor','pointer');
+			},
+			function(){
+				$(this).css('cursor','auto');
+		});
+		
+		$('#followed_sensor').toggle(function(){
+			
+				$(this).css('cursor', 'progress');
+				getFollowedBy();
+				$('#profile_followers').fadeIn(300);
+				$('#profile_followers').animate({
+					opacity: 1,
+					height: '+=50px'
+				
+				}, 1000, function() {});
+			},
+			function(){
+				
+				$('#profile_followers').animate({
+					opacity: 0,
+					height: '0px'
+				}, 500, function() {});
+		});
+		
+		// Map
 		$('img.hoverMap').hover(function() {
 			$('#map').stop().animate({'opacity': 1});
 		}, function() {
@@ -60,13 +100,20 @@ $(document).ready(function() {
 
 		}
 		
-		function getTestPage(){
-			$.ajax({url:'/ajax/test_page', success:function(data) {
-				$('#test_page').html(data);
+		function getFollowing(){
+			$.ajax({url:'/ajax/following', success:function(data) {
+				$('#profile_follows').html(data);
+				$('#following_sensor').css('cursor', 'auto');
 			}});
 		}
-
+		
+		function getFollowedBy(){
+			$.ajax({url:'/ajax/followed', success:function(data) {
+				$('#profile_followers').html(data);
+				$('#followed_sensor').css('cursor', 'auto');
+			}});
 		}
+		
     // TOPNAV HANDLING
     current = document.location.pathname;
     if (current == "/meals/new") $('#topnav_cook').addClass('nav_active');

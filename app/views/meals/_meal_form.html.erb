@@ -41,23 +41,27 @@
 		<% end %>
 		
 		<% unless params[:date] %>
-			<%= f.label :When? %>
-			<%= f.text_field :time, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
-		<% else %>
-			<%= f.label :When? %>
-			<%= f.text_field :time, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
+                <%= f.label :When? %>
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %>
+				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+				
+        <% else %>
+                <%= f.label :When? %>
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
 		<% end %>
 		
 			<%= f.label :Guests %>
 			<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
-		<% unless params[:date] %>
-			<%= f.label :Guests_need_to_apply_until %>
-			<%= f.text_field :deadline, :class => "datepicker", :value => Time.now.to_formatted_s(:db) %><br />
-		<% else %>
-			<%= f.label :deadline %>
-			<%= f.text_field :deadline, :class => "datepicker", :value => 12.hours.since(params[:date].to_time).to_formatted_s(:db) %><br />
-				
-		<%end%>
+			<% unless params[:date] %>
+				<%= f.label :Guests_need_to_apply_until %>
+				<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+				<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
+			<% else %>
+				<%= f.label :deadline %>
+				<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+				<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />	
+			<%end%>
   <%else%>
 		<% if current_user.current_user_location %>
 			<% if current_user.current_user_location.activate %>
@@ -94,13 +98,15 @@
 		<% end %>
 		
 		<%= f.label :When? %>
-		<%= f.text_field :time, :class => "datepicker", :value => Time.zone.at(@meal.time).to_formatted_s(:db) %><br />
+		<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+		<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
 
 
 		<%= f.label :Guests %>
 		<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
 		<%= f.label :Guests_need_to_apply_until %>
-		<%= f.text_field :deadline, :class => "datepicker", :value => Time.zone.at(@meal.deadline).to_formatted_s(:db) %><br />
+		<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+		  <%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
 <% end %>
   <br />
 

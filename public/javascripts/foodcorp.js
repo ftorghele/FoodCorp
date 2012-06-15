@@ -57,6 +57,7 @@ $(document).ready(function() {
 				$('#calendar_container').html(data);
 			}});
 			return calendarData;
+
 		}
 		
 		function getTestPage(){
@@ -65,7 +66,7 @@ $(document).ready(function() {
 			}});
 		}
 
-
+		}
     // TOPNAV HANDLING
     current = document.location.pathname;
     if (current == "/meals/new") $('#topnav_cook').addClass('nav_active');
@@ -75,7 +76,7 @@ $(document).ready(function() {
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);
-	$('p.alert').fadeOut(5000);
+	$('p.alert').fadeOut(10000);
 	
 	// Sign Up Animation
 	$('#signup_form_animate').click(function() {

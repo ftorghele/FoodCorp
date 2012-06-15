@@ -43,7 +43,7 @@
      <% end %>
   </div>
 
-      	<%= l(Time.at( @meal.time), :format => :meal) %><br>
+      	<%= @meal.time.strftime('%a %d.%m.%y') %> - <%= @meal.times.strftime('%H:%M') %><br>
         Description: <%= @meal.description %><br>
         <br>
         <% if current_user %>

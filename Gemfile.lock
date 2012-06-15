@@ -154,7 +154,7 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     rubyzip (0.9.8)
-    selenium-webdriver (2.22.1)
+    selenium-webdriver (2.22.2)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
       libwebsocket (~> 0.1.3)

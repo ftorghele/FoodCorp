@@ -1,7 +1,7 @@
 class MealsController < ApplicationController
 
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
-  before_filter :check_time, :only=> [:create, :update]
+/  before_filter :check_time, :only=> [:create, :update]/
   before_filter :get_meal, :only=> [:edit, :update]
   before_filter :get_user, :only => [:create_current_user_location, :update_current_user_location]
   
@@ -96,14 +96,7 @@ class MealsController < ApplicationController
     end
   end
 
-  def check_time
-    params[:meal][:time] = params[:meal][:time].to_datetime.to_i
-    params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
-
-    if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i || params[:meal][:time] < params[:meal][:deadline])
-      redirect_to :back,  :alert => I18n.t('meal.time_fail')
-    end
-  end
+  
 
   def get_meal
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first

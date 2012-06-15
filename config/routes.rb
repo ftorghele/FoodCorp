@@ -16,7 +16,8 @@ FoodCorp::Application.routes.draw do
   resources :meals
 	match 'create/current_user_location' => 'Meals#create_current_user_location', :as => 'create_current_user_location'
 	match 'update/update_current_user_location' => 'Meals#update_current_user_location', :as => 'update_current_user_location'
- 
+    match 'recipes' => 'Meals#recipes', :as => 'recipes'
+  
   controller :meals do
     match 'meals/create_comment' => :create_comment
   end
@@ -39,6 +40,7 @@ FoodCorp::Application.routes.draw do
      match 'ajax/updatemap' => :update_map
      match 'ajax/following' => :following
      match 'ajax/followed' => :followed
+     match 'ajax/recipe_photo' => :recipe_photo
   end
 
   root :to => "meals#index"

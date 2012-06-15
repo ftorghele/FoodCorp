@@ -74,4 +74,7 @@ class AjaxController < ApplicationController
   def followed
     @user = current_user
   end
+  
+  def recipe_photo
+  end
 end

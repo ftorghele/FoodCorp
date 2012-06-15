@@ -1,7 +1,10 @@
+require 'rss/1.0'
+require 'rss/2.0'
+
 class MealsController < ApplicationController
 
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
-/  before_filter :check_time, :only=> [:create, :update]/
+#  before_filter :check_time, :only=> [:create, :update]
   before_filter :get_meal, :only=> [:edit, :update]
   before_filter :get_user, :only => [:create_current_user_location, :update_current_user_location]
   
@@ -85,6 +88,29 @@ class MealsController < ApplicationController
       redirect_to :back, :notice => I18n.t('current_user_location.update_success')
     else
       redirect_to :back, :notice => I18n.t('current_user_location.update_fail')
+    end
+  end
+  
+  def recipes
+    @recipes_array = []
+    rss_recipes = RSS::Parser.parse('http://www.recipetips.com/cooking-feed/recipes/easy-dinners.xml', false)
+    
+    for i in 0...rss_recipes.items.count do
+      recipe = []
+      
+      recipe << rss_recipes.items[i].title
+      
+      description = rss_recipes.items[i].description
+      num = description.index '.'
+      recipe << description[0..num]
+      
+      photoStart = description.index 'src=\''
+      photoEnd = description.index '\'', (photoStart+6)
+      recipe << description[(photoStart+5)...photoEnd]
+      
+      recipe << rss_recipes.items[i].link.to_s
+      
+      @recipes_array << recipe
     end
   end
   

@@ -7,5 +7,6 @@
       <%end%>
     <%end%>
     <li><%= link_to "info", user_info_path(user.id), :class => is_active?("info") %></li>
+	<li><%= link_to "recipes", recipes_path, :class => is_active?("recipes") %></li>
   </ul>
 </div>

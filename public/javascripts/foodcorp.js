@@ -78,6 +78,18 @@ $(document).ready(function() {
 				}, 500, function() {});
 		});
 		
+		// recipes catagory
+		
+		$('.recipe').hover(function(){
+			recipeId = '#'+ $(this).attr('id');
+			recipePhotoURL = recipeId + " ul li.recipe_photo";
+			photo = $(recipePhotoURL).html();
+			
+			showPhoto(photo, recipeId);
+		},function(){
+			$('#recipe_photo_div').css('display','inline');
+		});
+		
 		// Map
 		$('img.hoverMap').hover(function() {
 			$('#map').stop().animate({'opacity': 1});
@@ -112,6 +124,22 @@ $(document).ready(function() {
 				$('#profile_followers').html(data);
 				$('#followed_sensor').css('cursor', 'auto');
 			}});
+		}
+		
+		function showPhoto(photo, recipeId){
+			
+			img_tag = '<img src="'+photo+'" width="100%" height="100%" style="position:absolute" />'
+			
+			$('#recipe_photo_div').html(img_tag);
+			$('#recipe_photo_div').css('display','inline');
+			
+			$(recipeId).mousemove(function(e){
+				
+				$('#recipe_photo_div').css({
+				   'left':  e.pageX,
+				   'top':   e.pageY
+				});
+			});
 		}
 		
     // TOPNAV HANDLING

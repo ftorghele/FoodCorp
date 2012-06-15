@@ -40,7 +40,6 @@ FoodCorp::Application.routes.draw do
      match 'ajax/updatemap' => :update_map
      match 'ajax/following' => :following
      match 'ajax/followed' => :followed
-     match 'ajax/recipe_photo' => :recipe_photo
   end
 
   root :to => "meals#index"

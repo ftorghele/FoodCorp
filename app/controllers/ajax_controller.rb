@@ -66,4 +66,8 @@ class AjaxController < ApplicationController
       @user_tasks.sort! { |a,b| a[0]["time"] <=> b[0]["time"] }
     end
   end
+  
+  def test_page
+	@test = "just a test"
+  end
 end

@@ -22,6 +22,23 @@ $(document).ready(function() {
 			$('#calendar_container').fadeOut(300);
 		});
 		
+		$('#test_page').hoverIntent(function(){
+			
+			getTestPage();
+			
+			$('#test_page').animate({
+				opacity: 1,
+				height: 'toggle'
+				
+			}, 3000, function() {
+				
+			});
+			
+			}, function() {
+			
+			$('#test_page').fadeOut(300);
+		});
+		
 		$('img.hoverMap').hover(function() {
 			$('#map').stop().animate({'opacity': 1});
 		}, function() {
@@ -40,6 +57,12 @@ $(document).ready(function() {
 				$('#calendar_container').html(data);
 			}});
 			return calendarData;
+		}
+		
+		function getTestPage(){
+			$.ajax({url:'/ajax/test_page', success:function(data) {
+				$('#test_page').html(data);
+			}});
 		}
 
 

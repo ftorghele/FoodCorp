@@ -37,6 +37,7 @@ FoodCorp::Application.routes.draw do
   controller :ajax do
      match 'ajax/calendar' => :calendar
      match 'ajax/updatemap' => :update_map
+     match 'ajax/test_page' => :test_page
   end
 
   root :to => "meals#index"

@@ -1,0 +1,11 @@
+<% if @user.fellowships.empty? %>
+  <p>No Persons following yet</p>
+<% end %>
+
+<% for fellowship in @user.fellowships %>
+	<p>
+	  <a href="<%= user_path(fellowship.follower.id.to_s) %>" title="<%= fellowship.follower.first_name %>" class="float_left" >
+	  <%= image_tag get_thumb_avatar_url(fellowship.follower), :size => "50x50", :alt => fellowship.follower.first_name %></a>
+	</p>
+<% end %>
+<div class="clr"></div>

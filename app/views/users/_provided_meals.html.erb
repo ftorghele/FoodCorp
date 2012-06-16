@@ -2,7 +2,15 @@
   <% meals.each do |meal|%>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
-	
+
+	  <div class="meal_right">
+				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
+				<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
+				<div id="map"></div>
+			</div>
+			<div class="clear"></div>
+	<span class="meal_info_right">		
+      
      <% if meal.vegetarien %>
        <%= image_tag getCategorieImageName(0), :alt => "veggie", :title => "veggie" %>
      <% end %>
@@ -24,50 +32,61 @@
      <% if meal.halal %>
        <%= image_tag getCategorieImageName(6), :alt => "halal", :title => "halal" %>
      <% end %>
-	
-        <span class="float_right space_right">
+     <% if meal.hot %>
+        <%= image_tag getCategorieImageName(7), :alt => "hot", :title => "hot" %>
+     <% end %>
+     <% if meal.veryhot %>
+        <%= image_tag getCategorieImageName(8), :alt => "veryhot", :title => "veryhot" %>
+     <% end %>
+     </span>
+        <span class="float_right space_right space_bottom">
           
           <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
         </span>
       </div>
-      <div class="meal_info"><%= l(Time.at( meal.time), :format => :meal) %>
+      
+      <div class="meal_info"><%= meal.time.to_s %> - <%= meal.times.to_s %><br>
+        <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
-            <br>Accepted Users:<br>
-            <% if meal.meal_arrangements.count > 0 %>
-              <ul>
-                <% meal.meal_arrangements.each do |mealArrangement| %>
-                  <% if mealArrangement.acceptance %>
-                    <li><%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %></li>
-                  <% end %>
-                <% end %>
-              </ul>
-              
-              <p>Selete Person to send invitation to:</p>
-              <% users = User.find(:all, :conditions => ["id != ?", current_user.id]) %>
+			<div id="meal_info_right">
+				<p><%= meal.slots %><b>Guests</b></p>
+				<b>Apply until:</b><br />
+				
+				<%= meal.deadline.to_s %> - <%= meal.deadline_time.to_s %>
+				<br>Accepted Users:<br>
+				<% if meal.meal_arrangements.count > 0 %>
+				  <ul>
+					<% meal.meal_arrangements.each do |mealArrangement| %>
+					  <% if mealArrangement.acceptance %>
+						<li><%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %></li>
+					  <% end %>
+					<% end %>
+				  </ul>
+				<% else %>
+				  <ul><li>none</li></ul>
+				<% end %>
+				<br>Outstanding Meal Requests<br>
+				<%= render 'meal_arrangement_requests', :meal => meal %>
+				<br />
+				<% if meal.eat_in %>
+					<b>Eat in</b>
+				<% end %>
+				<br />
+				<% if meal.take_away %>
+					<b>Take away</b>
+				<% end %>
+		    </div>
 
-			  <%= form_tag current_user, :method => :put do |u| %>
-			    <%= select("users", "user_id", users.collect {|p| [ p.first_name.concat(" ")<<p.last_name, p.id ] }, {:prompt => 'Select Person'}) %>
-			    <%= submit_tag "Send Invitation Mail" %>
-			  <% end %>
-			  
-			  <p>Person that has already got invitation:</p>
-			  <ul>
-			  <% users.each do |user| %>
-			    <% if user.got_invitation %>
-			    <li><%= user.first_name %></li>
-			    <% end %>
-			  <% end %>
-			  </ul>
-			  
-			<% else %>
-              <ul><li>none</li></ul>
-            <% end %>
-            <br>Outstanding Meal Requests:<br>
-            <%= render 'meal_arrangement_requests', :meal => meal %>
-          <% end %>
-        <% end %>
+			<div id="meals_distance_stream" style="display:none">
+						<div class="meal" id="meal_<%= meal.id %>">
+							<input type="hidden" title="lat" value="<%= meal.lat %>" />
+							<input type="hidden" title="lon" value="<%= meal.lon %>" />
+						</div>
+					</div>
       </div>
+      <%end%>
+      <%end%>
     </div>
   <%end%>
 </div>

@@ -170,6 +170,15 @@ img {
 	color: #fff;
 }
 
+#tab_new_meal{
+	//width: 50px;
+	//margin-top:-1px;
+	font-size: 35px;
+}
+
+.recipe{
+	list-style-type:none;
+}
 /* ---- TOPNAV END ----- */
 
 /* ---- TABNAV BEG ----- */
@@ -185,7 +194,7 @@ img {
 
 #tabnav li a {
     display: block;
-    width:208px;
+    width:158px;
     height:32px;
     padding: 15px 0 0 0;
     overflow: hidden;
@@ -201,6 +210,10 @@ img {
 #tabnav li a:hover, #tabnav a.nav_active {
     background-position: 0px -47px;
     color: #333333;
+}
+
+.recipe:hover {
+	background-color: rgb(200, 200, 200);
 }
 
 /* ---- TABNAV END ----- */
@@ -581,4 +594,8 @@ img {
 
 #home_wrapper{
     margin-top:20px;
+}
+
+.Adress{
+margin-left: 135px;
 }

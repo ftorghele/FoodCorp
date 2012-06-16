@@ -3,21 +3,21 @@ FoodCorp::Application.routes.draw do
   resources :comments
 
   resources :meal_arrangements
-    match 'update_meal_arrangement' => 'MealArrangements#update_meal_arrangement', :as => 'update_meal_arrangement'
-    
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }
 
   resources :users do
     match 'info' => :info
-    match 'users/1' => :show
   end
 
   resources :fellowships
+  
   resources :meals
-    match 'create/current_user_location' => 'Meals#create_current_user_location', :as => 'create_current_user_location'
-    match 'update/update_current_user_location' => 'Meals#update_current_user_location', :as => 'update_current_user_location'
-    
+	match 'create/current_user_location' => 'Meals#create_current_user_location', :as => 'create_current_user_location'
+	match 'update/update_current_user_location' => 'Meals#update_current_user_location', :as => 'update_current_user_location'
+    match 'recipes' => 'Meals#recipes', :as => 'recipes'
+  
   controller :meals do
     match 'meals/create_comment' => :create_comment
   end
@@ -38,6 +38,8 @@ FoodCorp::Application.routes.draw do
   controller :ajax do
      match 'ajax/calendar' => :calendar
      match 'ajax/updatemap' => :update_map
+     match 'ajax/following' => :following
+     match 'ajax/followed' => :followed
   end
 
   root :to => "meals#index"

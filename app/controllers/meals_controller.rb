@@ -1,13 +1,16 @@
+require 'rss/1.0'
+require 'rss/2.0'
+
 class MealsController < ApplicationController
 
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
-  before_filter :check_time, :only=> [:create, :update]
+#  before_filter :check_time, :only=> [:create, :update]
   before_filter :get_meal, :only=> [:edit, :update]
   before_filter :get_user, :only => [:create_current_user_location, :update_current_user_location]
   
   def index
    @coords = request.location;
-   @user_meals = Meal.find(:all, :conditions => ["user_id = ?", current_user.id]) if current_user
+   @user_meals = Meal.find(:all, :conditions => ["user_id = ? AND time >=" << Time.now.to_i.to_s, current_user.id]) if current_user
 
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]
@@ -37,10 +40,11 @@ class MealsController < ApplicationController
   def create
     @meal = Meal.new(params[:meal])
     @meal.user_id = current_user.id
-    @meal.user.meal_counter += 1
-    @meal.user.save
     
     if @meal.save
+			@meal.user.meal_counter += 1
+			@meal.user.save
+			
       redirect_to meal_path(@meal.id), :notice => I18n.t('meal.create_success')
     else
       redirect_to new_meal_path,  :alert => I18n.t('meal.create_fail')
@@ -87,6 +91,29 @@ class MealsController < ApplicationController
     end
   end
   
+  def recipes
+    @recipes_array = []
+    rss_recipes = RSS::Parser.parse('http://www.recipetips.com/cooking-feed/recipes/easy-dinners.xml', false)
+    
+    for i in 0...rss_recipes.items.count do
+      recipe = []
+      
+      recipe << rss_recipes.items[i].title
+      
+      description = rss_recipes.items[i].description
+      num = description.index '.'
+      recipe << description[0..num]
+      
+      photoStart = description.index 'src=\''
+      photoEnd = description.index '\'', (photoStart+6)
+      recipe << description[(photoStart+5)...photoEnd]
+      
+      recipe << rss_recipes.items[i].link.to_s
+      
+      @recipes_array << recipe
+    end
+  end
+  
   protected
   def check_login
     unless current_user
@@ -95,14 +122,7 @@ class MealsController < ApplicationController
     end
   end
 
-  def check_time
-    params[:meal][:time] = params[:meal][:time].to_datetime.to_i
-    params[:meal][:deadline] = params[:meal][:deadline].to_datetime.to_i
-
-    if(params[:meal][:time] <= Time.now.to_datetime.to_i || params[:meal][:deadline] <= Time.now.to_datetime.to_i || params[:meal][:time] < params[:meal][:deadline])
-      redirect_to :back,  :alert => I18n.t('meal.time_fail')
-    end
-  end
+  
 
   def get_meal
     @meal = Meal.where(:id => params[:id], :user_id => current_user.id).first

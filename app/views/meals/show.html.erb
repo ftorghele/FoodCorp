@@ -43,12 +43,21 @@
      <% end %>
   </div>
 
-      	<%= l(Time.at( @meal.time), :format => :meal) %><br>
+      	<%= @meal.time.strftime('%a %d.%m.%y') %> - <%= @meal.times.strftime('%H:%M') %><br>
         Description: <%= @meal.description %><br>
         <br>
         <% if current_user %>
         	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
         		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
+        		<% if @meal.eat_in %>
+					<b>Eat in</b>
+				<% end %>
+				<br />
+				<% if @meal.take_away %>
+					<b>Take away</b>
+				<% end %>
+				<p><%= @meal.slots %><b>Guests</b></p>
+			<br />
        		<div id="loc">
 					<div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
           <div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>

@@ -8,12 +8,89 @@ $(document).ready(function() {
 		getCalendar();
 		
 		$('#calendar').hoverIntent(function(){
-					getCalendar();
-					$('#calendar_container').fadeIn(500);
-				}, function() {
-					$('#calendar_container').fadeOut(300);
+			getCalendar();
+			$('#calendar_container').animate({
+				opacity: 1,
+				height: 'toggle'
+				
+			}, 3000, function() {
+				
+			});
+			
+			}, function() {
+			
+			$('#calendar_container').fadeOut(300);
 		});
 		
+		// ajax in upper_user_information.html.erb
+		// is following
+		$('#following_sensor').hover(function(){
+				$(this).css('cursor','pointer');
+			},
+			function(){
+				$(this).css('cursor','auto');
+		});
+		
+		$('#following_sensor').toggle(function(){
+			
+				$(this).css('cursor', 'progress');
+				getFollowing();
+				$('#profile_follows').fadeIn(300);
+				$('#profile_follows').animate({
+					opacity: 1,
+					height: '+=50px'
+				
+				}, 1000, function() {});
+			},
+			function(){
+				$('#profile_follows').html("");
+				$('#profile_follows').animate({
+					opacity: 0,
+					height: '0px'
+				}, 500, function() {});
+		});
+		
+		// ajax in upper_user_information.html.erb
+		// is followed by
+		$('#followed_sensor').hover(function(){
+				$(this).css('cursor','pointer');
+			},
+			function(){
+				$(this).css('cursor','auto');
+		});
+		
+		$('#followed_sensor').toggle(function(){
+			
+				$(this).css('cursor', 'progress');
+				getFollowedBy();
+				$('#profile_followers').fadeIn(300);
+				$('#profile_followers').animate({
+					opacity: 1,
+					height: '+=50px'
+				
+				}, 1000, function() {});
+			},
+			function(){
+				$('#profile_followers').html("");
+				$('#profile_followers').animate({
+					opacity: 0,
+					height: '0px'
+				}, 500, function() {});
+		});
+		
+		// recipes catagory
+		
+		$('.recipe').hover(function(){
+			recipeId = '#'+ $(this).attr('id');
+			recipePhotoURL = recipeId + " ul li.recipe_photo";
+			photo = $(recipePhotoURL).html();
+			
+			showPhoto(photo, recipeId);
+		},function(){
+			$('#recipe_photo_div').css('display','none');
+		});
+		
+		// Map
 		$('img.hoverMap').hover(function() {
 			$('#map').stop().animate({'opacity': 1});
 		}, function() {
@@ -29,12 +106,47 @@ $(document).ready(function() {
 		function getCalendar() {
 			fetchedData = true;
 			$.ajax({url:'/ajax/calendar', success:function(data) {
-														$('#calendar_container').html(data);
+				$('#calendar_container').html(data);
 			}});
 			return calendarData;
+
 		}
+		
+		function getFollowing(){
+			$.ajax({url:'/ajax/following', success:function(data) {
+				$('#profile_follows').html(data);
+				$('#following_sensor').css('cursor', 'auto');
+			}});
+		}
+		
+		function getFollowedBy(){
+			$.ajax({url:'/ajax/followed', success:function(data) {
+				$('#profile_followers').html(data);
+				$('#followed_sensor').css('cursor', 'auto');
+			}});
+		}
+		
+		function showPhoto(photoURL, recipeId){
+			
+			$("<img />").attr('src', photoURL).load(function() {
+				if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
+					alert('broken image!');
+				} else {
+					$('#recipe_photo_div').html(this);
+					$('#recipe_photo_div').css('display','inline');
+					
+					$(recipeId).mousemove(function(e){
+						
+						$('#recipe_photo_div').css({
+						   'left':  (e.pageX+5),
+						   'top':   (e.pageY+5)
+						});
+					});
+				}
+			});
 
-
+		}
+		
     // TOPNAV HANDLING
     current = document.location.pathname;
     if (current == "/meals/new") $('#topnav_cook').addClass('nav_active');
@@ -44,7 +156,7 @@ $(document).ready(function() {
 
 	// notifications/FLash Messages
 	$('p.notice').fadeOut(5000);
-	$('p.alert').fadeOut(5000);
+	$('p.alert').fadeOut(10000);
 	
 	// Sign Up Animation
 	$('#signup_form_animate').click(function() {
@@ -59,7 +171,8 @@ $(document).ready(function() {
 	markers = [];
 	loc = [];
 	
-	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ // true if user already entered home location
+	// true if user already entered home location (in homepage)
+	if( $('#current_user_location_street').val() && $('#current_user_location_activate').attr('checked') ){ 
 		
 		tmpgeocoder = new GClientGeocoder();
 		var address = "";//"example: 821 Mohawk Street, Columbus OH";
@@ -97,7 +210,8 @@ $(document).ready(function() {
 		
 		
 	}
-	else{
+	
+	if( $("#current_user_locations").val() == "y" || !$('#current_user_location_activate').attr('checked') ){
 	    $('#currentLocation').html(geoplugin_region() + ", "+ geoplugin_city());
 		loc = [geoplugin_countryName(), geoplugin_region(), geoplugin_city()];
 	}
@@ -120,7 +234,7 @@ $(document).ready(function() {
           loc[pos] = $(this).val();
 		  		geocoder.getLocations(loc.join(', '), addToMap);
       }
-  });
+	});
 
 	// Validate inputs for new meal
 	$('form.new_meal, form.edit_meal').submit(function() {
@@ -132,7 +246,7 @@ $(document).ready(function() {
 
                 return true;
 	});
-
+	
         //fraenk
         // get / set new position
 	$('#searchSubmit').click(function() {
@@ -158,8 +272,8 @@ $(document).ready(function() {
         if (navigator.geolocation) {
 			if(!$('#current_user_location_activate').attr('checked'))
 				navigator.geolocation.getCurrentPosition(geo_success, geo_error);
-
-            drawMap(loc);
+			
+			drawMap(loc);
         } else {
             drawMap(loc);
         }
@@ -269,22 +383,79 @@ $(document).ready(function() {
     
 	// animate Current User Location Form
 	
-	$('#animatecurrentUserLocationButton').hover(
+	$('#animatecurrentUserLocationButton').toggle(
 		function(){
 			$('#currentUserLocation').animate({ height: '100px' });
 			$('#currentUserLocation').fadeIn(500);
+		},
+		function(){
+			$('#currentUserLocation').animate({ height: '0px' });
+			$('#currentUserLocation').css('display','none');
 		}
 	);
 	
-	$('#currentUserLocation').hover(function(){},function(){
-		$('#currentUserLocation').animate({ height: '0px' });
-		$('#currentUserLocation').css('display','none');
-	});
-	
-	$(document).hover(function(){
-		//$('#currentUserLocation').css('display','none');
-	});
 });
+
+function updateMealForm(latlng) {
+	
+    var lg = new GLatLng(latlng.lat(), latlng.lng());
+    _tmpgeocoder = new GClientGeocoder();
+    
+    _tmpgeocoder.getLocations(lg, function(response){
+			place = response.Placemark[0];
+			console.log(place.AddressDetails);
+			
+			$("#meal_country").val(place.AddressDetails.Country.CountryName);
+			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined )
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.LocalityName);
+			else
+				$("#meal_city").val(place.AddressDetails.Country.AdministrativeArea.Locality.LocalityName);
+
+			tmp_str = "";
+			
+			if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea != undefined ){
+				if( place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality != undefined ){
+					$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+					tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+					
+					end = tmp_str.indexOf(" ");
+					$("#meal_street_number").val(tmp_str.substr(0, end));
+					$("#meal_street").val(tmp_str.substr(end, tmp_str.length-1));
+				}
+				else{
+					$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.PostalCode.PostalCodeNumber);
+					tmp_str = place.AddressDetails.Country.AdministrativeArea.SubAdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+					
+					end = tmp_str.indexOf(" ");
+					$("#meal_street").val(tmp_str.substr(0, end));
+					$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+				}
+			}
+			else{
+					if( place.AddressDetails.Country.AdministrativeArea.Locality.PostalCode != undefined ){
+						$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.Locality.PostalCode.PostalCodeNumber);
+						
+						tmp_str = place.AddressDetails.Country.AdministrativeArea.Locality.Thoroughfare.ThoroughfareName;
+					
+						end = tmp_str.indexOf(" ");
+						$("#meal_street").val(tmp_str.substr(0, end));
+						$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+					}
+					else{
+						$("#meal_zip_code").val(place.AddressDetails.Country.AdministrativeArea.Locality.DependentLocality.PostalCode.PostalCodeNumber);
+						
+						tmp_str = place.AddressDetails.Country.AdministrativeArea.Locality.DependentLocality.Thoroughfare.ThoroughfareName;
+					
+						end = tmp_str.indexOf(" ");
+						$("#meal_street").val(tmp_str.substr(0, end));
+						$("#meal_street_number").val(tmp_str.substr(end, tmp_str.length-1));
+					}
+					
+			}
+	});
+      
+}
 
 function panTo(lat, lon) {
 	point = GLatLng.fromUrlValue(lat+', '+lon);
@@ -319,8 +490,37 @@ function drawMap(env, rails, railsdepth) {
 							control: 'GSmallZoomControl'
 						}
 					}
-				});
-			}
+		});
+		
+		position = $.googleMaps.marker[0];
+		
+		// true when user has got current_user_location in new meal and edit meal category
+		if($("#current_user_locations").val() == "y" && position && marker){
+			//console.log(position);
+		    var adresse = "";
+		    adresse =  $('#meal_street').val(),
+			adresse += ", " + $('#meal_street_number').val(),
+			adresse += ", " + $('#meal_zip_code').val();
+			adresse += ", " + $("#meal_city").val();
+			adresse += ", " + $("#meal_country").val();
+			
+			_tmpgeocoder = new GClientGeocoder();
+    
+			_tmpgeocoder.getLocations(adresse, function(response){
+				place = response.Placemark[0];
+				//console.log(place);
+				
+				var _map = new GMap2(document.getElementById("map"));
+				_map.addControl(new GSmallZoomControl());
+				_map.addControl(new GMapTypeControl());
+				var center = new GLatLng(place.Point.coordinates[1], place.Point.coordinates[0]);
+				_map.setCenter(center, 17);
+				var _marker = new GMarker(center, {draggable: true});
+				_map.addOverlay(_marker);
+				GEvent.addListener(_marker, "dragend", updateMealForm);
+			});
+		}
+}
 
         // Grabs Locations for Meals, output them as Markers on the map
 	function get_markers() {
@@ -338,7 +538,8 @@ function drawMap(env, rails, railsdepth) {
 							icon: {
 							      shadow: 'http://chart.apis.google.com/chart?chst=d_map_pin_shadow',
 							      shadowSize: '22, 20'
-								}
+								},
+						   'dragend' : 'getAddress'	
 						});
 		})
 		
@@ -407,5 +608,6 @@ function drawMap(env, rails, railsdepth) {
 						}
 					}
 				});
+			
 	}
 	

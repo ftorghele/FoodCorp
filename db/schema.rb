@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520134500) do
+ActiveRecord::Schema.define(:version => 20120614132400) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120520134500) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "activate",      :default => true
+    t.text     "country"
   end
 
   create_table "fellowships", :force => true do |t|
@@ -69,8 +70,6 @@ ActiveRecord::Schema.define(:version => 20120520134500) do
     t.string   "title"
     t.text     "description"
     t.integer  "user_id"
-    t.integer  "time"
-    t.integer  "deadline"
     t.float    "lat"
     t.float    "lon"
     t.string   "country"
@@ -91,6 +90,13 @@ ActiveRecord::Schema.define(:version => 20120520134500) do
     t.boolean  "hot",           :default => false
     t.boolean  "veryhot",       :default => false
     t.boolean  "asian",         :default => false
+    t.boolean  "eat_in",        :default => false
+    t.boolean  "take_away",     :default => false
+    t.boolean  "got_point",     :default => false
+    t.date     "time"
+    t.date     "deadline"
+    t.datetime "times"
+    t.datetime "deadline_time"
   end
 
   add_index "meals", ["user_id"], :name => "index_meals_on_user_id"

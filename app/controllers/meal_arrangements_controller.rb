@@ -9,7 +9,7 @@ class MealArrangementsController < ApplicationController
       @meal_arrangement = MealArrangement.new(:user_id => current_user.id,
                                               :meal_id => params[:meal_id],
                                               :acceptance => false,
-                                              :mail_notification => params[:receive_meal].to_i)
+                                              :mail_notification => params[:receive_mail].to_i)
       if @meal_arrangement.save
         redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_success')
         current_user.points -= 1 if current_user.points > 0
@@ -75,7 +75,7 @@ class MealArrangementsController < ApplicationController
   private
 
   def check_points
-    if current_user.points > 0
+    if current_user.points <= 0
       redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.point_fail')
     end
   end

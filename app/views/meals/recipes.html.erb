@@ -8,20 +8,19 @@
   <%= render 'layouts/menu', :user => current_user %>
 </div>
 
-<div id="recipe_photo_div" style="display:none; width:250px; height:250px; position:absolute; top:0px; left:0px"></div>
+<div id="recipe_photo_div" style="display:none; width:250px; height:250px; position:absolute; bottom:-1000px"></div>
 
 <div id="main_body">
   <ul>
     <% num = 0 %>
 		<% @recipes_array.each do |recipe| %>
 		  <% num += 1 %>
-			<li class="recipe" id="recipe_<%= num %>"><%= num %> Recipe:
+			<li class="recipe" id="recipe_<%= num %>"><p style="font-weight:bold"><%= num %> Recipe:</p>
 				<ul>
-					<li>Recipe-Title:</li>
+					<li class="recipe_title">Recipe-Title:</li>
 					<ul style='list-style-type:none'><li><%= recipe[0] %></li></ul>
 					<li>Recipe-Description:</li>
 					<ul style='list-style-type:none'><li><%= recipe[1] %></li></ul>
-					<li>Recipe-Link:</li>
 					<ul style='list-style-type:none'><li><%= link_to 'to recipe', recipe[3] %></li></ul>
 					<li style="display:none" class="recipe_photo"><%= recipe[2] %></li>
 				</ul>

@@ -317,18 +317,6 @@ $(document).ready(function() {
 	else
 		geocoder.getLocations(loc.join(), addToMap);
 	
-	// Calendar & Time for Meals
-	$('.datepicker').datetime({
-		userLang:'de',
-		americanMode:false
-	});
-
-        // Calendar & Time for Meals
-	$('.datepickeronly').datepicker({
-		userLang:'de',
-                dateFormat: 'yy-mm-dd',
-		americanMode:false
-	});
 	
     // TAB HANDLING
     $(".tab_content").hide(); //Hide all content

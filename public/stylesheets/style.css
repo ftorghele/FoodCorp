@@ -467,6 +467,15 @@ img {
     padding: 5px 5px 5px 70px;
 }
 
+.display_formerly_meal {
+    width: 517px;
+    min-height: 60px;
+    background: #191919 url('/images/formerly_meal_bg.png') top left no-repeat;
+    -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+    margin: 5px;
+    padding: 5px 5px 5px 70px;
+}
+
 #provide_meal {
     width: 350px;
 }
@@ -492,6 +501,15 @@ img {
 
 .meal_title, .meal_title a {
     color: #e63600;
+    font-family: Helvetica;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 10px 0 0px 0;
+    display: block;
+}
+
+.formerly_meal_title, .formerly_meal_title a {
+    color: #F0F0F0;
     font-family: Helvetica;
     font-weight: bold;
     text-decoration: none;

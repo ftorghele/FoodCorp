@@ -46,18 +46,16 @@
           <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
         </span>
       </div>
-      <% date = Time.at meal.times.to_i %>
-      <% date = date.utc.strftime('%H:%M') %>
-      <div class="meal_info"><%= meal.time.strftime('%a %d.%m.%y') %> - <%= date %><br>
+      
+      <div class="meal_info"><%= meal.time.to_s %> - <%= meal.times.to_s %><br>
         <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
 			<div id="meal_info_right">
 				<p><%= meal.slots %><b>Guests</b></p>
 				<b>Apply until:</b><br />
-				<% date = Time.at meal.deadline_time.to_i %>
-				<% date = date.utc.strftime('%H:%M') %>
-				<%= meal.deadline.strftime('%a %d.%m.%y') %> - <%= date %>
+				
+				<%= meal.deadline.to_s %> - <%= meal.deadline_time.to_s %>
 				<br>Accepted Users:<br>
 				<% if meal.meal_arrangements.count > 0 %>
 				  <ul>

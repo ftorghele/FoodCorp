@@ -35,12 +35,17 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
     @user = FactoryGirl.create(:user) if User.all.empty?
     @user.confirm!
     @user.save!
+    @user
   end
   
   def login_user user_number
     user = User.where(:id => user_number).first
     unless user
-      user = sign_in_as(User.first.first_name << "X", User.first.last_name << "X", "x." << User.first.email, "123456") 
+			if !User.all.empty?
+				user = sign_in_as(User.first.first_name << "X", User.first.last_name << "X", "x." << User.first.email, "123456") 
+			else
+				user = create_user
+			end
 		else
 			visit root_path
 			click_on('Login')
@@ -65,7 +70,7 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   end
 	
   def createCurrentUserLocation user
-	loc = CurrentUserLocation.new( :street_number => 0, :street => 'Pakerstreet', :zip_code => 1234, :city => "London", :country => "England" )
+	  loc = CurrentUserLocation.new( :street_number => 0, :street => 'Pakerstreet', :zip_code => 1234, :city => "London", :country => "England" )
     loc.user_id = user.id
     loc.save
   end
@@ -132,9 +137,9 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   test "should be able to accept a reuqest" do
     
-    login_user 1
+    user = login_user 1
     click_link('cook')
-    click_link('meals')
+    click_link('/users/' << user.id.to_s)
     click_on('Accept')
     sign_out
 
@@ -163,13 +168,13 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
 	  fill_in 'user_email', :with => meal_creator.email
     fill_in 'user_password', :with => meal_creator.password
     click_on('user_submit')
-      
+    
     click_link(meal_creator.first_name << " " << meal_creator.last_name)
-    puts page.body
     click_on('Delete')
     sign_out
 
     login_user meal_eater
+    puts page.body
     click_on('personal Messages')
     assert page.has_content?('rejected')
     sign_out   
@@ -284,64 +289,53 @@ class UserIntegrationTest < ActionDispatch::IntegrationTest
   
   test "user should be rejected when another user has got same first name" do
     
-    @user = FactoryGirl.create(:user) if User.all.empty?
+    user = FactoryGirl.create(:user)
     
-	Capybara.using_session("id") do
-      visit root_path
-      click_link('register')
-      fill_in 'user_first_name', :with => @user.first_name + "1"
-      fill_in 'user_last_name', :with => @user.last_name
-      select 'male', :from => 'user_gender'
-      fill_in 'user_email', :with => "testuser13@test.com"
-      fill_in 'user_password', :with => 'geheim'
-      fill_in 'user_password_confirmation', :with => 'geheim'
-      click_on('user_submit')
-	  
-      page.has_content?('Invalid email or password')
-    end
+    visit root_path
+		click_link('register')
+		fill_in 'user_first_name', :with => user.first_name + "1"
+		fill_in 'user_last_name', :with => user.last_name
+		select 'male', :from => 'user_gender'
+		fill_in 'user_email', :with => "testuser13@test.com"
+		fill_in 'user_password', :with => 'geheim'
+		fill_in 'user_password_confirmation', :with => 'geheim'
+		click_on('user_submit')
+	
+		page.has_content?('Invalid email or password')
   end
   
   test "user should be rejected when another user has got same last name" do
     
-    @user = FactoryGirl.create(:user) if User.all.empty?
+    user = FactoryGirl.create(:user) if User.all.empty?
     
-	Capybara.using_session("id") do
-      visit root_path
-      click_link('register')
-      fill_in 'user_first_name', :with => 'Mr.Test2'
-      fill_in 'user_last_name', :with => @user.last_name + "2"
-      select 'male', :from => 'user_gender'
-      fill_in 'user_email', :with => "testuser14@test.com"
-      fill_in 'user_password', :with => 'geheim'
-      fill_in 'user_password_confirmation', :with => 'geheim'
-      click_on('user_submit')
-	  
-      page.has_content?('Invalid email or password')
-    end
+		visit root_path
+		click_link('register')
+		fill_in 'user_first_name', :with => 'Mr.Test2'
+		fill_in 'user_last_name', :with => user.last_name + "2"
+		select 'male', :from => 'user_gender'
+		fill_in 'user_email', :with => "testuser14@test.com"
+		fill_in 'user_password', :with => 'geheim'
+		fill_in 'user_password_confirmation', :with => 'geheim'
+		click_on('user_submit')
+	
+		page.has_content?('Invalid email or password')
+ 
   end
   
   test "current home location of user must be shown in new meal category" do
     
-    sign_in_as("Mr.Test15", "test14", "user14@gmail.com", "123456")
+    user = sign_in_as("Mr.Test15", "test14", "user14@gmail.com", "123456")
 
-    createCurrentUserLocation @user
+    createCurrentUserLocation user
     
-	Capybara.using_session("id") do
-	  visit root_path
-	  click_link 'Login'
-	  fill_in 'user_email', :with => @user.email
-      fill_in 'user_password', :with => @user.password
-      click_on('user_submit')
-      
-      click_on('cook')
-      
-      assert_equal @user.current_user_location.street, find_field('meal_street').value
-      assert_equal @user.current_user_location.street_number, find_field('meal_street_number').value.to_i
-      assert_equal @user.current_user_location.zip_code, find_field('meal_zip_code').value.to_i
-      assert_equal @user.current_user_location.city, find_field('meal_city').value
-      assert_equal @user.current_user_location.country, find_field('meal_country').value
-      
-    end
+		click_on('cook')
+		
+		assert_equal @user.current_user_location.street, find_field('meal_street').value
+		assert_equal @user.current_user_location.street_number, find_field('meal_street_number').value.to_i
+		assert_equal @user.current_user_location.zip_code, find_field('meal_zip_code').value.to_i
+		assert_equal @user.current_user_location.city, find_field('meal_city').value
+		assert_equal @user.current_user_location.country, find_field('meal_country').value
+		
   end
 
 end

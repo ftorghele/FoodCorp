@@ -42,7 +42,7 @@
 		
 		<% unless params[:date] %>
                 <%= f.label :When? %>
-				<%= f.date_select(:time, :order => [:day, :month, :year]) %>
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
 				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
 				
         <% else %>

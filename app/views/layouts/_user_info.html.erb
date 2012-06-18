@@ -4,7 +4,7 @@
 	<tr>
 	<td>
        <p><%= link_to(current_user.first_name + " " + current_user.last_name, user_path(current_user.id) )%><br>
-	   <%= link_to('personal Messages', messages_path)%><br>
+	   <%= link_to('personal Messages', messages_path, :id => "personal Messages")%><br>
 	   <%= current_user.points %> - <%= link_to('edit Profile', edit_user_registration_path) %> -
 	   <%= link_to('Logout', destroy_user_session_path) %></p>
 	 </td>

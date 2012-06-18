@@ -1,4 +1,4 @@
-<% if @meal.time > Date.today %>
+<% if @meal.time >= Date.today %>
 
 <img src="/images/closed.png" title="open" alt="open" class="openMeal" /><div id="main_header">
   <h3>Eat at <%= @user.first_name %> <%= @user.last_name %>'s Place</h3>

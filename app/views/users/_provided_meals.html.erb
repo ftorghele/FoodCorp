@@ -1,8 +1,8 @@
 <div id="provided_meals">
  <h4>Current Invitations</h4>
   <% meals.each do |meal|%>
-  <% if meal.time %>
-  <% if meal.time > Date.today %>
+  <% if meal.time && meal.times %>
+  <% if meal.time > Date.today && meal.times > Time.now %>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
 
@@ -99,8 +99,8 @@
 <div id="provided_meals">
  <h4>formerly cooked</h4>
   <% meals.each do |meal|%>
-  <% if meal.time %>
-  <% if meal.time < Date.today %>
+  <% if meal.time %% meal.times %>
+  <% if meal.time < Date.today && meal.times < Time.now %>
     <div class="display_formerly_meal">
       <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %>
 

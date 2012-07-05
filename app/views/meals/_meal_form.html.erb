@@ -19,10 +19,10 @@
 				</div>
 			<% else %>
 				<%= hidden_field_tag "current_user_locations", "n" %>
-				<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+				<%= f.text_field :street, :placeholder => "Street" %><br />
 
 				<div class="Adress">
-					<%= f.text_field :street, :placeholder => "Street" %><br />
+					<%= f.text_field :street_number, :placeholder => "Streetnumber" %><br />
 					<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
 					<%= f.text_field :city, :placeholder => "City" %><br />
 					<%= f.text_field :country, :placeholder => "Country" %><br />
@@ -30,10 +30,10 @@
 			<% end %>
 		<% else %>
 			<%= hidden_field_tag "current_user_locations", "n" %>
-			<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+			<%= f.text_field :street, :placeholder => "Street " %><br />
 
 			<div class="Adress">
-				<%= f.text_field :street, :placeholder => "Street" %><br />
+				<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
 				<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
 				<%= f.text_field :city, :placeholder => "City" %><br />
 				<%= f.text_field :country, :placeholder => "Country" %><br />
@@ -43,12 +43,16 @@
 		<% unless params[:date] %>
                 <%= f.label :When? %>
 				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+	<div class="date">
 				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+	</div>			
 				
         <% else %>
                 <%= f.label :When? %>
 				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+		<div class="date">
 				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+		</div>
 		<% end %>
 		
 			<%= f.label :Guests %>
@@ -99,8 +103,9 @@
 		
 		<%= f.label :When? %>
 		<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+		<div class="date">
 		<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
-
+		</div>
 
 		<%= f.label :Guests %>
 		<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>

@@ -6,6 +6,11 @@
 <div id="main_body">
   <%= render "users/user_information", :user => @user %>
   <div id="provided_meals">
+	
+	<% if current_user && @meal.user_id == current_user.id %>
+	  <h3>You are host of meal: <%= @meal.title %></h3>
+	<% end %>
+    
     <div class="display_meal">
 			<div class="meal_right">
 				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
@@ -84,6 +89,11 @@
 <div id="main_body">
   <%= render "users/user_information", :user => @user %>
   <div id="provided_meals">
+    
+    <% if current_user && @meal.user_id == current_user.id %>
+	  <h3>You are host of meal: <%= @meal.title %></h3>
+	<% end %>
+	
     <div class="display_formerly_meal">
 			<div class="meal_right">
 				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
@@ -129,13 +139,7 @@
         <% if current_user %>
         	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
         		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
-        		<% if @meal.eat_in %>
-					<b>Eat in</b>
-				<% end %>
-				<br />
-				<% if @meal.take_away %>
-					<b>Take away</b>
-				<% end %>
+				<%= render 'users/meals_eat_in_take_away', :meal => @meal %>
 				<p><%= @meal.slots %><b>Guests</b></p>
 			<br />
        		<div id="loc">

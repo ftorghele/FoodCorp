@@ -453,7 +453,7 @@ img {
 #provided_meals {
     float: right;
     width: 602px;
-    min-height: 100%
+    min-height: 100%;
 }
 
 /* ---- USER_PROFILE END ----*/
@@ -479,6 +479,7 @@ img {
 
 #provide_meal {
     width: 350px;
+    padding-left: 200px;
 }
 #provide_meal label {
     width: 120px;

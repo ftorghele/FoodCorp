@@ -1,153 +1,134 @@
 <div id="provide_meal" class="float_left">
-  <br>
-
-<%= form_for @meal do |f| %>
-  <%= f.label :What_do_you_cook? %>
-  <%= f.text_field :title %><br />
- 
-  <%unless @meal.title %>
-		<% if current_user.current_user_location %>
-			<% if current_user.current_user_location.activate %>
-				<%= hidden_field_tag "current_user_locations", "y" %>
-				<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
-
-				<div class="Adress">
-					<%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
-					<%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
-					<%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
-					<%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
-				</div>
-			<% else %>
-				<%= hidden_field_tag "current_user_locations", "n" %>
-				<%= f.text_field :street, :placeholder => "Street" %><br />
-
-				<div class="Adress">
-					<%= f.text_field :street_number, :placeholder => "Streetnumber" %><br />
-					<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
-					<%= f.text_field :city, :placeholder => "City" %><br />
-					<%= f.text_field :country, :placeholder => "Country" %><br />
-				</div>
-			<% end %>
-		<% else %>
-			<%= hidden_field_tag "current_user_locations", "n" %>
-			<%= f.text_field :street, :placeholder => "Street " %><br />
-
-			<div class="Adress">
-				<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
-				<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
-				<%= f.text_field :city, :placeholder => "City" %><br />
-				<%= f.text_field :country, :placeholder => "Country" %><br />
-			</div>
-		<% end %>
-		
-		<% unless params[:date] %>
-                <%= f.label :When? %>
-				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
-	<div class="date">
-				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
-	</div>			
-				
-        <% else %>
-                <%= f.label :When? %>
-				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
-		<div class="date">
-				<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
-		</div>
-		<% end %>
-		
-			<%= f.label :Guests %>
-			<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
-			<% unless params[:date] %>
-				<%= f.label :Guests_need_to_apply_until %>
-				<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
-				<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
-			<% else %>
-				<%= f.label :deadline %>
-				<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
-				<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />	
-			<%end%>
-  <%else%>
-		<% if current_user.current_user_location %>
-			<% if current_user.current_user_location.activate %>
-				<%= hidden_field_tag "current_user_locations", "y" %>
-				<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
-
-				<div class="Adress">
-					<%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
-					<%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
-					<%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
-					<%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
-				</div>
-			<% else %>
-				<%= hidden_field_tag "current_user_locations", "n" %>
-				<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
-
-				<div class="Adress">
-					<%= f.text_field :street, :placeholder => "Street" %><br />
-					<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
-					<%= f.text_field :city, :placeholder => "City" %><br />
-					<%= f.text_field :country, :placeholder => "Country" %><br />
-				</div>
-			<% end %>
-		<% else %>
-			<%= hidden_field_tag "current_user_locations", "n" %>
-			<%= f.text_field :street_number, :placeholder => "Street Number" %><br />
-
-			<div class="Adress">
-				<%= f.text_field :street, :placeholder => "Street" %><br />
-				<%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
-				<%= f.text_field :city, :placeholder => "City" %><br />
-				<%= f.text_field :country, :placeholder => "Country" %><br />
-			</div>
-		<% end %>
-		
-		<%= f.label :When? %>
-		<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
-		<div class="date">
-		<%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
-		</div>
-
-		<%= f.label :Guests %>
-		<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
-		<%= f.label :Guests_need_to_apply_until %>
-		<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
-		  <%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
-<% end %>
   <br />
 
-  <%= f.label :Guests_can_eat_at_your_place %>
-  <%= f.check_box :eat_in %><br /><br />
-  <%= f.label :Guests_can_take_their_meal_with_them %>
-  <%= f.check_box :take_away %><br />
-  <br /><br />
+<%= form_for @meal do |f| %>
+    <%= f.label 'Title of meal' %>
+    <%= f.text_field :title %><br />
+    
+    <%= f.label 'describe your meal' %>
+    <%= f.text_field :description %><br />
+    <br/>
+    
+    <%= f.label 'guests can eat with you' %>
+    <%= f.check_box :eat_in %><br /><br />
+    <%= f.label 'guests can take the meal away' %>
+    <%= f.check_box :take_away %><br />
+    <br /><br />
+    
+    <h4> Categories:</h4>  
+    <%= f.label 'for vegetarians?' %>
+    <%= f.check_box :vegetarien %><%= image_tag 'icon_veggie.png' %><br />
+    <%= f.label 'is it organic?' %>
+    <%= f.check_box :organic %><%= image_tag 'icon_organic.png' %><br />
+    <%= f.label 'is it kosher?' %>
+    <%= f.check_box :kosher %><%= image_tag 'icon_kosher.png' %><br />
+    <%= f.label 'is it asian?' %>
+    <%= f.check_box :asian %><%= image_tag 'icon_asian.png' %><br />
+    <%= f.label 'is it gluten free?' %>
+    <%= f.check_box :gluten_free %><%= image_tag 'icon_gluten-free.png' %><br />
+    <%= f.label 'is it lactose free?' %>
+    <%= f.check_box :lactose_free %><%= image_tag 'icon_lactose-free.png' %><br />
+    <%= f.label 'is it halal?' %>
+    <%= f.check_box :diabetics %><%= image_tag 'icon_halal.png' %><br />
+    <%= f.label 'is it hot?' %>
+    <%= f.check_box :hot %><%= image_tag 'icon_hot.png' %><br />
+    <%= f.label 'is it very hot?' %>
+    <%= f.check_box :veryhot %><%= image_tag 'icon_veryhot.png' %><br />
+    <br /><br />
+ 	
+    <h4> Times:</h4>  
+    <%unless @meal.title %>
+		
+		<% unless params[:date] %>
+                <%= f.label 'When do you cook it?' %>
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+                <div class="date">
+                   <%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+                </div>			
+				
+        <% else %>
+                <%= f.label 'When do you cook it?' %>
+				<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+                <div class="date">
+                   <%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+                </div>
+		<% end %>
+		
+        <%= f.label 'How many guests?' %><br />
+        <%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
+        <% unless params[:date] %>
+            <%= f.label 'guests need to come at?' %>
+            <%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+            <%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
+        <% else %>
+            <%= f.label 'guests need to come at?' %>
+            <%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+            <%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />	
+        <%end%>
+    <%else%>
+		
+		<%= f.label 'When do you cook it?' %>
+		<%= f.date_select(:time, :order => [:day, :month, :year]) %><br />
+		<div class="date">
+		  <%= f.datetime_select(:times, :order => [:hour, :minute]) %><br />
+		</div>
+
+		<%= f.label 'How many guests?' %>
+		<%= f.select :slots, (1..20).to_a ,{:include_blank => "Select"} %><br/>
+		<%= f.label 'guests need to come at?' %>
+		<%= f.date_select(:deadline, :order => [:day, :month, :year]) %><br />
+		<%= f.datetime_select(:deadline_time, :order => [:hour, :minute]) %><br />
+    <% end %>
+    <br /><br />
+  	
+    <h4> Address:</h4> 
+    <% if current_user.current_user_location %>
+        <% if current_user.current_user_location.activate %>
+            
+            <div class="Adress">
+				<%= hidden_field_tag "current_user_locations", "y" %>
+				<%= f.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
+                <%= f.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
+                <%= f.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
+                <%= f.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
+                <%= f.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
+            </div>
+        <% else %>
+            
+            <div class="Adress">
+                <%= hidden_field_tag "current_user_locations", "n" %>
+				<%= f.text_field :street, :placeholder => "Street" %><br />
+                <%= f.text_field :street_number, :placeholder => "Streetnumber" %><br />
+                <%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+                <%= f.text_field :city, :placeholder => "City" %><br />
+                <%= f.text_field :country, :placeholder => "Country" %><br />
+            </div>
+        <% end %>
+    <% else %>
+
+        <div class="Adress">
+            <%= hidden_field_tag "current_user_locations", "n" %>
+			<%= f.text_field :street, :placeholder => "Street " %><br />
+            <%= f.text_field :street_number, :placeholder => "Street Number" %><br />
+            <%= f.text_field :zip_code, :placeholder => "Zip Code" %><br />
+            <%= f.text_field :city, :placeholder => "City" %><br />
+            <%= f.text_field :country, :placeholder => "Country" %><br />
+        </div>
+    <% end %>
+    <br />
+    
+    <div style="" id="meal_map">
+		<br />
+		<p>Location Preview</p>
+		<div id="map" style="width: 350px; height: 250px" class="space_right"></div>
+		<%= render 'map_legend' %>
+		<div class="clr"></div>
+    </div>
   
-  <%= f.label :short_description %>
-  <%= f.text_field :description %><br />
-  <br/>
-  <h4> Categories:</h4>  
-  <%= f.label :Vegetarian %>
-  <%= f.check_box :vegetarien %><%= image_tag 'icon_veggie.png' %><br />
-  <%= f.label :Organic %>
-  <%= f.check_box :organic %><%= image_tag 'icon_organic.png' %><br />
-  <%= f.label :Kosher %>
-  <%= f.check_box :kosher %><%= image_tag 'icon_kosher.png' %><br />
-  <%= f.label :Asian %>
-  <%= f.check_box :asian %><%= image_tag 'icon_asian.png' %><br />
-  <%= f.label :Gluten_free %>
-  <%= f.check_box :gluten_free %><%= image_tag 'icon_gluten-free.png' %><br />
-  <%= f.label :Lactose_free %>
-  <%= f.check_box :lactose_free %><%= image_tag 'icon_lactose-free.png' %><br />
-  <%= f.label :Halal %>
-  <%= f.check_box :diabetics %><%= image_tag 'icon_halal.png' %><br />
-  <%= f.label :Hot %>
-  <%= f.check_box :hot %><%= image_tag 'icon_hot.png' %><br />
-  <%= f.label :Veryhot %>
-  <%= f.check_box :veryhot %><%= image_tag 'icon_veryhot.png' %><br />
+    <%= f.hidden_field(:lat) %>
+    <%= f.hidden_field(:lon) %>
 
-  <%= f.hidden_field(:lat) %>
-  <%= f.hidden_field(:lon) %>
-
-  <%= f.submit 'submit', :class => "submit" %>
+    <%= f.submit 'submit', :class => "submit" %>
 <% end %>
 
 </div>

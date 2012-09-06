@@ -1,9 +1,9 @@
 FoodCorp::Application.routes.draw do
 
   resources :comments
-
+	
   resources :meal_arrangements
-
+    
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }
 
@@ -17,7 +17,8 @@ FoodCorp::Application.routes.draw do
 	match 'create/current_user_location' => 'Meals#create_current_user_location', :as => 'create_current_user_location'
 	match 'update/update_current_user_location' => 'Meals#update_current_user_location', :as => 'update_current_user_location'
     match 'recipes' => 'Meals#recipes', :as => 'recipes'
-  
+    match 'meals/:id/:status' => 'Meals#show', :as => 'meal_arrangement_status'
+    
   controller :meals do
     match 'meals/create_comment' => :create_comment
   end

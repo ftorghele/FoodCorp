@@ -5,15 +5,19 @@
     <% if current_user && current_user.id != @meal.user_id %>
       <% if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
         <% if current_user.points > 0 %>
+			
+			<h2>Do you want to receive mail notifications, when meal is ready?</h2>
+			
 			<%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
 			  <%= hidden_field_tag 'meal_id', @meal.id %>
 			  
-			  <%= label_tag "Receive E-Mail Notification:" %>
+			  <p><%= label_tag "yes:" %></p>
 			  <%= radio_button_tag 'receive_mail', '1', true %>
-			  <%= label_tag "Don't Receive E-Mail Notification:" %>
+			  <p><%= label_tag "no thanks:" %></p>
 			  <%= radio_button_tag 'receive_mail', '0', false %>
-			  <%= image_submit_tag("request_meal.png", :id => "request_meal") %>
+			  <p><%= image_submit_tag("request_meal.png", :id => "request_meal") %></p>
 			<% end %>
+			
 		<% else %>
 			  <%= image_submit_tag("no_request_meal.png", :disabled => false) %>
 		<% end %>

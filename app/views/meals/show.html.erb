@@ -51,13 +51,7 @@
         <% if current_user %>
         	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
         		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
-        		<% if @meal.eat_in %>
-					<b>Eat in</b>
-				<% end %>
-				<br />
-				<% if @meal.take_away %>
-					<b>Take away</b>
-				<% end %>
+				<%= render 'users/meals_eat_in_take_away', :meal => @meal %>
 				<p><%= @meal.slots %><b>Guests</b></p>
 			<br />
        		<div id="loc">

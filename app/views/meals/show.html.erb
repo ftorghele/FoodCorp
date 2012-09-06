@@ -1,7 +1,7 @@
 <% if @meal.time >= Date.today && @meal.times > Time.now %>
 
 <img src="/images/closed.png" title="open" alt="open" class="openMeal" /><div id="main_header">
-  <h3>Eat at <%= @user.first_name %> <%= @user.last_name %>'s Place</h3>
+  <h3>Eat at <%= link_to @user.first_name << " " << @user.last_name << 's Place', user_path(@user.id) %></h3>
 </div>
 <div id="main_body">
   <%= render "users/user_information", :user => @user %>
@@ -84,7 +84,7 @@
 <% else %>
 
 <img src="/images/closed.png" title="open" alt="open" class="openMeal" /><div id="main_header">
-  <h3>Eat at <%= @user.first_name %> <%= @user.last_name %>'s Place</h3>
+  <h3>Eat at <%= link_to @user.first_name << " " << @user.last_name << '\'s Place', user_path(@user.id) %></h3>
 </div>
 <div id="main_body">
   <%= render "users/user_information", :user => @user %>

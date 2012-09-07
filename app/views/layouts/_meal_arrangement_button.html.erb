@@ -11,10 +11,10 @@
 			<%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
 			  <%= hidden_field_tag 'meal_id', @meal.id %>
 			  
-			  <p><%= label_tag "yes:" %></p>
-			  <%= radio_button_tag 'receive_mail', '1', true %>
-			  <p><%= label_tag "no thanks:" %></p>
-			  <%= radio_button_tag 'receive_mail', '0', false %>
+			  <p><%= label_tag "yes:" %>
+			  <%= radio_button_tag 'receive_mail', '1', true %></p>
+			  <p><%= label_tag "no thanks:" %>
+			  <%= radio_button_tag 'receive_mail', '0', false %></p>
 			  <p><%= image_submit_tag("request_meal.png", :id => "request_meal") %></p>
 			<% end %>
 			

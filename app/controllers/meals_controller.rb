@@ -9,8 +9,10 @@ class MealsController < ApplicationController
   before_filter :get_user, :only => [:create_current_user_location, :update_current_user_location]
   
   def index
-   @coords = request.location;
-   @user_meals = Meal.find(:all, :conditions => ["user_id = ? AND time >=" << Time.now.to_i.to_s, current_user.id]) if current_user
+   @coords = request.location
+   t = Time.now
+   dateToday = Date.new(t.year, t.month, t.day).to_s
+   @user_meals = Meal.find(:all, :conditions => ["user_id = ? AND time >=" << dateToday, current_user.id]) if current_user
 
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]

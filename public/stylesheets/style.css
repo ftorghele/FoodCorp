@@ -48,7 +48,7 @@ p.notice, p.alert {
 }
 
 #top_navigation_container {
-	width: 652px;
+	width: 602px;
 	height: 122px;
 	float: left;
     position: relative;
@@ -312,6 +312,7 @@ img {
     position:absolute;
     right:20px;
     top:30px;
+    z-index: 100;
 }
 
 #login img {

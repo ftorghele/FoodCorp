@@ -14,8 +14,8 @@ FoodCorp::Application.routes.draw do
   resources :fellowships
   
   resources :meals
-	match 'create/current_user_location' => 'Meals#create_current_user_location', :as => 'create_current_user_location'
-	match 'update/update_current_user_location' => 'Meals#update_current_user_location', :as => 'update_current_user_location'
+	match 'location/new' => 'Meals#create_location', :as => 'create_user_location'
+	match 'location/update' => 'Meals#update_location', :as => 'update_user_location'
     match 'recipes' => 'Meals#recipes', :as => 'recipes'
     match 'meal/:id/:status' => 'Meals#show', :as => 'meal_arrangement_status'
     

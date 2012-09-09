@@ -6,7 +6,7 @@ class MealsController < ApplicationController
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
 #  before_filter :check_time, :only=> [:create, :update]
   before_filter :get_meal, :only=> [:edit, :update]
-  before_filter :get_user, :only => [:create_current_user_location, :update_current_user_location]
+  before_filter :get_user, :only => [:create_location, :update_location]
   
   def index
    @coords = request.location
@@ -18,13 +18,13 @@ class MealsController < ApplicationController
    @storred_search_radius = cookies[:storred_search_radius]
    
    if current_user
-     if current_user.current_user_location
-       @current_user_location = User.find(current_user.id).current_user_location
+     if current_user.location
+       @location = User.find(current_user.id).location
      else
-       @current_user_location = CurrentUserLocation.new
+       @location = Location.new
      end
    else
-     @current_user_location = nil
+     @location = nil
    end
   end
 
@@ -74,19 +74,19 @@ class MealsController < ApplicationController
     redirect_to :back
   end
   
-  def create_current_user_location
-    @current_user_location = CurrentUserLocation.create(params[:current_user_location])
-    @current_user_location.user_id = current_user.id
+  def create_location
+    @location = Location.create(params[:location])
+    @location.user_id = current_user.id
     
-    if @current_user_location.save
+    if @location.save
       redirect_to :back, :notice => I18n.t('current_user_location.create_success')
     else
       redirect_to :back, :notice => I18n.t('current_user_location.create_fail')
     end
   end
   
-  def update_current_user_location
-    if User.find(params[:user_id]).current_user_location.update_attributes(params[:current_user_location])
+  def update_location
+    if User.find(params[:user_id]).location.update_attributes(params[:location])
       redirect_to :back, :notice => I18n.t('current_user_location.update_success')
     else
       redirect_to :back, :notice => I18n.t('current_user_location.update_fail')

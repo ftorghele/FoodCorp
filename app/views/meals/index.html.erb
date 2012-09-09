@@ -17,18 +17,18 @@
   <p>Save your home position for further visits</p>
   <% if current_user %>
     
-    <% if current_user.current_user_location %>
-      <%= render 'current_user_location_form', :meal_action => update_current_user_location_path %>
+    <% if current_user.location %>
+      <%= render 'user_location_form', :meal_action => update_user_location_path %>
     <% else %>
-      <%= render 'current_user_location_form', :meal_action => create_current_user_location_path %>
+      <%= render 'user_location_form', :meal_action => create_user_location_path %>
     <% end %>
     
   <% end %>
 </div>
 
 <% if current_user %>
-    <% if current_user.current_user_location %>
-		<% if current_user.current_user_location.activate %>
+    <% if current_user.location %>
+		<% if current_user.location.activate %>
 		  <div id="mealfind">Home location: <span id="currentLocation"></span></div>
 		<% else %>
 		  <div id="mealfind">Current location: <span id="currentLocation"></span></div>

@@ -16,7 +16,17 @@ class UsersController < ApplicationController
   def update 
     if params[:user_id] # wants to get mails?
       user = User.find(params[:user_id])
-      user.update_attributes(:mail_notification => params[:user][:mail_notification] ) 
+      if params[:user] && params[:user][:mail_notification] # in user's profile
+        user.update_attributes(:mail_notification => params[:user][:mail_notification] ) 
+      end
+      
+      if params[:receive_mail] # in show meal
+        if params[:receive_mail] == '1'
+		  user.update_attributes(:mail_notification => true ) 
+        else
+          user.update_attributes(:mail_notification => false ) 
+        end
+      end
       redirect_to :back, :notice => 'Mail Notifications updated'
     end
     

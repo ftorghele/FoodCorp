@@ -1,0 +1,16 @@
+<p>Mail Notifictions are 
+  <% if on %>
+	on
+  <% else %>
+	off
+  <% end %>
+</p>
+
+<p>
+  <%= label_tag "yes:" %>
+  <%= radio_button_tag 'receive_mail', '1', true %>
+</p>
+<p>
+  <%= label_tag "no thanks:" %>
+  <%= radio_button_tag 'receive_mail', '0', false %>
+</p>

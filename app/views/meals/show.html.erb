@@ -7,10 +7,8 @@
   <%= render "users/user_information", :user => @user %>
   <div id="provided_meals">
 	
-	<% if current_user && @meal.user_id == current_user.id %>
-	  <h3>You are host of meal: <%= @meal.title %></h3>
-	<% end %>
-    
+	<%= render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
+	
     <div class="display_meal">
 			<div class="meal_right">
 				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
@@ -90,9 +88,7 @@
   <%= render "users/user_information", :user => @user %>
   <div id="provided_meals">
     
-    <% if current_user && @meal.user_id == current_user.id %>
-	  <h3>You are host of meal: <%= @meal.title %></h3>
-	<% end %>
+    <%= render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
 	
     <div class="display_formerly_meal">
 			<div class="meal_right">

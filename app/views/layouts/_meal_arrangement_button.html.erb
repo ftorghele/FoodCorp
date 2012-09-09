@@ -6,7 +6,7 @@
       <% if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
         <% if current_user.points > 0 %>
 			
-			<h2>Do you want to receive mail notifications, when meal is ready?</h2>
+			<h2>When you order this meal, you may want to receive mail notifications, when meal is ready to eat?</h2>
 			
 			<%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
 			  <%= hidden_field_tag 'meal_id', @meal.id %>
@@ -19,20 +19,24 @@
 			<% end %>
 			
 		<% else %>
+              <h2>Unfortunately you do not have got points to order this meal.</h2>
 			  <%= image_submit_tag("no_request_meal.png", :disabled => false) %>
 		<% end %>
 		
       <%else%>
-      
+        
+        <h2>Do you want to receive mail notifications at all?</h2>
+        <h3>This concerns your meal orders as well.</h3>
         <% if current_user %>
 			<%= form_for current_user, :method => :update do |u| %>
 			  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
-			  <%= label_tag "Receive E-Mail Notification?" %>
+			  <%= label_tag "Receive:" %>
 			  <%= check_box_tag 'receive_mail', current_user.mail_notification, current_user.mail_notification  %>
 			  <%= image_submit_tag "update_mail_notification.png" %>
 			<% end %>
         <% end %>
         
+        <h2>Delete your order of this meal? Click on button below</h2>
         <%= form_tag(meal_arrangement_path(@meal_arrangement.id), :method => "delete") do %>
           <%= image_submit_tag("delete_meal_request.png", :id => "delete_meal_request") %>
         <%end%>
@@ -40,5 +44,6 @@
     <% end %>
   <% end %>
 <% else %>
+  <h2>You have to log in in order to make an order of this meal.</h2>
   <%= link_to image_tag("login_to_eat.png", :title => "login to eat"), user_session_path %>
 <% end %>

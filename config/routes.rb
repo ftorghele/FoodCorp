@@ -17,7 +17,7 @@ FoodCorp::Application.routes.draw do
 	match 'location/new' => 'Meals#create_location', :as => 'create_user_location'
 	match 'location/update' => 'Meals#update_location', :as => 'update_user_location'
     match 'recipes' => 'Meals#recipes', :as => 'recipes'
-    match 'meal/:id/:status' => 'Meals#show', :as => 'meal_arrangement_status'
+    match 'meals/:id/:status' => 'Meals#show', :as => 'meal_arrangement_status'
     
   controller :meals do
     match 'meals/create_comment' => :create_comment

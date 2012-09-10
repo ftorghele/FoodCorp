@@ -1,12 +1,34 @@
 <% if current_user %>
   <% if current_user.id == @meal.user_id %>
+    
+    <% if @meal.meal_arrangements.length != 0 %>
+		<h3>Following users have ordered your meal</h3>
+		
+		<% for i in 0...@meal.meal_arrangements.length %>
+		  <% user = @meal.meal_arrangements[i].user.first_name << ' ' << @meal.meal_arrangements[i].user.last_name %>
+		  <%= 'user: ' << user %>
+		  
+		  <% if @meal.meal_arrangements[i].acceptance %>
+		      <p>Meal order's been accepted already.</p>
+		  <% else %>
+			  <p>You can accept this order of user <%= user %></p>
+			  <%= render 'users/meal_arrangement_update_form', :meal_arrangement => @meal.meal_arrangements[i] %>
+		  <% end %>
+		  <p>You can delete this order of user <%= user %></p>
+		  <%= render 'users/meal_arrangement_delete_form', :meal_arrangement => @meal.meal_arrangements[i] %>
+		<% end %>
+		
+    <% end %>
+    
+    <p>Click button below to edit meal.</p>
     <%= link_to image_tag("edit_meal.png", :title => "edit", :id => "edit_meal"), edit_meal_path(@meal.id) %>
+    
   <% else %>
     <% if current_user && current_user.id != @meal.user_id %>
       <% if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
         <% if current_user.points > 0 %>
 			
-			<p>When you order this meal, you may want to receive mail notifications, when meal is ready to eat?</p>
+			<p>When you order this meal, you may want to receive a mail notification, when meal is ready to eat?</p>
 			
 			<%= form_tag({:controller => "meal_arrangements", :action => "create"}, :method => "post") do %>
 			  <%= hidden_field_tag 'meal_id', @meal.id %>
@@ -22,7 +44,7 @@
 		
       <%else%>
         
-        <p>Do you want to receive mail notifications at all? this would concern your meal orders as well.</p>
+        <p>Do you want to receive mail notifications at all? This would concern your meal notififactions as well.</p>
         
         <% if current_user %>
 			<%= form_for current_user, :method => :update do |u| %>
@@ -38,7 +60,9 @@
         <%end%>
       <%end%>
     <% end %>
+    
   <% end %>
+  
 <% else %>
   <p>You have to log in in order to make an order of this meal.</p>
   <%= link_to image_tag("login_to_eat.png", :title => "login to eat"), user_session_path %>

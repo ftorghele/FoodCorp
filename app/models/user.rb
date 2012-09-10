@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
                   :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, 
                   :mail_notification, :got_invitation, :current_user_location_id, :meal_counter
 
-  validates :first_name, :presence => true, :uniqueness => true 
-  validates :last_name, :presence => true, :uniqueness => true
+#  validates :first_name, :presence => true, :uniqueness => true 
+#  validates :last_name, :presence => true, :uniqueness => true
   validates :gender, :presence => true
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)

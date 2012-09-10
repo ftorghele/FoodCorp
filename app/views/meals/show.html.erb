@@ -1,174 +1,95 @@
-<% if @meal.time >= Date.today && @meal.times > Time.now %>
-
 <img src="/images/closed.png" title="open" alt="open" class="openMeal" /><div id="main_header">
   <h3>Eat at <%= link_to @user.first_name << " " << @user.last_name << 's Place', user_path(@user.id) %></h3>
 </div>
+
 <div id="main_body">
-  <%= render "users/user_information", :user => @user %>
-  <div id="provided_meals">
-	
-	<%= render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
-	
-    <div class="display_meal">
-			<div class="meal_right">
-				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
-				<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
-				<div id="map"></div>
-			</div>
-			<div class="clear"></div>
-			<div class="meal_info">
-      	<div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
-   <div class="meal_icon">
-     <% if @meal.vegetarien %>
-       <%= image_tag 'icon_veggie.png', :alt => "veggie", :title => "veggie" %>
-     <% end %>
-     <% if @meal.organic %>
-       <%= image_tag 'icon_organic.png', :alt => "organic", :title => "organic" %>
-     <% end %>
-     <% if @meal.kosher %>
-       <%= image_tag 'icon_kosher.png', :alt => "kosher", :title => "hosher" %>
-     <% end %>
-     <% if @meal.asian %>
-       <%= image_tag 'icon_asian.png', :alt => "asian", :title => "asian" %>
-     <% end %>
-     <% if @meal.gluten_free %>
-       <%= image_tag 'icon_gluten.png', :alt => "gluten", :title => "gluten" %>
-     <% end %>
-     <% if @meal.lactose_free %>
-       <%= image_tag 'icon_lactose-free.png', :alt => "lactose free", :title => "lactose free" %>
-     <% end %>
-     <% if @meal.diabetics %>
-       <%= image_tag 'icon_halal.png', :alt => "halal", :title => "halal" %>
-     <% end %>
-     <% if @meal.hot %>
-       <%= image_tag 'icon_hot.png', :alt => "hot", :title => "hot" %>
-     <% end %>
-     <% if @meal.veryhot %>
-       <%= image_tag 'icon_veryhot.png', :alt => "very hot", :title => "very hot" %>
-     <% end %>
-  </div>
-
-      	<%= @meal.time.strftime('%a %d.%m.%y') %> - <%= @meal.times.strftime('%H:%M') %><br>
-        Description: <%= @meal.description %><br>
-        <br>
-        <% if current_user %>
-        	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
-        		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
-				<%= render 'users/meals_eat_in_take_away', :meal => @meal %>
-				<p><%= @meal.slots %><b>Guests</b></p>
-			<br />
-       		<div id="loc">
-					<div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
-          <div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>
-					<div class="country"><%= @meal.country %></div>
-						<% end %>
-					<% end %>
-				<% end %>
-
-					<div id="meals_distance_stream" style="display:none">
-						<div class="meal" id="meal_<%= @meal.id %>">
-							<input type="hidden" title="lat" value="<%= @meal.lat %>" />
-							<input type="hidden" title="lon" value="<%= @meal.lon %>" />
-						</div>
-					</div>
-					<%= render "layouts/meal_arrangement_button" %>
-
-				</div>
-			</div>
-		</div>
-	<div class="clear"></div>
-</div>
-
-<% else %>
-
-<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><div id="main_header">
-  <h3>Eat at <%= link_to @user.first_name << " " << @user.last_name << '\'s Place', user_path(@user.id) %></h3>
-</div>
-<div id="main_body">
-  <%= render "users/user_information", :user => @user %>
-  <div id="provided_meals">
+    <%= render "users/user_information", :user => @user %>
+    <div id="provided_meals">
     
     <%= render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
-	
-    <div class="display_formerly_meal">
-			<div class="meal_right">
-				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
-				<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
-				<div id="map"></div>
-			</div>
-			<div class="clear"></div>
-			<div class="meal_info">
-      	<div class="formerly_meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
-   <div class="meal_icon">
-     <% if @meal.vegetarien %>
-       <%= image_tag 'icon_veggie.png', :alt => "veggie", :title => "veggie" %>
-     <% end %>
-     <% if @meal.organic %>
-       <%= image_tag 'icon_organic.png', :alt => "organic", :title => "organic" %>
-     <% end %>
-     <% if @meal.kosher %>
-       <%= image_tag 'icon_kosher.png', :alt => "kosher", :title => "hosher" %>
-     <% end %>
-     <% if @meal.asian %>
-       <%= image_tag 'icon_asian.png', :alt => "asian", :title => "asian" %>
-     <% end %>
-     <% if @meal.gluten_free %>
-       <%= image_tag 'icon_gluten-free.png', :alt => "gluten", :title => "gluten" %>
-     <% end %>
-     <% if @meal.lactose_free %>
-       <%= image_tag 'icon_lactose-free.png', :alt => "lactose free", :title => "lactose free" %>
-     <% end %>
-     <% if @meal.diabetics %>
-       <%= image_tag 'icon_halal.png', :alt => "halal", :title => "halal" %>
-     <% end %>
-     <% if @meal.hot %>
-       <%= image_tag 'icon_hot.png', :alt => "hot", :title => "hot" %>
-     <% end %>
-     <% if @meal.veryhot %>
-       <%= image_tag 'icon_veryhot.png', :alt => "very hot", :title => "very hot" %>
-     <% end %>
-  </div>
-
-      	<%= @meal.time.strftime('%a %d.%m.%y') %> - <%= @meal.times.strftime('%H:%M') %><br>
-        Description: <%= @meal.description %><br>
-        <br>
-        <% if current_user %>
-        	<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
-        		<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
-				<%= render 'users/meals_eat_in_take_away', :meal => @meal %>
-				<p><%= @meal.slots %><b>Guests</b></p>
-			<br />
-       		<div id="loc">
-					<div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
-          <div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>
-					<div class="country"><%= @meal.country %></div>
-						<% end %>
-					<% end %>
-				<% end %>
-
-					<div id="meals_distance_stream" style="display:none">
-						<div class="meal" id="meal_<%= @meal.id %>">
-							<input type="hidden" title="lat" value="<%= @meal.lat %>" />
-							<input type="hidden" title="lon" value="<%= @meal.lon %>" />
-						</div>
-					</div>
-					<%= render "layouts/meal_arrangement_button" %>
-
-
-					<div id="comment_box"><% @meal.comment_threads.each do |comment| %>
-						<div class="comment_avatar"><%= link_to image_tag(get_thumb_avatar_url(get_user_name(comment.user_id))), user_path(@user) %></div>
-						<div class="comment">
-							<%= link_to get_user_name(comment.user_id).first_name, user_path(@user) %>
-							wrote on <%= l(comment.created_at, :format => :long) %>: <br>
-							<%=  comment.body %><br>
-						</div>
-						<% end %>
-						<%= render 'comments/comment_form', :meal => @meal %>
-					</div>
-
-				</div>
-			</div>
+    
+    <div class="display_meal">
+            <div class="meal_right">
+                <img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
+                <img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
+                <div id="map"></div>
+            </div>
+            <div class="clear"></div>
+            <div class="meal_info">
+        <div class="meal_title"><%= link_to @meal.title, meal_path(@meal.id) %></div>
+    <div class="meal_icon">
+		<% if @meal.vegetarien %>
+		<%= image_tag 'icon_veggie.png', :alt => "veggie", :title => "veggie" %>
+		<% end %>
+		<% if @meal.organic %>
+		<%= image_tag 'icon_organic.png', :alt => "organic", :title => "organic" %>
+		<% end %>
+		<% if @meal.kosher %>
+		<%= image_tag 'icon_kosher.png', :alt => "kosher", :title => "hosher" %>
+		<% end %>
+		<% if @meal.asian %>
+		<%= image_tag 'icon_asian.png', :alt => "asian", :title => "asian" %>
+		<% end %>
+		<% if @meal.gluten_free %>
+		<%= image_tag 'icon_gluten.png', :alt => "gluten", :title => "gluten" %>
+		<% end %>
+		<% if @meal.lactose_free %>
+		<%= image_tag 'icon_lactose-free.png', :alt => "lactose free", :title => "lactose free" %>
+		<% end %>
+		<% if @meal.diabetics %>
+		<%= image_tag 'icon_halal.png', :alt => "halal", :title => "halal" %>
+		<% end %>
+		<% if @meal.hot %>
+		<%= image_tag 'icon_hot.png', :alt => "hot", :title => "hot" %>
+		<% end %>
+		<% if @meal.veryhot %>
+		<%= image_tag 'icon_veryhot.png', :alt => "very hot", :title => "very hot" %>
+		<% end %>
+    </div>
+  
+    <%= @meal.time.strftime('%a %d.%m.%y') %> - <%= @meal.times.strftime('%H:%M') %><br>
+    Description: <%= @meal.description %><br>
+    <br>
+    <% if current_user %>
+        <% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
+            <% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
+            <%= render 'users/meals_eat_in_take_away', :meal => @meal %>
+            <p><%= @meal.slots %><b>Guests</b></p>
+        <br />
+        <div id="loc">
+        <div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
+        <div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>
+        <div class="country"><%= @meal.country %></div>
+             <% end %>
+        <% end %>
+    <% end %>
+    
+	<div id="meals_distance_stream" style="display:none">
+		<div class="meal" id="meal_<%= @meal.id %>">
+			<input type="hidden" title="lat" value="<%= @meal.lat %>" />
+			<input type="hidden" title="lon" value="<%= @meal.lon %>" />
 		</div>
-	<div class="clear"></div>
+	</div>
+    
+    <%= render "layouts/meal_arrangement_button" %>
+    
+    </div>
+    </div>
+    </div>
+    <div class="clear"></div>
 </div>
+
+<% if @meal.time < Date.today && @meal.times <= Time.now && current_user && @meal.user_id != current_user.id %>
+<p>Comment this former meal.</p>
+<div id="comment_box"><% @meal.comment_threads.each do |comment| %>
+    <div class="comment_avatar"><%= link_to image_tag(get_thumb_avatar_url(get_user_name(comment.user_id))), user_path(@user) %></div>
+    <div class="comment">
+        <%= link_to get_user_name(comment.user_id).first_name, user_path(@user) %>
+        wrote on <%= l(comment.created_at, :format => :long) %>: <br>
+        <%=  comment.body %><br>
+    </div>
+    <% end %>
+    <%= render 'comments/comment_form', :meal => @meal %>
+</div>
+
 <% end %>

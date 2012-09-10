@@ -1,16 +1,16 @@
 
 <% # unfortunalty this partial di not work due to @form_tag, that is a nil Class, no idea why %>
 
-<% if current_user.current_user_location %>
-	<% if current_user.current_user_location.activate %>
+<% if current_user.location %>
+	<% if current_user.location.activate %>
 		<%= hidden_field_tag "current_user_locations", "y" %>
-		<%= @form_tag.text_field :street_number, :value => current_user.current_user_location.street_number, :placeholder => "Street Number" %><br />
+		<%= @form_tag.text_field :street_number, :value => current_user.location.street_number, :placeholder => "Street Number" %><br />
 
 		<div class="Adress">
-			<%= @form_tag.text_field :street, :value => current_user.current_user_location.street, :placeholder => "Street" %><br />
-			<%= @form_tag.text_field :zip_code, :value => current_user.current_user_location.zip_code, :placeholder => "Zip Code" %><br />
-			<%= @form_tag.text_field :city, :value => current_user.current_user_location.city, :placeholder => "City" %><br />
-			<%= @form_tag.text_field :country, :value => current_user.current_user_location.country, :placeholder => "Country" %><br />
+			<%= @form_tag.text_field :street, :value => current_user.location.street, :placeholder => "Street" %><br />
+			<%= @form_tag.text_field :zip_code, :value => current_user.location.zip_code, :placeholder => "Zip Code" %><br />
+			<%= @form_tag.text_field :city, :value => current_user.location.city, :placeholder => "City" %><br />
+			<%= @form_tag.text_field :country, :value => current_user.location.country, :placeholder => "Country" %><br />
 		</div>
 	<% else %>
 		<%= hidden_field_tag "current_user_locations", "n" %>

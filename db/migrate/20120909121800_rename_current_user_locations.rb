@@ -1,6 +1,6 @@
-class CreateCurrentUserLocations < ActiveRecord::Migration
+class RenameCurrentUserLocations < ActiveRecord::Migration
   def self.up
-    create_table :current_user_locations do |t|
+    create_table :locations do |t|
       t.integer :user_id
       t.string :street
       t.integer :street_number
@@ -12,6 +12,6 @@ class CreateCurrentUserLocations < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :current_user_locations
+    drop_table :locations
   end
 end

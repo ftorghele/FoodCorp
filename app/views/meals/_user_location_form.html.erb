@@ -1,4 +1,4 @@
-<%= form_for(@current_user_location, :url => meal_action) do |l| %>
+<%= form_for(@location, :url => meal_action) do |l| %>
 	<%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
 	<%= l.text_field :street, :placeholder => 'Street' %>
 	<%= l.text_field :street_number, :placeholder => 'No.' %>

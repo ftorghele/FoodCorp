@@ -1,4 +1,4 @@
-class CurrentUserLocation < ActiveRecord::Base
+class Location < ActiveRecord::Base
   belongs_to :user, :dependent => :destroy
   
   validates :street, :presence => true 

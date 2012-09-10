@@ -99,7 +99,11 @@
 <div id="provided_meals">
  <h4>formerly cooked</h4>
   <% meals.each do |meal|%>
+
   <%# if meal.time.present? %>
+
+
+
   <% if meal.time < Date.today && meal.times < Time.now %>
     <div class="display_formerly_meal">
       <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %>
@@ -147,7 +151,11 @@
       </div>
       <%# date = Time.at meal.times.to_i %>
       <%# date = date.utc.strftime('%H:%M') %>
+<<<<<<< HEAD
       <div class="meal_info"><%= meal.time %> - <%= date %><br>
+=======
+      <div class="meal_info"><%= meal.time.strftime('%a %d.%m.%y') %> - <%= meal.times %><br>
+>>>>>>> 2ea75c867dd3675f797f0f70a15d77bca96f24e0
         <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
@@ -156,7 +164,11 @@
 				<b>Apply until:</b><br />
 				<% date = Time.at meal.deadline_time.to_i %>
 				<%# date = date.utc.strftime('%H:%M') %>
+<<<<<<< HEAD
 				<%= meal.deadline %> - <%= date %>
+=======
+				<%= meal.deadline.strftime('%a %d.%m.%y') %> - <%= meal.deadline_time %>
+>>>>>>> 2ea75c867dd3675f797f0f70a15d77bca96f24e0
 				<br>Accepted Users:<br>
 				<% if meal.meal_arrangements.count > 0 %>
 				  <ul>
@@ -172,13 +184,7 @@
 				<br>Outstanding Meal Requests<br>
 				<%= render 'meal_arrangement_requests', :meal => meal %>
 				<br />
-				<% if meal.eat_in %>
-					<b>Eat in</b>
-				<% end %>
-				<br />
-				<% if meal.take_away %>
-					<b>Take away</b>
-				<% end %>
+				<%= render 'meals_eat_in_take_away', :meal => meal %>
 		    </div>
 
 			<div id="meals_distance_stream" style="display:none">

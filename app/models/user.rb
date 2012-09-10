@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :meals
   has_many :meal_arrangements
   has_many :comments
-  has_one :current_user_location
+  has_one :location
   
   # Followers
   has_many :fellowships
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me,
                   :first_name, :last_name, :gender, :birthday, :fb_id, :avatar, :use_fb_avatar,
                   :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, 
-                  :mail_notification, :got_invitation, :current_user_location_id, :meal_counter
+                  :mail_notification, :got_invitation, :location_id, :meal_counter
 
 #  validates :first_name, :presence => true, :uniqueness => true 
 #  validates :last_name, :presence => true, :uniqueness => true

@@ -1,8 +1,9 @@
 <div id="provided_meals">
  <h4>Current Invitations</h4>
   <% meals.each do |meal|%>
-  <%# if meal.time.present? %>
-    <% if meal.time > Date.today# && meal.times > Time.now %>
+  <%# if meal.time & meal.times %>
+	<% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
+    <% if time_to_check > Time.now %>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
 
@@ -48,7 +49,7 @@
         </span>
       </div>
       
-      <div class="meal_info"><%=l(meal.time, :format => :long) %> - <%= l(meal.times, :format => :short) %><br>
+      <div class="meal_info"><%=l meal.time, :format => :short %> - <%=  meal.times.strftime("%H:%M")%><br>
         <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
@@ -56,7 +57,7 @@
 				<p><%= meal.slots %><b>Guests</b></p>
 				<b>Apply until:</b><br />
 				
-				<%= meal.deadline.to_s %> - <%= meal.deadline_time.to_s %>
+				<%= l meal.deadline, :format => :short %> - <%= meal.deadline_time.strftime("%H:%M") %>
 				<br>Accepted Users:<br>
 				<% if meal.meal_arrangements.count > 0 %>
 				  <ul>
@@ -102,9 +103,8 @@
 
   <%# if meal.time.present? %>
 
-
-
-  <% if meal.time < Date.today && meal.times < Time.now %>
+  <% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
+    <% if time_to_check < Time.now %>
     <div class="display_formerly_meal">
       <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %>
 
@@ -149,27 +149,18 @@
           <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
         </span>
       </div>
-      <%# date = Time.at meal.times.to_i %>
-      <%# date = date.utc.strftime('%H:%M') %>
-<<<<<<< HEAD
-      <div class="meal_info"><%= meal.time %> - <%= date %><br>
-=======
-      <div class="meal_info"><%= meal.time.strftime('%a %d.%m.%y') %> - <%= meal.times %><br>
->>>>>>> 2ea75c867dd3675f797f0f70a15d77bca96f24e0
+
+      <div class="meal_info"><%=l meal.time, :format => :short %> - <%= meal.times.strftime("%H:%M") %><br/>
         <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
 			<div id="meal_info_right">
 				<p><%= meal.slots %><b>Guests</b></p>
 				<b>Apply until:</b><br />
-				<% date = Time.at meal.deadline_time.to_i %>
-				<%# date = date.utc.strftime('%H:%M') %>
-<<<<<<< HEAD
-				<%= meal.deadline %> - <%= date %>
-=======
-				<%= meal.deadline.strftime('%a %d.%m.%y') %> - <%= meal.deadline_time %>
->>>>>>> 2ea75c867dd3675f797f0f70a15d77bca96f24e0
-				<br>Accepted Users:<br>
+				<% l meal.deadline, :format => :short %> - <%= meal.deadline_time.strftime("%H:%M") %>
+				
+
+				<b>Accepted Users:</b><br />
 				<% if meal.meal_arrangements.count > 0 %>
 				  <ul>
 					<% meal.meal_arrangements.each do |mealArrangement| %>

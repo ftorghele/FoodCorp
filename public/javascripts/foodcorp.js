@@ -254,11 +254,12 @@ $(document).ready(function() {
                 $('#searchLocation').val(),
                 function(point) {
                   if (!point) {
-                    //alert($('#searchLocation').val() + " not found");
+                   // alert($('#searchLocation').val() + " not found");
                     $('#searchLon').val($.cookie("longitude"));
                     $('#searchLat').val($.cookie("latitude"));
                     $('#address').submit();
                   } else {
+					//  alert($('#searchLocation').val() + " not found");
                     $('#searchLon').val(point.x);
                     $('#searchLat').val(point.y);
                     $('#address').submit();

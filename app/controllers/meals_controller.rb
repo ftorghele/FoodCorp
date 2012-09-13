@@ -13,6 +13,8 @@ class MealsController < ApplicationController
    t = Time.now
    dateToday = Date.new(t.year, t.month, t.day).to_s
    @user_meals = Meal.find(:all, :conditions => ["user_id = ? AND time >=" << dateToday, current_user.id]) if current_user
+   @meals = Meal.find(:all)
+    
 
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]

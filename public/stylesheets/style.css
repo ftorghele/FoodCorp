@@ -397,7 +397,15 @@ img {
     height: 350px;
     background:#383838;
     border: 1px solid #000;
-    overflow: auto;
+    overflow: scroll;
+    
+}
+
+#meals_distance_stream .each_meal_index{
+  height: 90px;
+  padding: 5px;
+  margin: 5px 0 10px 0;
+  border-bottom: 1px solid black;
 }
 
 #currentUserLocation{
@@ -624,3 +632,5 @@ margin-left: 135px;
 .date{
 margin-left: 135px;
 }
+
+

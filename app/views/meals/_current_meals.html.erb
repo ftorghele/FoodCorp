@@ -35,7 +35,7 @@
 			<% end %>
 		</div>
   
-    <%= l meal.time, :format => :short %> - <%=  meal.times %><br />
+    <%= l meal.time, :format => :short %> - <%=  meal.times.strftime('%H:%M') %><br />
     
     </div>
     </div>
@@ -74,7 +74,7 @@
 			<% end %>
 		</div>
   
-    <%= l meal.time, :format => :short %> - <%=  meal.times %><br />
+    <%= l meal.time, :format => :short %> - <%=  meal.times.strftime('%H:%M') %><br />
     
     </div>
     </div>

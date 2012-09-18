@@ -1,8 +1,8 @@
-<div class ="meal_schow_index" >  
+<div class ="display_meal" >  
   <% @meal_arrangement.each do |arrangement| %>
   <% if arrangement && arrangement.user_id == current_user.id %>
    <% @meals.each do |meal|%>
-       <div class ="each_meal_index" >
+       <div class ="meal_info" >
         <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
         <%= meal.zip_code %> <%= meal.city %> at 
         <% @user.each do |user| %>
@@ -38,7 +38,7 @@
 			<% end %>
 		</div>
   
-    <%= l meal.time, :format => :short %> - <%=  meal.times %><br />
+    <%= l meal.time, :format => :short %> - <%=  meal.times.strftime('%H:%M') %><br />
     
     </div>
     <% end %>

@@ -1,0 +1,47 @@
+<div class ="meal_schow_index" >  
+  <% @meal_arrangement.each do |arrangement| %>
+  <% if arrangement && arrangement.user_id == current_user.id %>
+   <% @meals.each do |meal|%>
+       <div class ="each_meal_index" >
+        <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
+        <%= meal.zip_code %> <%= meal.city %> at 
+        <% @user.each do |user| %>
+          <%= link_to user.first_name << 's', user_path(user.id) %>
+        <% end %>
+		<div class="meal_icon">
+			<% if meal.vegetarien %>
+			<%= image_tag 'icon_veggie.png', :alt => "veggie", :title => "veggie" %>
+			<% end %>
+			<% if meal.organic %>
+			<%= image_tag 'icon_organic.png', :alt => "organic", :title => "organic" %>
+			<% end %>
+			<% if meal.kosher %>
+			<%= image_tag 'icon_kosher.png', :alt => "kosher", :title => "hosher" %>
+			<% end %>
+			<% if meal.asian %>
+			<%= image_tag 'icon_asian.png', :alt => "asian", :title => "asian" %>
+			<% end %>
+			<% if meal.gluten_free %>
+			<%= image_tag 'icon_gluten.png', :alt => "gluten", :title => "gluten" %>
+			<% end %>
+			<% if meal.lactose_free %>
+			<%= image_tag 'icon_lactose-free.png', :alt => "lactose free", :title => "lactose free" %>
+			<% end %>
+			<% if meal.diabetics %>
+			<%= image_tag 'icon_halal.png', :alt => "halal", :title => "halal" %>
+			<% end %>
+			<% if meal.hot %>
+			<%= image_tag 'icon_hot.png', :alt => "hot", :title => "hot" %>
+			<% end %>
+			<% if meal.veryhot %>
+			<%= image_tag 'icon_veryhot.png', :alt => "very hot", :title => "very hot" %>
+			<% end %>
+		</div>
+  
+    <%= l meal.time, :format => :short %> - <%=  meal.times %><br />
+    
+    </div>
+    <% end %>
+    <% end %>
+    <% end %>
+    </div>

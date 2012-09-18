@@ -118,6 +118,12 @@ class MealsController < ApplicationController
     end
   end
   
+  def own_dated_meal
+  @meals = Meal.joins(:meal_arrangements)
+  @meal_arrangement = MealArrangement.where(:user_id => current_user.id) if current_user
+  @user = User.joins(:meals => :meal_arrangements)
+  end
+  
   protected
   def check_login
     unless current_user

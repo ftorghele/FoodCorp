@@ -254,11 +254,12 @@ $(document).ready(function() {
                 $('#searchLocation').val(),
                 function(point) {
                   if (!point) {
-                    //alert($('#searchLocation').val() + " not found");
+                   // alert($('#searchLocation').val() + " not found");
                     $('#searchLon').val($.cookie("longitude"));
                     $('#searchLat').val($.cookie("latitude"));
                     $('#address').submit();
                   } else {
+					//  alert($('#searchLocation').val() + " not found");
                     $('#searchLon').val(point.x);
                     $('#searchLat').val(point.y);
                     $('#address').submit();
@@ -324,15 +325,22 @@ $(document).ready(function() {
     $(".tab_content:first").show(); //Show first tab content
 
     //On Click Event
-    $("ul.tabs li").click(function() {
+    $("ul.tabs li").click(function(event) {
+            
+            if( event.target.getAttribute('href') == '#tab4' )
+				$('#submit_button').hide();
+			else
+				$('#submit_button').show();
+				
+			$("ul.tabs li a").removeClass("nav_active", 500); //Remove any "active" class
+			$(this).children().toggleClass("nav_active", 500); //Add "active" class to selected tab
+			$(".tab_content").hide(); //Hide all tab content
 
-            $("ul.tabs li a").removeClass("nav_active", 500); //Remove any "active" class
-            $(this).children().toggleClass("nav_active", 500); //Add "active" class to selected tab
-            $(".tab_content").hide(); //Hide all tab content
-
-            var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
-            $(activeTab).fadeIn(500); //Fade in the active ID content
+			var activeTab = $(this).find("a").attr("href"); //Find the href attribute value to identify the active tab + content
+			$(activeTab).fadeIn(500); //Fade in the active ID content
+            
             return false;
+            
     });
 
 		

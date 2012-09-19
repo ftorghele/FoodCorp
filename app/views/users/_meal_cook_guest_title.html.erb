@@ -1,0 +1,20 @@
+<% if current_user %>
+  <% if meal.user_id == current_user.id %>
+	<h3>You are host of meal: <%= meal.title %></h3>
+  <% else %>
+	
+	<% if meal_arrangement && meal_arrangement.user_id == current_user.id %>
+	  <h3>You are guest of meal: <%= meal.title %></h3>
+	<% else %>
+	  <% if current_user.points > 0 %>
+	    <h3>You are no guest of meal <%= meal.title %> yet, but you can order it.</h3>
+	  <% else %>
+	    <h3>Sorry, you can not order meal <%= meal.title %>, because you have got no points.</h3>
+	  <% end %>
+	<% end %>
+  
+  <% end %>
+  
+<% else %>
+  <h3>You are not logged in.</h3>
+<% end %>

@@ -2,6 +2,8 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  formats:
+    time: "%H:%M"
   activerecord:
     attributes:
       user:
@@ -16,7 +18,7 @@ en:
         city: "Zip code and city:"
         street: "Street and Street Number:"
         info_field: "Some Information about you which is displayed on your profile page:"
-
+        
   application:
     title: "DinnerCollective"
     access_denied: "Access denied"
@@ -31,7 +33,7 @@ en:
     inbox: "Inbox"
     outbox: "Outbox"
     new: "New PM"
-    
+    mail: "Mail"
     
   meal:
     time_fail: "Time not valid!"

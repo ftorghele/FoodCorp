@@ -1,4 +1,4 @@
-<%= form_tag({:action => "create_comment"}, :method => "post") do %>
+<%= form_tag(create_commit_path, :method => "post") do %>
   <%= hidden_field_tag 'meal_id', meal.id %>
   <%= text_area_tag 'body', nil, :id => "comment_area" %><br>
   <%= image_submit_tag("submit_comment.png", :id => "comment_submit") %>

@@ -48,10 +48,11 @@ p.notice, p.alert {
 }
 
 #top_navigation_container {
-	width: 782px;
+	width: 602px;
 	height: 122px;
-	float: right;
-        position: relative;
+	float: left;
+    position: relative;
+    right: 50px;    
 }
 
 #main {
@@ -311,6 +312,7 @@ img {
     position:absolute;
     right:20px;
     top:30px;
+    z-index: 100;
 }
 
 #login img {
@@ -395,7 +397,15 @@ img {
     height: 350px;
     background:#383838;
     border: 1px solid #000;
-    overflow: auto;
+    overflow: scroll;
+    
+}
+
+#meals_distance_stream .each_meal_index{
+  height: 90px;
+  padding: 5px;
+  margin: 5px 0 10px 0;
+  border-bottom: 1px solid black;
 }
 
 #currentUserLocation{
@@ -452,7 +462,7 @@ img {
 #provided_meals {
     float: right;
     width: 602px;
-    min-height: 100%
+    min-height: 100%;
 }
 
 /* ---- USER_PROFILE END ----*/
@@ -478,6 +488,7 @@ img {
 
 #provide_meal {
     width: 350px;
+    padding-left: 200px;
 }
 #provide_meal label {
     width: 120px;
@@ -621,3 +632,5 @@ margin-left: 135px;
 .date{
 margin-left: 135px;
 }
+
+

@@ -1,0 +1,6 @@
+pirate:
+  time:
+    formats:
+      short: "%d.%b %H:%M"
+      datum: "%a %d.%m.%y"
+      time: "%H:%M"

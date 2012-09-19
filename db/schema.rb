@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614132400) do
+ActiveRecord::Schema.define(:version => 20120909123500) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -54,6 +54,18 @@ ActiveRecord::Schema.define(:version => 20120614132400) do
 
   add_index "fellowships", ["follower_id"], :name => "index_fellowships_on_follower_id"
   add_index "fellowships", ["user_id"], :name => "index_fellowships_on_user_id"
+
+  create_table "locations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "street"
+    t.integer  "street_number"
+    t.integer  "zip_code"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "activate",      :default => true
+    t.text     "country"
+  end
 
   create_table "meal_arrangements", :force => true do |t|
     t.integer  "meal_id"
@@ -152,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20120614132400) do
     t.boolean  "got_invitation",                          :default => false
     t.integer  "current_user_location_id",                :default => 0
     t.integer  "meal_counter",                            :default => 0
+    t.integer  "location_id",                             :default => 0
   end
 
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true

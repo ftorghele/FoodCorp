@@ -3,7 +3,7 @@ require "capybara/rails"
 
 module ActionController
   class IntegrationTest
-    include Capybara
+    include Capybara::DSL
 
     def sign_in_as(email, password)
       user = User.create( :password => password,

@@ -5,6 +5,7 @@
       <li><a href="#tab1"><%=  I18n.t 'tab.general' %></a></li>
       <li><a href="#tab2"><%=  I18n.t 'tab.info' %></a></li>
       <li><a href="#tab3"><%=  I18n.t 'tab.address' %></a></li>
+      <li><a href="#tab4"><%=  I18n.t 'tab.mail' %></a></li>
     </ul>
   </div>
 </div>
@@ -43,9 +44,10 @@
             <%= f.password_field :password_confirmation %></p>
 
         </div>
+        
         <div class="clr"></div>
-
       </div>
+      
       <div id="tab2" class="tab_content">
         <div class="float_left">
           <%= image_tag get_medium_avatar_url(@user), :id => "profile_avatar" %>
@@ -58,13 +60,14 @@
           <p><%= f.label :avatar %><br />
           <%= f.file_field :avatar %></p>
           <br />
-           
-        </div>
-        <div class="clr"></div>
-        <br>
+         
         <p><%= f.label :info_field %><br />
-          <%= f.text_area :info_field, :rows => 8 %></p>
+        <%= f.text_area :info_field, :rows => 8 %></p>
+        </div>
+        
+        <div class="clr"></div>
       </div>
+      
       <div id="tab3" class="tab_content">
         <p><%= f.label :country %><br />
           <%= f.text_field :country %></p>
@@ -80,17 +83,22 @@
       </div>
       <div class="clr"></div>
     </div>
-
-    <p><%= f.submit "Update" %></p>
-  <% end %><br /><br />
-  <% if current_user %>
-	<%= form_for current_user, :method => :update do |u| %>
-	  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
-	  <%= u.label "Receive Mail Notifications:" %>
-	  <%= u.radio_button :mail_notification, true %> <br />
-	  <%= u.label "Don't Receive Mail Notifications:" %>
-	  <%= u.radio_button :mail_notification, false %>
-	  <p><%= image_submit_tag "update_mail_notification.png" %></p>
-	<% end %>
+    
+    <p><%= f.submit "Update", :id => 'submit_button' %></p>
   <% end %>
+  
+  
+  <div id="tab4" class="tab_content">
+	  <% if current_user %>
+		<%= form_for current_user, :method => :update do |u| %>
+		  <%= hidden_field_tag 'user_id', current_user.id, :value => current_user.id %>
+		  <%= u.label "Receive Mail Notifications:" %>
+		  <%= u.radio_button :mail_notification, true %> <br />
+		  <%= u.label "Don't Receive Mail Notifications:" %>
+		  <%= u.radio_button :mail_notification, false %>
+		  <p><%= image_submit_tag "update_mail_notification.png" %></p>
+		<% end %>
+	  <% end %>
+  </div>
+  
 </div>

@@ -10,12 +10,13 @@ class MealArrangementsController < ApplicationController
                                               :meal_id => params[:meal_id],
                                               :acceptance => false,
                                               :mail_notification => params[:receive_mail].to_i)
-      if @meal_arrangement.save
-        redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_success')
-        current_user.points -= 1 if current_user.points > 0
+      
+      if @meal_arrangement.save && current_user.points > 0
+        current_user.points -= 1
         current_user.update_attribute(:points, current_user.points)
+        redirect_to meal_arrangement_status_path(params[:meal_id], 'accepted'), :notice => I18n.t('meal_arrangements.create_success')
       else
-        redirect_to meal_path(params[:meal_id]), :notice => I18n.t('meal_arrangements.create_fail')
+        redirect_to meal_arrangement_status_path(params[:meal_id], 'denied'), :notice => I18n.t('meal_arrangements.create_fail')
       end
   end
 

@@ -402,10 +402,12 @@ img {
 }
 
 #meals_distance_stream .each_meal_index{
+  float:left;
   height: 90px;
   padding: 5px;
   margin: 5px 0 10px 0;
   border-bottom: 1px solid black;
+  width: 370px;
 }
 
 #currentUserLocation{

@@ -86,7 +86,7 @@
 		<% if time_to_check < Time.now %>
 			<%= render "users/user_information", :user => @user %>
 			<div id="provided_meals">	
-				<%= render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
+				<%# render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
 		
 			<div class="display_formerly_meal">
 				<div class="meal_right">
@@ -163,6 +163,7 @@
 						<% end %>
 						<%= render 'comments/comment_form', :meal => @meal %>
 					</div>
+					<%= render "layouts/rating_button" %>
 				</div>
 			</div>
 		</div>

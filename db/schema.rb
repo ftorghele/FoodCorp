@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120909123500) do
+ActiveRecord::Schema.define(:version => 20120920192152) do
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -123,6 +123,24 @@ ActiveRecord::Schema.define(:version => 20120909123500) do
     t.boolean "opened",                    :default => false
     t.boolean "recipient_delete",          :default => false
     t.boolean "sender_delete",             :default => false
+  end
+
+  create_table "rating", :force => true do |t|
+    t.integer  "meal_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rating", ["meal_id"], :name => "index_rating_on_meal_id"
+  add_index "rating", ["user_id"], :name => "index_rating_on_user_id"
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "meals_id"
+    t.integer  "rating"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

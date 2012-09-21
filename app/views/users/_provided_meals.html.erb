@@ -1,7 +1,7 @@
 <div id="provided_meals">
  <h4>Current Invitations</h4>
   <% meals.each do |meal|%>
-  <%# if meal.time & meal.times %>
+  <% if meal.present? %>
 	<% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
     <% if time_to_check > Time.now %>
     <div class="display_meal">
@@ -93,7 +93,9 @@
       <%end%>
     </div>
    <%end%>
-   <%# end %>
+   <% else %>
+	<h2> No current invitations! </h2>
+   <% end %>
   <%end%>
 </div>
 
@@ -101,7 +103,7 @@
  <h4>formerly cooked</h4>
   <% meals.each do |meal|%>
 
-  <%# if meal.time.present? %>
+  <% if meal.present? %>
 
   <% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
     <% if time_to_check < Time.now %>
@@ -189,6 +191,8 @@
       <%end%>
     </div>
    <%end%>
-   <%#end%>
+   <% else %>
+	<h2> No formerly Meals </h2>
+   <%end%>
   <%end%>
 </div>

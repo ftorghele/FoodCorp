@@ -1,53 +1,55 @@
+<% if meals.count < 1 %>
+	<p> No meals yet! </p>
+	<p> <%= link_to "New Meal", new_meal_path, :class => is_active?("new") %></p>
+<% else %>
 <div id="provided_meals">
  <h4>Current Invitations</h4>
   <% meals.each do |meal|%>
-  <% if meal.present? %>
 	<% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
     <% if time_to_check > Time.now %>
     <div class="display_meal">
-      <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %>
+      <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
 
-	  <div class="meal_right">
-				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
-				<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
-				<div id="map"></div>
-			</div>
-			<div class="clear"></div>
-	<span class="meal_info_right">		
-      
-     <% if meal.vegetarien %>
-       <%= image_tag getCategorieImageName(0), :alt => "veggie", :title => "veggie" %>
-     <% end %>
-     <% if meal.organic %>
-       <%= image_tag getCategorieImageName(1), :alt => "organic", :title => "organic" %>
-     <% end %>
-     <% if meal.kosher %>
-       <%= image_tag getCategorieImageName(2), :alt => "kosher", :title => "hosher" %>
-     <% end %>
-     <% if meal.asian %>
-       <%= image_tag getCategorieImageName(3), :alt => "asian", :title => "asian" %>
-     <% end %>
-     <% if meal.lactose_free %>
-       <%= image_tag getCategorieImageName(4), :alt => "lactose free", :title => "lactose free" %>
-     <% end %>
-     <% if meal.gluten_free %>
-       <%= image_tag getCategorieImageName(5), :alt => "gluten", :title => "gluten" %>
-     <% end %>
-     <% if meal.halal %>
-       <%= image_tag getCategorieImageName(6), :alt => "halal", :title => "halal" %>
-     <% end %>
-     <% if meal.hot %>
-        <%= image_tag getCategorieImageName(7), :alt => "hot", :title => "hot" %>
-     <% end %>
-     <% if meal.veryhot %>
-        <%= image_tag getCategorieImageName(8), :alt => "veryhot", :title => "veryhot" %>
-     <% end %>
-     </span>
+		<div class="meal_right">
+			<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
+			<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
+			<div id="map"></div>
+		</div>
+		<div class="clear"></div>
+		<span class="meal_info_right">		 
+		 <% if meal.vegetarien %>
+		   <%= image_tag getCategorieImageName(0), :alt => "veggie", :title => "veggie" %>
+		 <% end %>
+		 <% if meal.organic %>
+		   <%= image_tag getCategorieImageName(1), :alt => "organic", :title => "organic" %>
+		 <% end %>
+		 <% if meal.kosher %>
+		   <%= image_tag getCategorieImageName(2), :alt => "kosher", :title => "hosher" %>
+		 <% end %>
+		 <% if meal.asian %>
+		   <%= image_tag getCategorieImageName(3), :alt => "asian", :title => "asian" %>
+		 <% end %>
+		 <% if meal.lactose_free %>
+		   <%= image_tag getCategorieImageName(4), :alt => "lactose free", :title => "lactose free" %>
+		 <% end %>
+		 <% if meal.gluten_free %>
+		   <%= image_tag getCategorieImageName(5), :alt => "gluten", :title => "gluten" %>
+		 <% end %>
+		 <% if meal.halal %>
+		   <%= image_tag getCategorieImageName(6), :alt => "halal", :title => "halal" %>
+		 <% end %>
+		 <% if meal.hot %>
+			<%= image_tag getCategorieImageName(7), :alt => "hot", :title => "hot" %>
+		 <% end %>
+		 <% if meal.veryhot %>
+			<%= image_tag getCategorieImageName(8), :alt => "veryhot", :title => "veryhot" %>
+		 <% end %>
+		</span>
         <span class="float_right space_right space_bottom">
           
           <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
         </span>
-      </div>
+      
       
       <div class="meal_info"><%=l meal.time, :format => :short %> - <%=  meal.times.strftime("%H:%M")%><br>
         <br /><br />
@@ -80,119 +82,103 @@
 				<% if meal.take_away %>
 					<b>Take away</b>
 				<% end %>
+				
 		    </div>
 
 			<div id="meals_distance_stream" style="display:none">
-						<div class="meal" id="meal_<%= meal.id %>">
-							<input type="hidden" title="lat" value="<%= meal.lat %>" />
-							<input type="hidden" title="lon" value="<%= meal.lon %>" />
-						</div>
-					</div>
+				<div class="meal" id="meal_<%= meal.id %>">
+					<input type="hidden" title="lat" value="<%= meal.lat %>" />
+					<input type="hidden" title="lon" value="<%= meal.lon %>" />
+				</div>
+			</div>
       </div>
       <%end%>
       <%end%>
+      </div>
     </div>
-   <%end%>
-   <% else %>
-	<h2> No current invitations! </h2>
    <% end %>
-  <%end%>
+   <% end %>
 </div>
 
 <div id="provided_meals">
  <h4>formerly cooked</h4>
   <% meals.each do |meal|%>
-
-  <% if meal.present? %>
-
   <% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
     <% if time_to_check < Time.now %>
     <div class="display_formerly_meal">
-      <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %>
+      <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
 
 	  <div class="meal_right">
-				<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
-				<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
-				<div id="map"></div>
-			</div>
-			<div class="clear"></div>
-	<span class="meal_info_right">		
+		<img src="/images/closed.png" title="open" alt="open" class="openMeal" /><br>
+		<img src="/images/compass.png" title="Map" alt="Location" class="hoverMap" />
+		<div id="map"></div>
+	  </div>
+	  <div class="clear"></div>
+	  <span class="meal_info_right">		
       
-     <% if meal.vegetarien %>
-       <%= image_tag getCategorieImageName(0), :alt => "veggie", :title => "veggie" %>
-     <% end %>
-     <% if meal.organic %>
-       <%= image_tag getCategorieImageName(1), :alt => "organic", :title => "organic" %>
-     <% end %>
-     <% if meal.kosher %>
-       <%= image_tag getCategorieImageName(2), :alt => "kosher", :title => "hosher" %>
-     <% end %>
-     <% if meal.asian %>
-       <%= image_tag getCategorieImageName(3), :alt => "asian", :title => "asian" %>
-     <% end %>
-     <% if meal.lactose_free %>
-       <%= image_tag getCategorieImageName(4), :alt => "lactose free", :title => "lactose free" %>
-     <% end %>
-     <% if meal.gluten_free %>
-       <%= image_tag getCategorieImageName(5), :alt => "gluten", :title => "gluten" %>
-     <% end %>
-     <% if meal.halal %>
-       <%= image_tag getCategorieImageName(6), :alt => "halal", :title => "halal" %>
-     <% end %>
-     <% if meal.hot %>
-        <%= image_tag getCategorieImageName(7), :alt => "hot", :title => "hot" %>
-     <% end %>
-     <% if meal.veryhot %>
-        <%= image_tag getCategorieImageName(8), :alt => "veryhot", :title => "veryhot" %>
-     <% end %>
+		 <% if meal.vegetarien %>
+		   <%= image_tag getCategorieImageName(0), :alt => "veggie", :title => "veggie" %>
+		 <% end %>
+		 <% if meal.organic %>
+		   <%= image_tag getCategorieImageName(1), :alt => "organic", :title => "organic" %>
+		 <% end %>
+		 <% if meal.kosher %>
+		   <%= image_tag getCategorieImageName(2), :alt => "kosher", :title => "hosher" %>
+		 <% end %>
+		 <% if meal.asian %>
+		   <%= image_tag getCategorieImageName(3), :alt => "asian", :title => "asian" %>
+		 <% end %>
+		 <% if meal.lactose_free %>
+		   <%= image_tag getCategorieImageName(4), :alt => "lactose free", :title => "lactose free" %>
+		 <% end %>
+		 <% if meal.gluten_free %>
+		   <%= image_tag getCategorieImageName(5), :alt => "gluten", :title => "gluten" %>
+		 <% end %>
+		 <% if meal.halal %>
+		   <%= image_tag getCategorieImageName(6), :alt => "halal", :title => "halal" %>
+		 <% end %>
+		 <% if meal.hot %>
+			<%= image_tag getCategorieImageName(7), :alt => "hot", :title => "hot" %>
+		 <% end %>
+		 <% if meal.veryhot %>
+			<%= image_tag getCategorieImageName(8), :alt => "veryhot", :title => "veryhot" %>
+		 <% end %>
      </span>
-        <span class="float_right space_right space_bottom">
-          
-          <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
-        </span>
-      </div>
+     <span class="float_right space_right space_bottom">
+       <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
+     </span>
+   
 
       <div class="meal_info"><%=l meal.time, :format => :short %> - <%= meal.times.strftime("%H:%M") %><br/>
-        <br /><br />
-        <% if current_user %>
-          <% if current_user.id == meal.user_id %>
-			<div id="meal_info_right">
-				<p><%= meal.slots %><b>Guests</b></p>
-				<b>Apply until:</b><br />
-				<% l meal.deadline, :format => :short %> - <%= meal.deadline_time.strftime("%H:%M") %>
+      <p><%= meal.slots %><b>Guests</b></p>
 				
-
-				<b>Accepted Users:</b><br />
-				<% if meal.meal_arrangements.count > 0 %>
+				<% if @rating.count > 0 %>
 				  <ul>
-					<% meal.meal_arrangements.each do |mealArrangement| %>
-					  <% if mealArrangement.acceptance %>
-						<li><%= link_to mealArrangement.user.first_name+" "+mealArrangement.user.last_name, user_path(mealArrangement.user_id) %></li>
+					<% @rating.each do |rating| %>
+					  <% if rating && rating.meals_id == meal.id %>
+						<li><%= link_to rating.user.first_name+" "+rating.user.last_name, user_path(rating.user_id) %> <%= rating.rating %> Sterne</li>
 					  <% end %>
 					<% end %>
 				  </ul>
-				<% else %>
-				  <ul><li>none</li></ul>
 				<% end %>
-				<br>Outstanding Meal Requests<br>
-				<%= render 'meal_arrangement_requests', :meal => meal %>
-				<br />
-				<%= render 'meals_eat_in_take_away', :meal => meal %>
-		    </div>
-
-			<div id="meals_distance_stream" style="display:none">
-						<div class="meal" id="meal_<%= meal.id %>">
-							<input type="hidden" title="lat" value="<%= meal.lat %>" />
-							<input type="hidden" title="lon" value="<%= meal.lon %>" />
-						</div>
+        <br /><br />
+        <% if current_user %>
+          <% if current_user.id == meal.user_id %>
+			
+				
+			<div id="meal_info_right">
+				<div id="meals_distance_stream" style="display:none">
+					<div class="meal" id="meal_<%= meal.id %>">
+						<input type="hidden" title="lat" value="<%= meal.lat %>" />
+						<input type="hidden" title="lon" value="<%= meal.lon %>" />
 					</div>
-      </div>
-      <%end%>
+				</div>
+			</div>  
+		<%end%>
       <%end%>
     </div>
-   <%end%>
-   <% else %>
-	<h2> No formerly Meals </h2>
+    </div>
    <%end%>
   <%end%>
 </div>
+<% end %>

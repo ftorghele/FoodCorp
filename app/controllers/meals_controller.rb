@@ -39,7 +39,7 @@ class MealsController < ApplicationController
     @meal = Meal.find(params[:id])
     @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first if current_user
     @user = User.find( @meal.user_id )
-    #@rating = Rating.where(:meal_id => params[:id], :user_id => current_user.id).first if current_user
+    @rating = Rating.where(:meals_id => params[:id], :user_id => current_user.id).first if current_user
   end
 
   def create

@@ -11,6 +11,7 @@ class UsersController < ApplicationController
  
   def show
     @meals = Meal.find(:all, :conditions => ["user_id = ?", params[:id]], :order => 'created_at DESC')
+    @rating = Rating.find(:all)
   end
   
   def update 

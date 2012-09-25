@@ -19,6 +19,7 @@ class Meal < ActiveRecord::Base
   belongs_to :user
   has_many :meal_arrangements
   has_many :comments
+  has_many :rating
 
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   reverse_geocoded_by :lat, :lon

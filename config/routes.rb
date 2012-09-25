@@ -4,7 +4,7 @@ FoodCorp::Application.routes.draw do
 	
   resources :meal_arrangements
     
-  resources :rating
+  resources :ratings
   
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
                                        :registrations => "registrations" }

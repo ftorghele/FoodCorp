@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :meal_arrangements
   has_many :comments
   has_one :location
+  has_many :rating
   
   # Followers
   has_many :fellowships

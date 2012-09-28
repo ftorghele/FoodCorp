@@ -30,6 +30,9 @@ class User < ActiveRecord::Base
 #  validates :first_name, :presence => true, :uniqueness => true 
 #  validates :last_name, :presence => true, :uniqueness => true
   validates :gender, :presence => true
+  
+   
+  
 
   def self.find_for_facebook_oauth(access_token, signed_in_resource=nil)
     data = access_token['extra']['user_hash']

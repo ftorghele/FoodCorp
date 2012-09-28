@@ -1,8 +1,10 @@
 <div class ="display_meal" >  
+  <% mdisplay = 0 %>
 	<% @meal_arrangement.each do |arrangement| %>
 		<% if arrangement && arrangement.user_id == current_user.id %>
 				<% time_to_check = arrangement.meal.time + (arrangement.meal.times.strftime("%H").to_i).hours - 3.hours + (arrangement.meal.times.strftime("%M").to_i).minutes%>
 				<% if time_to_check > Time.now %>
+				  <% mdisplay = mdisplay +1 %>
 				   <div class ="meal_info" >
 						<div class="meal_title"><%= link_to arrangement.meal.title, meal_path(arrangement.meal.id) %></div>
 						<%= arrangement.meal.zip_code %> <%= arrangement.meal.city %> at 
@@ -48,6 +50,10 @@
   <% if @meal_arrangement.count == 0 %>
 	<br />
     <div class="meal_info"> No dates yet<br />
+     To look for Meals click <%= link_to "here", "/" %></div>
+  <% end %>
+  <% if mdisplay == 0 %>
+    <div class="meal_info"> No current dates!<br />
      To look for Meals click <%= link_to "here", "/" %></div>
   <% end %>
 </div>

@@ -4,9 +4,12 @@
 <% else %>
 <div id="provided_meals">
  <h4>Current Invitations</h4>
+  <% mdisplay = 0 %>
   <% meals.each do |meal|%>
+	
 	<% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
     <% if time_to_check > Time.now %>
+		<% mdisplay = mdisplay+1 %>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
 
@@ -98,13 +101,18 @@
     </div>
    <% end %>
    <% end %>
+   <% if mdisplay == 0 %>
+     <h2>No current Meals!</h2>
+   <% end %>
 </div>
 
 <div id="provided_meals">
- <h4>formerly cooked</h4>
+ <h4>Formerly cooked</h4>
+  <% mdisplay = 0 %>
   <% meals.each do |meal|%>
   <% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
     <% if time_to_check < Time.now %>
+    <% mdisplay = mdisplay + 1 %>
     <div class="display_formerly_meal">
       <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
 
@@ -180,5 +188,8 @@
     </div>
    <%end%>
   <%end%>
+  <% if mdisplay == 0 %>
+    <h2>No formerly Meals!</h2>
+  <% end %>
 </div>
 <% end %>

@@ -50,7 +50,7 @@
 		</span>
         <span class="float_right space_right space_bottom">
           
-          <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
+          <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user && current_user.id == meal.user_id %>
         </span>
       
       
@@ -153,7 +153,7 @@
 		 <% end %>
      </span>
      <span class="float_right space_right space_bottom">
-       <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user.id == meal.user_id %>
+       <%= link_to image_tag("edit_meal.png", :title => "edit"), edit_meal_path(meal.id) if current_user && current_user.id == meal.user_id %>
      </span>
    
 

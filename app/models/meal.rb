@@ -26,7 +26,7 @@ class Meal < ActiveRecord::Base
 	
   def check_time
     if time.present? && times.present?
-      time + (times.strftime('%H').to_i).hours - 3.hours + (times.strftime('%M').to_i).minutes
+      time + (times.strftime('%H').to_i).hours - 2.hours + (times.strftime('%M').to_i).minutes
     else
       "unbekannt"
     end

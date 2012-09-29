@@ -11,7 +11,6 @@
 <p>Welcome <%= @resource.email %>!</p>
 <p>You have successfully signed up.
 <p>You can confirm your account through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p>http://dinnercollective.com/users/confirmation?<%= @resource.confirmation_token %></p>
 </body>
 </html>

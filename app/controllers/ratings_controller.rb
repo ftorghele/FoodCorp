@@ -11,13 +11,13 @@ class RatingsController < ApplicationController
   def create # user_id form meal_a is user that wants to eat at someone's place
       @rating = Rating.new(params[:rating])
       @rating.user_id = current_user.id
-      @rating.meals_id = params[:meal_id]
+      @rating.meal_id = params[:meal_id]
       
       @rating.save
       if @rating.save
-		redirect_to "/meals/#{@rating.meals_id}/#{@rating.rating}", :notice => "Speichern erfolgreich"
+		redirect_to "/meals/#{@rating.meal_id}/#{@rating.rating}", :notice => "Speichern erfolgreich"
 	  else
-		redirect_to meals_path(@rating.meals_id), :notice => "Speichern fehlgeschlagen"
+		redirect_to meals_path(@rating.meal_id), :notice => "Speichern fehlgeschlagen"
 	  end
   end
 

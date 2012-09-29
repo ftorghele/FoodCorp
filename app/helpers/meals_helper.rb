@@ -19,4 +19,12 @@ module MealsHelper
     array = ["icon_veggie.png", "icon_organic.png", "icon_kosher.png", "icon_asian.png", "icon_lactose-free.png", "icon_gluten-free.png", "icon_halal.png", "icon_hot.png", "icon_veryhot.png"]
     array[arg]
   end
+  
+   def rating_button_request(args)
+    if Rating.find(:all, :conditions => { :user_id => args[:user_id] , :meal_id => args[:meal_id] }).count > 0
+     return false;
+    else
+     return true;
+    end
+  end
 end

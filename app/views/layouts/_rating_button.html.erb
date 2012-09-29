@@ -1,7 +1,7 @@
 <% if current_user %>
     <% if current_user && current_user.id != @meal.user_id %>
 	  <% unless rating %>
-      <% if button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
+      <% if rating_button_request(:meal_id => @meal.id, :user_id => current_user.id) %>
 			
 			<p>You can rate the meal with 1 to 5 stars.</p>
 			
@@ -13,7 +13,7 @@
 			<% end %>
       <% end %>
       <% end %>
-      <% if rating && rating.user_id == current_user.id && rating.meals_id == @meal.id %>
+      <% if rating && rating.user_id == current_user.id && rating.meal_id == @meal.id %>
 	      Bewertung von <%= rating.user.first_name %> mit: <%= @rating.rating %> Sternen.	      
       <% end %>  
     <% end %>  

@@ -1,5 +1,6 @@
 <div class ="meal_schow_index" > 
    <% meals.each do |meal|%>
+   
     <% if @storred_search_location.present? || params[:date].present? %>
      <% if meal.city == @storred_search_location || meal.time.to_s == params[:date]%>
        <div class ="each_meal_index" >

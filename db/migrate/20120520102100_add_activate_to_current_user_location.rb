@@ -1,9 +1,9 @@
-class AddActivateToUserLocation < ActiveRecord::Migration
+class AddActivateToCurrentUserLocation < ActiveRecord::Migration
   def self.up
-   add_column :location, :activate, :boolean, :default => true
+   add_column :current_user_locations, :activate, :boolean, :default => true
   end
 
   def self.down
-   remove_column :location, :activate
+   remove_column :current_user_locations, :activate
   end
 end

@@ -14,7 +14,7 @@ class MealsController < ApplicationController
    dateToday = Date.new(t.year, t.month, t.day).to_s
    @user_meals = Meal.find(:all, :conditions => ["user_id = ? AND time >=" << dateToday, current_user.id]) if current_user
    @meals = Meal.find(:all, :order => "time DESC")
-    
+   @user = User.joins(:meals)
 
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]
@@ -39,7 +39,7 @@ class MealsController < ApplicationController
     @meal = Meal.find(params[:id])
     @meal_arrangement = MealArrangement.where(:meal_id => params[:id], :user_id => current_user.id).first if current_user
     @user = User.find( @meal.user_id )
-    @rating = Rating.where(:meals_id => params[:id], :user_id => current_user.id).first if current_user
+    @rating = Rating.where(:meal_id => params[:id], :user_id => current_user.id).first if current_user
   end
 
   def create

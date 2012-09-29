@@ -1,9 +1,9 @@
 class Rating < ActiveRecord::Base
-
-  attr_accessible :meals_id, :user_id, :rating
+  
+  attr_accessible :meal_id, :user_id, :rating
 
   validates :user_id, :presence => true
-  validates :meals_id, :presence => true
+  validates :meal_id, :presence => true
 
   has_one :user
   has_one :meal

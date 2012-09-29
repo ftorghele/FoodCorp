@@ -24,7 +24,29 @@ class Meal < ActiveRecord::Base
   geocoded_by :address, :latitude  => :lat, :longitude => :lon
   reverse_geocoded_by :lat, :lon
 	
+  def check_time
+    if time.present? && times.present?
+      time + (times.strftime('%H').to_i).hours - 3.hours + (times.strftime('%M').to_i).minutes
+    else
+      "unbekannt"
+    end
+  end
   
+  def short_time
+    if self.times.present?
+      self.times.strftime('%H:%M')
+    else
+      "unbekannt"
+    end
+  end
+  
+  def short_deadline
+    if self.deadline_time.present? 
+      self.deadline_time.strftime('%H:%M')
+    else
+      "unbekannt"
+    end
+  end
  / def check_deadline
     created_at.strftime('%d.%m').eql? Time.now.strftime('%d.%m')
   end/

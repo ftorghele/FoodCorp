@@ -5,8 +5,8 @@
 
 <div id="main_body">
 	<% if @meal.present? %>
-		<% time_to_check = @meal.time + (@meal.times.strftime("%H").to_i).hours - 3.hours + (@meal.times.strftime("%M").to_i).minutes%>
-		<% if time_to_check > Time.now %>
+		<%# time_to_check = @meal.time + (@meal.times.strftime("%H").to_i).hours - 3.hours + (@meal.times.strftime("%M").to_i).minutes%>
+		<% if @meal.check_time > Time.now %>
 		<%= render "users/user_information", :user => @user %>
 		<div id="provided_meals">
 			<%= render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>
@@ -82,8 +82,8 @@
 		<div class="clear"></div>
 		<% end %>
 		
-		<% time_to_check = @meal.time + (@meal.times.strftime("%H").to_i).hours - 3.hours + (@meal.times.strftime("%M").to_i).minutes%>
-		<% if time_to_check < Time.now %>
+		<%# time_to_check = @meal.time + (@meal.times.strftime("%H").to_i).hours - 3.hours + (@meal.times.strftime("%M").to_i).minutes%>
+		<% if @meal.check_time < Time.now %>
 			<%= render "users/user_information", :user => @user %>
 			<div id="provided_meals">	
 				<%# render 'users/meal_cook_guest_title', :meal => @meal, :meal_arrangement => @meal_arrangement %>

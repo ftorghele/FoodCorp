@@ -7,8 +7,8 @@
   <% mdisplay = 0 %>
   <% meals.each do |meal|%>
 	
-	<% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
-    <% if time_to_check > Time.now %>
+	<%# time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
+    <% if meal.check_time > Time.now %>
 		<% mdisplay = mdisplay+1 %>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
@@ -54,7 +54,7 @@
         </span>
       
       
-      <div class="meal_info"><%=l meal.time, :format => :short %> - <%=  meal.times.strftime("%H:%M")%><br>
+      <div class="meal_info"><%=l meal.time, :format => :short %> - <%=  meal.short_time %><br>
         <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
@@ -62,7 +62,7 @@
 				<p><%= meal.slots %><b>Guests</b></p>
 				<b>Apply until:</b><br />
 				
-				<%= l meal.deadline, :format => :short %> - <%= meal.deadline_time.strftime("%H:%M") %>
+				<%= l meal.deadline, :format => :short %> - <%= meal.short_deadline %>
 				<br>Accepted Users:<br>
 				<% if meal.meal_arrangements.count > 0 %>
 				  <ul>
@@ -94,7 +94,7 @@
 					<input type="hidden" title="lon" value="<%= meal.lon %>" />
 				</div>
 			</div>
-      </div>
+      
       <%end%>
       <%end%>
       </div>
@@ -110,8 +110,8 @@
  <h4>Formerly cooked</h4>
   <% mdisplay = 0 %>
   <% meals.each do |meal|%>
-  <% time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
-    <% if time_to_check < Time.now %>
+  <%# time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
+    <% if meal.check_time < Time.now %>
     <% mdisplay = mdisplay + 1 %>
     <div class="display_formerly_meal">
       <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
@@ -157,13 +157,13 @@
      </span>
    
 
-      <div class="meal_info"><%=l meal.time, :format => :short %> - <%= meal.times.strftime("%H:%M") %><br/>
+      <div class="meal_info"><%=l meal.time, :format => :short %> - <%= meal.short_time %><br/>
       <p><%= meal.slots %><b>Guests</b></p>
 				
 				<% if @rating.count > 0 %>
 				  <ul>
 					<% @rating.each do |rating| %>
-					  <% if rating && rating.meals_id == meal.id %>
+					  <% if rating && rating.meal_id == meal.id %>
 						<li><%= link_to rating.user.first_name+" "+rating.user.last_name, user_path(rating.user_id) %> <%= rating.rating %> Sterne</li>
 					  <% end %>
 					<% end %>

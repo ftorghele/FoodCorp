@@ -46,7 +46,7 @@
       <div class ="each_meal_index" >
         <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
         <%= meal.zip_code %> <%=meal.city %> at
-        <%= link_to meal.user.first_name, user_path(meal.id) %>      
+        <%= link_to meal.user.first_name, user_path(meal.user_id) %>      
 		<div class="meal_icon">
 			<% if meal.vegetarien %>
 			<%= image_tag 'icon_veggie.png', :alt => "veggie", :title => "veggie" %>

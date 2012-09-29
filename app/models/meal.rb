@@ -32,19 +32,22 @@ class Meal < ActiveRecord::Base
     end
   end
   
+
+  def check_time
+    if time.present? && times.present?
+      time + (times.strftime('%H').to_i).hours - 3.hours + (times.strftime('%M').to_i).minutes
+    end
+  end
+  
   def short_time
-    if self.times.present?
-      self.times.strftime('%H:%M')
-    else
-      "unbekannt"
+    if times.present?
+      times.strftime('%H:%M')
     end
   end
   
   def short_deadline
-    if self.deadline_time.present? 
-      self.deadline_time.strftime('%H:%M')
-    else
-      "unbekannt"
+    if deadline_time.present?
+      deadline_time.strftime('%H:%M')
     end
   end
  / def check_deadline

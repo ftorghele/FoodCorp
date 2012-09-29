@@ -2,13 +2,15 @@
   <% mdisplay = 0 %>
 	<% @meal_arrangement.each do |arrangement| %>
 		<% if arrangement && arrangement.user_id == current_user.id %>
-				<% if arrangement.meal.check_time.present? && arrangement.meal.check_time > Time.now %>
+				<%# time_to_check = arrangement.meal.time + (arrangement.meal.times.strftime("%H").to_i).hours - 3.hours + (arrangement.meal.times.strftime("%M").to_i).minutes%>
+				<% if arrangement.meal.check_time > Time.now %>
+
 				  <% mdisplay = mdisplay +1 %>
 				   <div class ="meal_info" >
 						<div class="meal_title"><%= link_to arrangement.meal.title, meal_path(arrangement.meal.id) %></div>
 						<%= arrangement.meal.zip_code %> <%= arrangement.meal.city %> at 
 						<%# @user.meal_id do |user| %>
-							<%= link_to arrangement.meal.user.first_name, user_path(arrangement.meal.id) %>
+							<%= link_to arrangement.meal.user.first_name, user_path(arrangement.meal.user_id) %>
 						<%# end %>
 						<div class="meal_icon">
 							<% if arrangement.meal.vegetarien %>
@@ -40,7 +42,7 @@
 							<% end %>
 						</div>
 				  
-					   <%= l arrangement.meal.time, :format => :short %> - <%=  arrangement.meal.times.strftime('%H:%M') %><br />
+					   <%= l arrangement.meal.time, :format => :short %> - <%=  arrangement.meal.short_time %><br />
 					
 					   </div>
 				  <% end %>

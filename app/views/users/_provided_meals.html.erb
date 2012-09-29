@@ -6,7 +6,9 @@
  <h4>Current Invitations</h4>
   <% mdisplay = 0 %>
   <% meals.each do |meal|%>
-    <% if meal.check_time.present? && meal.check_time > Time.now %>
+	
+	<%# time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
+    <% if meal.check_time > Time.now %>
 		<% mdisplay = mdisplay+1 %>
     <div class="display_meal">
       <div class="meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
@@ -52,7 +54,7 @@
         </span>
       
       
-      <div class="meal_info"><%=l meal.time, :format => :short %> - <%=  meal.short_time %>
+      <div class="meal_info"><%=l meal.time, :format => :short %> - <%=  meal.short_time %><br>
         <br /><br />
         <% if current_user %>
           <% if current_user.id == meal.user_id %>
@@ -92,7 +94,7 @@
 					<input type="hidden" title="lon" value="<%= meal.lon %>" />
 				</div>
 			</div>
-      </div>
+      
       <%end%>
       <%end%>
       </div>
@@ -108,7 +110,8 @@
  <h4>Formerly cooked</h4>
   <% mdisplay = 0 %>
   <% meals.each do |meal|%>
-    <% if meal.check_time.present? && meal.check_time < Time.now %>
+  <%# time_to_check = meal.time + (meal.times.strftime("%H").to_i).hours - 3.hours + (meal.times.strftime("%M").to_i).minutes%>
+    <% if meal.check_time < Time.now %>
     <% mdisplay = mdisplay + 1 %>
     <div class="display_formerly_meal">
       <div class="formerly_meal_title"><%= link_to meal.title, meal_path(meal.id) %></div>
@@ -155,8 +158,7 @@
    
 
       <div class="meal_info"><%=l meal.time, :format => :short %> - <%= meal.short_time %><br/>
-      <p><%= meal.slots %><b>Guests</b></p><br />
-				
+      <p><%= meal.slots %><b>Guests</b></p>				
 				<% if @rating.count > 0 %>
 				<p><b>Rating:</b></p>
 				  <ul>

@@ -57,7 +57,8 @@
 						<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
 							<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
 							<%= render 'users/meals_eat_in_take_away', :meal => @meal %>
-							<p><%= @meal.slots %><b>Guests</b></p>
+							<p>There is still a chance to eat for <%= @meal.slots %><b>Guests</b></p>
+              <p><%= get_number_of_guests(@meal.meal_arrangements) %></p>
 							<br />
 							<div id="loc">
 							<div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
@@ -133,14 +134,15 @@
 					<% if current_user %>
 						<% if @meal_arrangement != nil || @meal.user_id == current_user.id %>
 							<% if @meal.user_id == current_user.id || @meal_arrangement.acceptance == true %>
-							<%= render 'users/meals_eat_in_take_away', :meal => @meal %>
-							<p><%= @meal.slots %><b>Guests</b></p>
-							<br />
-							<div id="loc">
-							<div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
-							<div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>
-							<div class="country"><%= @meal.country %></div>
-							 <% end %>
+                <%= render 'users/meals_eat_in_take_away', :meal => @meal %>
+                <p>There is still a chance to eat for <%= @meal.slots %><b>Guests</b></p>
+                <p><%= get_number_of_guests(@meal.meal_arrangements) %></p>
+                <br />
+                <div id="loc">
+                <div class="street"><%= @meal.street %> <%= @meal.street_number%></div>
+                <div class="city"><%= @meal.zip_code %> <%= @meal.city %></div>
+                <div class="country"><%= @meal.country %></div>
+							<% end %>
 						<% end %>
 					<% end %>
 			

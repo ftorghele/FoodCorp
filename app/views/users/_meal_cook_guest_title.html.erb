@@ -3,13 +3,17 @@
 	<h3>You are host of meal: <%= meal.title %></h3>
   <% else %>
 	
-	<% if meal_arrangement && meal_arrangement.user_id == current_user.id %>
+	<% if meal_arrangement && meal_arrangement.user_id == current_user.id && meal_arrangement.acceptance %>
 	  <h3>You are guest of meal: <%= meal.title %></h3>
 	<% else %>
-	  <% if current_user.points > 0 %>
+	  <% if current_user.points > 0 && meal_arrangement.nil? %>
 	    <h3>You are no guest of meal <%= meal.title %> yet, but you can order it.</h3>
 	  <% else %>
-	    <h3>Sorry, you can not order meal <%= meal.title %>, because you have got no points.</h3>
+	    <% if current_user.points == 0 %>
+	      <h3>Sorry, you can not order meal <%= meal.title %>, because you have got no points.</h3>
+		<% else %>
+	      <h3>Meal's not been accepted by the host yet.</h3>
+		<% end %>
 	  <% end %>
 	<% end %>
   

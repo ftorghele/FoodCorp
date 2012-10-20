@@ -20,11 +20,25 @@ module MealsHelper
     array[arg]
   end
   
-   def rating_button_request(args)
-    if Rating.find(:all, :conditions => { :user_id => args[:user_id] , :meal_id => args[:meal_id] }).count > 0
-     return false;
+  def rating_button_request(args)
+   if Rating.find(:all, :conditions => { :user_id => args[:user_id] , :meal_id => args[:meal_id] }).count > 0
+    return false;
+   else
+    return true;
+   end
+  end
+  
+  def get_number_of_guests meal_arrangments
+    if meal_arrangments.empty?
+      'no guests have ordered this meal yet.'
     else
-     return true;
+      num = 0
+      meal_arrangments.each do |arrang|
+        if arrang.acceptance
+          num += 1
+        end
+      end
+      num.to_s << ' guests are invited.'
     end
   end
 end

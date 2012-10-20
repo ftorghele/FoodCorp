@@ -1,0 +1,9 @@
+<div>
+  <h3>Your are currently in:</h3>
+  <p><%= @location.street << ' ' << @location.street_number.to_s << ' ' << @location.zip_code.to_s << ' ' << @location.city %></p>
+  <% if @location.activate %>
+	<p>Your current position get used for creating and editing your meal</p>
+  <% else %>
+	<p>Your current position do not get used for creating and editing your meal</p>
+  <% end %>
+</div>

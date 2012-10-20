@@ -82,54 +82,37 @@
     <br /><br />
   	
     <h4> Address:</h4> 
-    <% if current_user.location %>
-        <% if current_user.location.activate %>
+    <% if current_user.location && current_user.location.activate %>
+		<div class="Adress">
+			<%= hidden_field_tag "current_user_locations", "y" %>
+			<%= f.label :street_number %>
+			<%= f.text_field :street_number, :value => current_user.location.street_number, :placeholder => "Street Number" %><br />
+			<%= f.label :street %>
+			<%= f.text_field :street, :value => current_user.location.street, :placeholder => "Street" %><br />
+			<%= f.label :zip_code %>
+			<%= f.text_field :zip_code, :value => current_user.location.zip_code, :placeholder => "Zip Code" %><br />
+			<%= f.label :city %>
+			<%= f.text_field :city, :value => current_user.location.city, :placeholder => "City" %><br />
+			<%= f.label :country %>
+			<%= f.text_field :country, :value => current_user.location.country, :placeholder => "Country" %><br />
+		</div>
+     <% else %>
             
-          <div class="Adress">
-            <%= hidden_field_tag "current_user_locations", "y" %>
-            <%= f.label :street_number %>
-            <%= f.text_field :street_number, :value => current_user.location.street_number, :placeholder => "Street Number" %><br />
-            <%= f.label :street %>
-            <%= f.text_field :street, :value => current_user.location.street, :placeholder => "Street" %><br />
-            <%= f.label :zip_code %>
-            <%= f.text_field :zip_code, :value => current_user.location.zip_code, :placeholder => "Zip Code" %><br />
-            <%= f.label :city %>
-            <%= f.text_field :city, :value => current_user.location.city, :placeholder => "City" %><br />
-            <%= f.label :country %>
-            <%= f.text_field :country, :value => current_user.location.country, :placeholder => "Country" %><br />
-          </div>
-        <% else %>
-            
-            <div class="Adress">
-              <%= hidden_field_tag "current_user_locations", "n" %>
-              <%= f.label :street_number %>
-              <%= f.text_field :street_number, :value => current_user.location.street_number, :placeholder => "Street Number" %><br />
-              <%= f.label :street %>
-              <%= f.text_field :street, :value => current_user.location.street, :placeholder => "Street" %><br />
-              <%= f.label :zip_code %>
-              <%= f.text_field :zip_code, :value => current_user.location.zip_code, :placeholder => "Zip Code" %><br />
-              <%= f.label :city %>
-              <%= f.text_field :city, :value => current_user.location.city, :placeholder => "City" %><br />
-              <%= f.label :country %>
-              <%= f.text_field :country, :value => current_user.location.country, :placeholder => "Country" %><br />
-            </div>
-        <% end %>
-    <% else %>
-
-        <div class="Adress">
-          <%= hidden_field_tag "current_user_locations", "n" %>
-          <%= f.label :street_number %>
-          <%= f.text_field :street_number, :value => current_user.location.street_number, :placeholder => "Street Number" %><br />
-          <%= f.label :street %>
-          <%= f.text_field :street, :value => current_user.location.street, :placeholder => "Street" %><br />
-          <%= f.label :zip_code %>
-          <%= f.text_field :zip_code, :value => current_user.location.zip_code, :placeholder => "Zip Code" %><br />
-          <%= f.label :city %>
-          <%= f.text_field :city, :value => current_user.location.city, :placeholder => "City" %><br />
-          <%= f.label :country %>
-          <%= f.text_field :country, :value => current_user.location.country, :placeholder => "Country" %><br />
-        </div>
+		<div class="Adress">
+		  <%= hidden_field_tag "current_user_locations", "n" %>
+		  <%= f.label :street_number %>
+		  <%= f.text_field :street_number, :value => '', :placeholder => "Street Number" %><br />
+		  <%= f.label :street %>
+		  <%= f.text_field :street, :value => '', :placeholder => "Street" %><br />
+		  <%= f.label :zip_code %>
+		  <%= f.text_field :zip_code, :value => '', :placeholder => "Zip Code" %><br />
+		  <%= f.label :city %>
+		  <%= f.text_field :city, :value => '', :placeholder => "City" %><br />
+		  <%= f.label :country %>
+		  <%= f.text_field :country, :value => '', :placeholder => "Country" %><br />
+		</div>
     <% end %>
+    
     <br />
     
     <div style="" id="meal_map">

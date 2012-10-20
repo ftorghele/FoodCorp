@@ -6,7 +6,6 @@ class MealsController < ApplicationController
   before_filter :check_login, :only=> [:new, :create, :update, :edit, :destroy]
 #  before_filter :check_time, :only=> [:create, :update]
   before_filter :get_meal, :only=> [:edit, :update]
-  before_filter :get_user, :only => [:create_location, :update_location]
   
   def index
    @coords = request.location
@@ -20,12 +19,8 @@ class MealsController < ApplicationController
    @storred_search_location = cookies[:storred_search_location]
    @storred_search_radius = cookies[:storred_search_radius]
    
-   if current_user
-     if current_user.location
-       @location = User.find(current_user.id).location
-     else
-       @location = Location.new
-     end
+   if current_user && current_user.location
+     @location = current_user.location
    else
      @location = nil
    end
@@ -76,25 +71,6 @@ class MealsController < ApplicationController
     comment = Comment.build_from(meal, current_user.id, params[:body] )
     comment.save
     redirect_to :back
-  end
-  
-  def create_location
-    @location = Location.create(params[:location])
-    @location.user_id = current_user.id
-    
-    if @location.save
-      redirect_to :back, :notice => I18n.t('current_user_location.create_success')
-    else
-      redirect_to :back, :notice => I18n.t('current_user_location.create_fail')
-    end
-  end
-  
-  def update_location
-    if User.find(params[:user_id]).location.update_attributes(params[:location])
-      redirect_to :back, :notice => I18n.t('current_user_location.update_success')
-    else
-      redirect_to :back, :notice => I18n.t('current_user_location.update_fail')
-    end
   end
   
   def recipes

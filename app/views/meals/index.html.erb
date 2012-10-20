@@ -14,16 +14,14 @@
 <% end %>
 
 <div id="currentUserLocation">
-  <p>Save your home position for further visits</p>
-  <% if current_user %>
-    
-    <% if current_user.location %>
-      <%= render 'user_location_form', :meal_action => update_user_location_path %>
-    <% else %>
-      <%= render 'user_location_form', :meal_action => create_user_location_path %>
-    <% end %>
-    
+  
+  <% if @location %>
+    <%= render 'locations/show_user_location' %>
+    <%= link_to 'Edit your current positions', edit_location_path(@location.id) %>
+  <% else %>
+    <%= link_to 'Use your position to create and edit your meals, click here', new_location_path %>
   <% end %>
+    
 </div>
 
 <% if current_user %>

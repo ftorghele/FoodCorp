@@ -20,7 +20,7 @@ class LocationsController < ApplicationController
   end
   
   def update
-    if @location.update_attributes(params[:location])
+    if @location.update_attributes(params[:location]) && @location.update_attributes(:activate => params[:location][:activate] == '1')
       redirect_to :root, :notice => I18n.t('current_user_location.update_success')
     else
       redirect_to :back, :notice => I18n.t('current_user_location.update_fail')

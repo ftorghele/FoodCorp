@@ -11,18 +11,18 @@
 	<td>You are in...</td>
 	<td><%= image_tag("change.png", :id => 'animatecurrentUserLocationButton') %></td>
 	</table>
+	
+	<div id="currentUserLocation">
+	  
+	  <% if @location %>
+		<%= render 'locations/show_user_location' %>
+		<%= link_to 'Edit your current positions', edit_user_location_path(current_user,@location) %>
+	  <% else %>
+		<%= link_to 'Use your position to create and edit your meals, click here', new_user_location_path(current_user) %>
+	  <% end %>
+		
+	</div>
 <% end %>
-
-<div id="currentUserLocation">
-  
-  <% if @location %>
-    <%= render 'locations/show_user_location' %>
-    <%= link_to 'Edit your current positions', edit_location_path(@location.id) %>
-  <% else %>
-    <%= link_to 'Use your position to create and edit your meals, click here', new_location_path %>
-  <% end %>
-    
-</div>
 
 <% if current_user %>
     <% if current_user.location %>

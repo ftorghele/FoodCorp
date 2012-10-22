@@ -30,7 +30,7 @@ module MealsHelper
   
   def get_number_of_guests meal_arrangments
     if meal_arrangments.empty?
-      'no guests have ordered this meal yet.'
+      'no users have ordered this meal yet.'
     else
       num = 0
       meal_arrangments.each do |arrang|

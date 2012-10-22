@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(:version => 20120929161448) do
   add_index "comments", ["parent_id"], :name => "index_comments_on_parent_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "current_user_locations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "street"
+    t.integer  "street_number"
+    t.integer  "zip_code"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "activate",      :default => true
+    t.text     "country"
+  end
+
   create_table "fellowships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "follower_id"
@@ -158,7 +170,7 @@ ActiveRecord::Schema.define(:version => 20120929161448) do
     t.boolean  "use_fb_avatar"
     t.integer  "points",                                  :default => 1
     t.text     "info_field"
-    t.boolean  "mail_notification",                       :default => false
+    t.boolean  "mail_notification",                       :default => true
     t.text     "email_adresse"
     t.boolean  "got_invitation",                          :default => false
     t.integer  "current_user_location_id",                :default => 0

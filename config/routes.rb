@@ -2,8 +2,6 @@ FoodCorp::Application.routes.draw do
 
   get "locations/new"
 
-  resources :locations
-  
   resources :comments
 	
   resources :meal_arrangements
@@ -14,6 +12,7 @@ FoodCorp::Application.routes.draw do
                                        :registrations => "registrations" }
 
   resources :users do
+    resources :locations
     match 'info' => :info
   end
 

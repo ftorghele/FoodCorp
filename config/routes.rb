@@ -1,9 +1,13 @@
 FoodCorp::Application.routes.draw do
 
+  get "locations/new"
+
+  resources :locations
+  
   resources :comments
 	
   resources :meal_arrangements
-    
+   
   resources :ratings
   
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",
@@ -16,8 +20,8 @@ FoodCorp::Application.routes.draw do
   resources :fellowships
   
   resources :meals
-	match 'location/new' => 'Meals#create_location', :as => 'create_user_location'
-	match 'location/update' => 'Meals#update_location', :as => 'update_user_location'
+	#match 'location/new' => 'Meals#create_location', :as => 'create_user_location'
+	#match 'location/update' => 'Meals#update_location', :as => 'update_user_location'
     match 'recipes' => 'Meals#recipes', :as => 'recipes'
     match 'own_dated_meal' => 'Meals#own_dated_meal', :as => 'dates'
     match 'meals/:id/:status' => 'Meals#show', :as => 'meal_arrangement_status'

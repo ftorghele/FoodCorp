@@ -4,19 +4,20 @@
     <% if @meal.meal_arrangements.length != 0 %>
 		<h3>Following users have ordered your meal</h3>
 		
-		<% for i in 0...@meal.meal_arrangements.length %>
-		  <% user = @meal.meal_arrangements[i].user.first_name << ' ' << @meal.meal_arrangements[i].user.last_name %>
-		  <%= 'user: ' << user %>
-		  
-		  <% if @meal.meal_arrangements[i].acceptance %>
-		      <p>Meal order's been accepted already.</p>
-		  <% else %>
-			  <p>You can accept this order of user <%= user %></p>
-			  <%= render 'users/meal_arrangement_update_form', :meal_arrangement => @meal.meal_arrangements[i] %>
-		  <% end %>
-		  <p>You can delete this order of user <%= user %></p>
-		  <%= render 'users/meal_arrangement_delete_form', :meal_arrangement => @meal.meal_arrangements[i] %>
-		<% end %>
+      <% for i in 0...@meal.meal_arrangements.length %>
+        <% user = @meal.meal_arrangements[i].user.first_name << ' ' << @meal.meal_arrangements[i].user.last_name %>
+        <%= 'user: ' << user %>
+        
+        <% if @meal.meal_arrangements[i].acceptance %>
+            <p>Meal order's been accepted already.</p>
+        <% else %>
+          <p>You can accept this order of user <%= user %></p>
+          <%= render 'users/meal_arrangement_update_form', :meal_arrangement => @meal.meal_arrangements[i] %>
+        <% end %>
+        <p>You can delete this order of user <%= user %></p>
+        <%= render 'users/meal_arrangement_delete_form', :meal_arrangement => @meal.meal_arrangements[i] %>
+        <br />
+      <% end %>
 		
     <% end %>
     

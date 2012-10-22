@@ -1,0 +1,15 @@
+<%= form_for(@location, :html => { :style => '400px' }) do |l| %>
+	<%= l.label :street %>
+	<%= l.text_field :street, { :style => 'margin-left:250px', :placeholder => 'Street' } %><br />
+	<%= l.label :street_number %>
+	<%= l.text_field :street_number, { :style => 'margin-left:192px', :placeholder => 'No.' } %><br />
+	<%= l.label :zip_code %>
+	<%= l.text_field :zip_code, { :style => 'margin-left:230px', :placeholder => 'Zip Code' } %><br />
+	<%= l.label :city %>
+	<%= l.text_field :city, { :style => 'margin-left:264px', :placeholder => 'City' } %><br />
+	<%= l.label :country %>
+	<%= l.text_field :country, { :style => 'margin-left:236px', :placeholder => 'Country' } %><br />
+	<%= l.label 'When checked your home position is used for searching, creating and editing meals:' %>
+	<%= l.check_box :activate %>
+	<%= l.submit 'Save', :id => 'current_user_location_submit_button' %>
+<% end %>

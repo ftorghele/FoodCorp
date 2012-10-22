@@ -1,4 +1,7 @@
 class Location < ActiveRecord::Base
+  
+  attr_accessible :street,:street_number, :zip_code, :city, :country, :user, :activate
+  
   belongs_to :user, :dependent => :destroy
   
   validates :street, :presence => true 

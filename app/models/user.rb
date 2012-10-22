@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
                   :country, :city, :zip_code, :street, :street_number, :phone_number, :info_field, 
                   :mail_notification, :got_invitation, :location_id, :meal_counter
 
-#  validates :first_name, :presence => true, :uniqueness => true 
-#  validates :last_name, :presence => true, :uniqueness => true
+  validates :first_name, :presence => true
+  validates :last_name, :presence => true
   validates :gender, :presence => true
   
    

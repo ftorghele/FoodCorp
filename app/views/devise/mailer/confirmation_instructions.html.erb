@@ -1,16 +1,7 @@
-<html><head>
-        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-        
-        <!-- Facebook sharing information tags -->
-        <meta content="title" property="og:title">
-        
-        <title>You have successfully signed up.</title>
-		
-</head>
-<body>
+
 <p>Welcome <%= @resource.email %>!</p>
 <p>You have successfully signed up.
 <p>You can confirm your account through the link below:</p>
-<p>http://dinnercollective.com/users/confirmation?<%= @resource.confirmation_token %></p>
-</body>
-</html>
+
+<p><%= link_to 'confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+

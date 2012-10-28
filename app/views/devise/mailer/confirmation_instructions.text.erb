@@ -1,4 +1,5 @@
 Welcome <%= @resource.email %>!
 You have successfully signed up.
 Follow the link to confirm your registration.
-<%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
+http://dinnercollective.com/users/confirmation?confirmation_token=<%= @resource.confirmation_token %>
+<%# link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
